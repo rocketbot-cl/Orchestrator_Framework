@@ -2,7 +2,7 @@
 
 
 
-# Rocketbot Framework
+# Orchestrator Framework
   
 Este módulo permite trabalhar com tarefas e transações, imprimir logs no console, enviar alertas por e-mail ou enviar um sinal para parar o framework.  
 
@@ -21,31 +21,40 @@ Para instalar o módulo no Rocketbot Studio, pode ser feito de duas formas:
 1. Login NOC  
 Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenciais.
 
-2. Obter Tarefas  
+2. Obter processos  
+Obter todos os processos
+
+3. Obter Tarefas  
 Obter tarefas
 
-3. Criar Tarefa  
+4. Criar Tarefa  
 Adiciona uma nova tarefa
 
-4. Adicionar Transação  
+5. Estabelecer Prioridade  
+Estabelecer a prioridade de uma tarefa
+
+6. Adicionar Transação  
 Adicionar uma nova transação
 
-5. Adicionar várias Transações  
+7. Adicionar várias Transações  
 Adicionar novas transações
 
-6. Obter transações não processadas  
+8. Obter transações não processadas  
 Obter todas as transações não processadas de uma tarefa
 
-7. Definir estado  
+9. Definir estado  
 Alterar o estado de uma transação
 
-8. Enviar alerta  
+10. Enviar alerta  
 Envie uma mensagem de alerta para os e-mails definidos no processo do orquestrador
 
-9.   
+11. Enviar log personalizado  
+Enviar log personalizado
 
+12. Parar Framework?  
+Enviar ordem para parar o framework
 
-10. Deve parar?  
+13. Deve parar o Framework?  
 Verifique se o framework deve parar  
 
 

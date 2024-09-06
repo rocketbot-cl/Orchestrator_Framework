@@ -2,13 +2,13 @@
 
 
 
-# Rocketbot Framework
+# Orchestrator Framework
   
 Este módulo permite trabalhar com tarefas e transações, imprimir logs no console, enviar alertas por e-mail ou enviar um sinal para parar o framework.  
 
-*Read this in other languages: [English](Manual_Rocketbot_Framework.md), [Português](Manual_Rocketbot_Framework.pr.md), [Español](Manual_Rocketbot_Framework.es.md)*
+*Read this in other languages: [English](Manual_Orchestrator_Framework.md), [Português](Manual_Orchestrator_Framework.pr.md), [Español](Manual_Orchestrator_Framework.es.md)*
   
-![banner](imgs/Banner_Rocketbot_Framework.jpg)
+![banner](imgs/Banner_Orchestrator_Framework.jpg)
 ## Como instalar este módulo
   
 Para instalar o módulo no Rocketbot Studio, pode ser feito de duas formas:
@@ -27,14 +27,20 @@ Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenci
 |API KEY|User APIKey|eyJ0eXAiOiJKV2QiLCJhbGciOiJIUzI1MiJ9.eyJpc3MiOiJudHRwczpcL1wvZGV2My5teXJiLmlwXC9hcGlcL3VzZXJzXC9hcGlrZXlcL2dlbmVyYXRlIiwiaWF0IjoxNjg5MDI0NDI2LCJleHAiOjE3NTIwOTY0MjYsIm5iZiI6MTY4OTAyNDQyNiwianRpIjoiSUxQQWRoY3F3NkM1RmllUCIsInN1YiI6MzIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJub2MiOm51bGx9.HZ4oFuOXL_VBlqAHyWkgJQr29bbBLSBnmcx6ij27zaI|
 |Definir como variável|Variável para guardar resultado sem {}|var|
 
+### Obter processos
+  
+Obter todos os processos
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Atribuir resultado à variável|Variável para guardar|Variable|
+
 ### Obter Tarefas
   
 Obter tarefas
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
-|Definir como variável|Variável para guardar resultado sem {}|var|
-|Obter key|Variável para armazenar a chave da nova tarefa|new_key|
+|Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Criar Tarefa
   
@@ -42,7 +48,18 @@ Adiciona uma nova tarefa
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
-|Definir como variável|Variável para guardar resultado sem {}|var|
+|Task Key|Variável para guardar a key da nova tarefa, sem {}|key|
+|Atribuir resultado à variável|Variável para guardar|Variable|
+
+### Estabelecer Prioridade
+  
+Estabelecer a prioridade de uma tarefa
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
+|Task Key|Task Key||
+|Prioridade|Prioridade da tarefa||
+|Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Adicionar Transação
   
@@ -53,7 +70,7 @@ Adicionar uma nova transação
 |Task Key|Task Key||
 |Transação|Transação a enviar. A entrada deve ser uma lista de listas, sendo os cabeçalhos o primeiro valor da lista principal.|[['Header1', 'Header2', 'Header3'],[1, 2, 3]]|
 |Tem Cabeçalhos|Se marcada, levará a primeira lista como o título da transação..|True|
-|Definir como variável|Variável para guardar resultado sem {}|var|
+|Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Adicionar várias Transações
   
@@ -64,7 +81,7 @@ Adicionar novas transações
 |Task Key|Task Key||
 |Transações|Transações a enviar. A entrada deve ser uma lista de listas, sendo os cabeçalhos o primeiro valor da lista principal.|[['Header1', 'Header2', 'Header3'],[1, 2, 3],[4, 5, 6],[7, 8, 9]]|
 |Tem Cabeçalhos|Se marcada, levará a primeira lista como os títulos das transações.|True|
-|Definir como variável|Variável para guardar resultado sem {}|var|
+|Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Obter transações não processadas
   
@@ -73,7 +90,7 @@ Obter todas as transações não processadas de uma tarefa
 | --- | --- | --- |
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
-|Definir como variável|Variável para guardar resultado sem {}|var|
+|Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Definir estado
   
@@ -84,7 +101,7 @@ Alterar o estado de uma transação
 |Task Key|Task Key||
 |Transaction ID|Transaction ID||
 |Estado|Selecione o estado da transação||
-|Definir como variável|Variável para guardar resultado sem {}|var|
+|Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Enviar alerta
   
@@ -92,23 +109,32 @@ Envie uma mensagem de alerta para os e-mails definidos no processo do orquestrad
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
-|Definir como variável|Variável para guardar resultado sem {}|var|
+|Atribuir resultado à variável|Variável para guardar|Variable|
 |Mensagem|Mensagem a enviar para o email definido no alerta do processo||
 
-### 
+### Enviar log personalizado
   
-
+Enviar log personalizado
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Instância do processo|Variável onde a instância do processo deve ser inserida|a2f64d5d9988c|
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Mensagem|Mensagem a enviar para o email definido no alerta do processo||
 
-### Deve parar?
+### Parar Framework?
+  
+Enviar ordem para parar o framework
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Instância do processo|ID da instância do processo a ser parada|a2f64d5d9988c|
+|Process Token|Token do processo a ser parado|LGPS8DYPJCAVECEF|
+|Atribuir resultado à variável|Variável para guardar|Variable|
+
+### Deve parar o Framework?
   
 Verifique se o framework deve parar
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Instância do processo|Variável onde a instância do processo deve ser inserida|a2f64d5d9988c|
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
-|Atribuir resultado à variável|Variável onde True ou False será armazenado dependendo se deve parar ou não|Variable|
+|Atribuir resultado à variável|Variável para guardar|Variable|

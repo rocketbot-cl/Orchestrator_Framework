@@ -13,10 +13,8 @@ PrintException = PrintException # type: ignore
 global tmp_vars
 
 
-
-
 base_path = tmp_global_obj["basepath"]
-cur_path = base_path + 'modules' + os.sep + 'Rocketbot_Framework' + os.sep + 'libs' + os.sep
+cur_path = base_path + 'modules' + os.sep + 'Orchestrator_Framework' + os.sep + 'libs' + os.sep
 if cur_path not in sys.path:
     sys.path.append(cur_path)
 
@@ -55,6 +53,27 @@ if module != 'Login' and module != 'REFramework':
     except NameError:
         raise Exception("No se ha iniciado sesión en Orchestrator")
 
+if module == 'GetProcesses':
+    token_ = GetParams('process_token')
+    var_ = GetParams('result')
+
+    try:
+        res = requests.post(configFormObject.server_ + f'/api/process/list',
+                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        res_ = res.json()
+        if res.status_code == 200:
+            array = []
+            if 'data' in res_:
+                for data in res_['data']:
+                    array.append({'token': data['token'], 'name': data['name']})
+                SetVar(var_, array)
+        else:
+            raise Exception(res_['message'])
+    except Exception as e:
+        PrintException()
+        raise e
+
+
 if module == 'GetTasks':
     token_ = GetParams('process_token')
     var_ = GetParams('result')
@@ -82,6 +101,29 @@ if module == 'AddTask':
 
     try:
         res = requests.post(configFormObject.server_ + f'/api/process/{token_}/addTask',
+                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        res_ = res.json()
+        if res.status_code == 200:
+            if var_:
+                SetVar(var_, res_['success'])
+            if key_:
+                SetVar(key_, res_['data']['key'])
+        else:
+            SetVar(var_, res_['success'])
+            raise Exception(res_['message'])
+    except Exception as e:
+        PrintException()
+        raise e
+
+if module == 'PriorityTask':
+    token_ = GetParams('process_token')
+    priority_ = GetParams('priority')
+    key_ = GetParams('task_key')
+    var_ = GetParams('result')
+    
+    try:
+        data = {'priority': priority_}
+        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks/{key_}/setTaskPriority', json=data,
                             headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
         res_ = res.json()
         if res.status_code == 200:
@@ -240,12 +282,31 @@ if module == 'SendLog':
         res = requests.post(configFormObject.server_ + '/api/rocketbot/log', json=data,
                             headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
         res_ = res.json()
-        if res.status_code == 200:
-            if var_:
-                SetVar(var_, res_['success'])
-        else:
+        if res.status_code != 200:
             raise Exception(res_['message'])
     
+    except Exception as e:
+        PrintException()
+        raise e
+
+if module == "StopFramework":
+    instance_ = GetParams('process_instance')
+    token_ = GetParams('process_token')
+    var_ = GetParams('result')
+
+    try:
+        data = {"instance": instance_, "process": token_, "stop_framework": 1}
+        res = requests.post(configFormObject.server_ + '/api/robots/setFrameworkStatus', json=data,
+                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
+        
+        res_ = res.json()
+        if res.status_code == 200:
+            if var_:
+                SetVar(var_, True)
+        else:
+            SetVar(var_, False)
+            raise Exception(res_['message'])
+
     except Exception as e:
         PrintException()
         raise e
@@ -253,7 +314,7 @@ if module == 'SendLog':
 if module == "ShouldStop":
     instance_ = GetParams('process_instance')
     token_ = GetParams('process_token')
-    var_ = GetParams('var_')
+    var_ = GetParams('result')
 
     try:
         data = {"instance": instance_, "process": token_}

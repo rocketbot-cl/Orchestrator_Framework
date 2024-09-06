@@ -2,7 +2,7 @@
 
 
 
-# Rocketbot Framework
+# Orchestrator Framework
   
 This module allows working with tasks and transactions, print logs to the console, send email alerts or send a signal to stop the framework.  
 
@@ -21,31 +21,40 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 1. Login NOC  
 Login to NOC using one of the options, API Key, noc.ini file, or credentials.
 
-2. Get Tasks  
+2. Get Processes  
+Get all processes
+
+3. Get Tasks  
 Get task
 
-3. Create Task  
+4. Create Task  
 Adds a new task
 
-4. Add Transaction  
+5. Set Priority  
+Set the priority of a task
+
+6. Add Transaction  
 Add one new transaction
 
-5. Add multiple Transactions  
+7. Add multiple Transactions  
 Add new transactions
 
-6. Get unprocessed transactions  
+8. Get unprocessed transactions  
 Get every unprocessed transactions from a task
 
-7. Set status  
+9. Set status  
 Change the status of a transaction
 
-8. Send alert  
+10. Send alert  
 Send an alert message to the emails set into the Orchestrator Process
 
-9. Send Log  
+11. Send custom log  
 Send custom log
 
-10. Should Stop?  
+12. Stop Framework  
+Send order to stop the framework
+
+13. Should Stop Framework?  
 Check if the framework should stop  
 
 
