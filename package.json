@@ -7,7 +7,7 @@
     "pr": "Este módulo permite trabalhar com tarefas e transações, imprimir logs no console, enviar alertas por e-mail ou enviar um sinal para parar o framework."
   },
   "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "license": "MIT",
   "homepage": "http://rocketbot.com",
   "linux": true,
@@ -1144,6 +1144,40 @@
               "pr": "Mensagem a enviar para o email definido no alerta do processo"
             },
             "id": "message",
+            "css": "col-md-12"
+          },
+          {
+            "type": "select",
+            "placeholder": {
+              "es": "info",
+              "en": "info",
+              "pr": "info"
+            },
+            "title": {
+              "es": "Tipo",
+              "en": "Type",
+              "pr": "Tipo"
+            },
+            "options": [
+              {
+                "title": "info",
+                "value": "info"
+              },
+              {
+                "title": "warning",
+                "value": "warning"
+              },
+              {
+                "title": "error",
+                "value": "error"
+              }
+            ],
+            "description": {
+              "es": "Seleccionar el tipo de log a enviar.",
+              "en": "Select the type of log to send.",
+              "pr": "Selecione o tipo de log a enviar."
+            },
+            "id": "type_",
             "css": "col-md-12"
           }
         ]

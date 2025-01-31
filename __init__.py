@@ -273,12 +273,12 @@ if module == 'SendLog':
     instance_ = GetParams('process_instance')
     token_ = GetParams('process_token')
     log_ = GetParams('message')
-
+    type_ = GetParams('type_') or 'info'
     if not token_ or not log_:
         raise Exception('Missing Data')
 
     try:
-        data = {'processToken': token_, 'key': instance_, 'log': log_}
+        data = {'processToken': token_, 'key': instance_, 'log': log_, 'type': type_}
         res = requests.post(configFormObject.server_ + '/api/rocketbot/log', json=data,
                             headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
         res_ = res.json()
