@@ -1,16 +1,14 @@
 import pandas as pd
-import requests
 import json
 import sys
 import os
+import ast
+import configparser
 
 tmp_global_obj = tmp_global_obj # type: ignore
 GetParams = GetParams # type: ignore
 SetVar = SetVar # type: ignore
 PrintException = PrintException # type: ignore
-
-
-global tmp_vars
 
 
 base_path = tmp_global_obj["basepath"]
@@ -22,44 +20,132 @@ from configurationObject import ConfigObject # type: ignore
 from orchestator import OrchestatorCommon # type: ignore
 
 global configFormObject
-global path_ini_assetnoc_
+global instance_key_ini
 
 module = GetParams('module')
 
-if module == 'Login':
-    server_ = GetParams("server_url")
-    var_ = GetParams('result')
-    api_key = GetParams("apikey")
+def _first_param(*names):
+    for name in names:
+        value = GetParams(name)
+        if value not in (None, ""):
+            return value
+    return None
 
+def get_process_and_instance_id(process_token, instance_key):
+    if not process_token:
+        if instance_key:
+            raise Exception("An instance cannot be specified without a process")
+        return 0, 0
+    response = configFormObject.post('/api/process/' + process_token)
+    if response.status_code != 200:
+        raise Exception(configFormObject.response_error(response))
+    process = response.json()['data']
+    if not instance_key:
+        return process['id'], 0
+    for instance in process.get('instances', []):
+        if instance.get('key') == instance_key:
+            return process['id'], instance['id']
+    raise Exception("The specified instance does not belong to the process")
 
-    orchestrator_service = OrchestatorCommon(server=server_, user="", password="", ini_path="", apikey=api_key)
-    if server_ is None:
-        server_ = orchestrator_service.server
-    token = orchestrator_service.get_authorization_token()
-    headers = {'content-type': 'application/x-www-form-urlencoded','Authorization': 'Bearer {token}'.format(token=token)}
-    res = requests.post(server_ + '/api/formData/all',
-                        headers=headers)
-    configFormObject = ConfigObject(token, orchestrator_service.server, orchestrator_service.user, orchestrator_service.password, api_key, None)
-    if res.status_code != 200:
-        raise Exception("El API Key es incorrecto")
+def get_user_ids(user_mails):
+    if not user_mails or user_mails == "[]":
+        return []
+    if isinstance(user_mails, str):
+        try:
+            parsed = ast.literal_eval(user_mails)
+            mails = parsed if isinstance(parsed, (list, tuple)) else [parsed]
+        except (ValueError, SyntaxError):
+            mails = [mail.strip() for mail in user_mails.strip("[]").split(",")]
     else:
-        conx = True
-    SetVar(var_, conx)
+        mails = user_mails
+    response = configFormObject.post('/api/users/list')
+    if response.status_code != 200:
+        raise Exception(configFormObject.response_error(response))
+    users = {user['email']: user['id'] for user in response.json().get('data', [])}
+    missing = [mail for mail in mails if mail not in users]
+    if missing:
+        raise Exception("Users not found in NOC: " + ", ".join(missing))
+    return [users[mail] for mail in mails]
 
-if module != 'Login' and module != 'REFramework':
+def get_process_and_instance_keys(process_id, instance_id):
+    if not process_id:
+        if instance_id:
+            raise Exception("A global Asset cannot have an instance")
+        return None, None
+    response = configFormObject.post('/api/process/list')
+    if response.status_code != 200:
+        raise Exception(configFormObject.response_error(response))
+    for process in response.json().get('data', []):
+        if process.get('id') == process_id:
+            if not instance_id:
+                return process.get('token'), None
+            for instance in process.get('instances', []):
+                if instance.get('id') == instance_id:
+                    return process.get('token'), instance.get('key')
+            raise Exception("The Asset instance does not belong to the process")
+    raise Exception("The process associated with the Asset was not found")
+
+if module in ('Login', 'loginNOC'):
+    server_ = GetParams("server_url")
+    var_ = _first_param('result', 'var_')
+    iframe = GetParams("iframe")
+    try:
+        iframe = ast.literal_eval(iframe) if isinstance(iframe, str) else (iframe or {})
+    except (ValueError, SyntaxError):
+        iframe = {}
+    username = _first_param("user", "email") or iframe.get("user", "")
+    password = GetParams("password") or iframe.get("password", "")
+    api_key = GetParams("apikey") or iframe.get("apikey", "")
+    path = _first_param("path_ini", "ruta_") or iframe.get("path_ini", "")
+    ignore_ssl = GetParams("ignore_ssl")
+    if ignore_ssl is None:
+        ignore_ssl = iframe.get("ignore_ssl", False)
+    if isinstance(ignore_ssl, str):
+        ignore_ssl = ignore_ssl.lower() == "true"
+    verify_ssl = not ignore_ssl
+    instance_key_ini = None
+    try:
+        if path:
+            ini_config = configparser.ConfigParser()
+            if not ini_config.read(path):
+                raise Exception("Could not read the noc.ini file: " + path)
+            instance_key_ini = ini_config.get('USER', 'key', fallback=None)
+        if not ((username and password) or api_key or path):
+            raise Exception("Please provide an API Key, credentials, or a noc.ini file")
+        orchestrator_service = OrchestatorCommon(
+            server=server_, user=username, password=password,
+            ini_path=path, apikey=api_key
+        )
+        token = orchestrator_service.get_authorization_token(verify=verify_ssl)
+        server_ = orchestrator_service.server
+        configFormObject = ConfigObject(
+            token, server_, orchestrator_service.user,
+            orchestrator_service.password, api_key, None, verify_ssl
+        )
+        res = configFormObject.post('/api/formData/all')
+        if res.status_code != 200:
+            raise Exception(configFormObject.response_error(res))
+        if var_:
+            SetVar(var_, True)
+    except Exception as e:
+        if var_:
+            SetVar(var_, False)
+        PrintException()
+        raise e
+
+if module not in ('Login', 'loginNOC', 'REFramework'):
     try:
         if configFormObject is None:
-            raise Exception("No se ha iniciado sesión en Orchestrator")
+            raise Exception("Not logged in to Orchestrator")
     except NameError:
-        raise Exception("No se ha iniciado sesión en Orchestrator")
+        raise Exception("Not logged in to Orchestrator")
 
 if module == 'GetProcesses':
     token_ = GetParams('process_token')
     var_ = GetParams('result')
 
     try:
-        res = requests.post(configFormObject.server_ + f'/api/process/list',
-                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        res = configFormObject.post('/api/process/list')
         res_ = res.json()
         if res.status_code == 200:
             array = []
@@ -79,14 +165,13 @@ if module == 'GetTasks':
     var_ = GetParams('result')
 
     try:
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks',
-                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        res = configFormObject.post(f'/api/process/{token_}/tasks')
         res_ = res.json()
         if res.status_code == 200:
             array = []
             if 'data' in res_:
-                for data in res_['data']:
-                    array.append(data)
+                for task in res_['data']:
+                    array.append(task)
             SetVar(var_, array)
         else:
             raise Exception(res_['message'])
@@ -100,8 +185,7 @@ if module == 'AddTask':
     key_ = GetParams('key')
 
     try:
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/addTask',
-                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        res = configFormObject.post(f'/api/process/{token_}/addTask')
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -120,11 +204,12 @@ if module == 'PriorityTask':
     priority_ = GetParams('priority')
     key_ = GetParams('task_key')
     var_ = GetParams('result')
-    
+
     try:
-        data = {'priority': priority_}
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks/{key_}/setTaskPriority', json=data,
-                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        res = configFormObject.post(
+            f'/api/process/{token_}/tasks/{key_}/setTaskPriority',
+            json_data={'priority': priority_}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -144,19 +229,19 @@ if module == 'AddTransaction':
     transaction = GetParams('transaction')
     headers = GetParams('headers')
     var_ = GetParams('result')
-    
-    transaction = eval(transaction)
-    
+
+    transaction = ast.literal_eval(transaction)
+
     try:
-        if headers and eval(headers):
+        if headers and ast.literal_eval(headers):
             df = pd.DataFrame(transaction[1:], columns=transaction[0])
         else:
             df = pd.DataFrame(transaction)
-        
-        data = {}
-        data['transaction'] = json.dumps(df.to_dict('records')[0])
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks/{task_key}/addTransaction', json=data,
-                            headers={'Authorization': 'Bearer ' + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+
+        res = configFormObject.post(
+            f'/api/process/{token_}/tasks/{task_key}/addTransaction',
+            json_data={'transaction': json.dumps(df.to_dict('records')[0])}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -174,20 +259,19 @@ if module == 'AddTransactions':
     transactions = GetParams('transactions')
     headers = GetParams('headers')
     var_ = GetParams('result')
-    
-    transactions = eval(transactions)
-    
+
+    transactions = ast.literal_eval(transactions)
+
     try:
-        if headers and eval(headers):
+        if headers and ast.literal_eval(headers):
             df = pd.DataFrame(transactions[1:], columns=transactions[0])
         else:
             df = pd.DataFrame(transactions)
-        
-        data = {}
-        data['transactions'] = json.dumps(df.to_dict('records'))
-        
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks/{task_key}/addTransactions', json=data,
-                            headers={'Authorization': 'Bearer ' + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+
+        res = configFormObject.post(
+            f'/api/process/{token_}/tasks/{task_key}/addTransactions',
+            json_data={'transactions': json.dumps(df.to_dict('records'))}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -202,16 +286,17 @@ if module == 'GetUnprocessedTransactions':
     task_key = GetParams('task_key')
     token_ = GetParams('process_token')
     var_ = GetParams('result')
-    
+
     try:
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks/{task_key}/getUnprocessedTransactions',
-                            headers={'Authorization': "Bearer " + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+        res = configFormObject.post(
+            f'/api/process/{token_}/tasks/{task_key}/getUnprocessedTransactions'
+        )
         res_ = res.json()
         if res.status_code == 200:
             array = []
             if 'data' in res_:
-                for data in res_['data']:
-                    array.append(data)
+                for transaction in res_['data']:
+                    array.append(transaction)
             SetVar(var_, array)
         else:
             raise Exception(res_['message'])
@@ -230,14 +315,15 @@ if module == 'SetStatus':
     if not transaction_id:
         raise Exception("Transaction ID is needed.")
     try:
-        data = {'transaction': transaction_id, 'status': status_}
-        res = requests.post(configFormObject.server_ + f'/api/process/{token_}/tasks/{task_key}/setTransactionStatus', json=data,
-                            headers={'Authorization': "Bearer " + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+        res = configFormObject.post(
+            f'/api/process/{token_}/tasks/{task_key}/setTransactionStatus',
+            json_data={'transaction': transaction_id, 'status': status_}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
                 SetVar(var_, res_['success'])
-        else:   
+        else:
             raise Exception(res_['message'])
     except Exception as e:
         PrintException()
@@ -250,12 +336,12 @@ if module == 'SendAlert':
 
     if not token_ or not log_:
         raise Exception('Missing Data')
-    
+
     try:
-        data = {'processToken': token_, 'message': log_}
-        res = requests.post(configFormObject.server_ + '/api/rocketbot/alert', json=data,
-                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
-              
+        res = configFormObject.post(
+            '/api/rocketbot/alert',
+            json_data={'processToken': token_, 'message': log_}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -264,11 +350,11 @@ if module == 'SendAlert':
             if var_:
                 SetVar(var_, res_['success'])
             raise Exception(res_['message'])
-    
+
     except Exception as e:
         PrintException()
         raise e
-    
+
 if module == 'SendLog':
     instance_ = GetParams('process_instance')
     token_ = GetParams('process_token')
@@ -278,13 +364,14 @@ if module == 'SendLog':
         raise Exception('Missing Data')
 
     try:
-        data = {'processToken': token_, 'key': instance_, 'log': log_, 'type': type_}
-        res = requests.post(configFormObject.server_ + '/api/rocketbot/log', json=data,
-                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
+        res = configFormObject.post(
+            '/api/rocketbot/log',
+            json_data={'processToken': token_, 'key': instance_, 'log': log_, 'type': type_}
+        )
         res_ = res.json()
         if res.status_code != 200:
             raise Exception(res_['message'])
-    
+
     except Exception as e:
         PrintException()
         raise e
@@ -295,10 +382,10 @@ if module == "StopFramework":
     var_ = GetParams('result')
 
     try:
-        data = {"instance": instance_, "process": token_, "stop_framework": 1}
-        res = requests.post(configFormObject.server_ + '/api/robots/setFrameworkStatus', json=data,
-                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
-        
+        res = configFormObject.post(
+            '/api/robots/setFrameworkStatus',
+            json_data={"instance": instance_, "process": token_, "stop_framework": 1}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -310,24 +397,137 @@ if module == "StopFramework":
     except Exception as e:
         PrintException()
         raise e
-    
+
 if module == "ShouldStop":
     instance_ = GetParams('process_instance')
     token_ = GetParams('process_token')
     var_ = GetParams('result')
 
     try:
-        data = {"instance": instance_, "process": token_}
-        res = requests.post(configFormObject.server_ + '/api/robots/getFrameworkStatus', json=data,
-                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
-        
+        res = configFormObject.post(
+            '/api/robots/getFrameworkStatus',
+            json_data={"instance": instance_, "process": token_}
+        )
         res_ = res.json()
         if res.status_code == 200:
             if var_:
-                SetVar(var_, True if res_['data']==1 else False)
+                SetVar(var_, True if res_['data'] == 1 else False)
         else:
             raise Exception(res_['message'])
 
+    except Exception as e:
+        PrintException()
+        raise e
+
+if module == "getData":
+    name_ = GetParams("name")
+    var_ = GetParams("result")
+    process_token = GetParams("process_token")
+    instance_key = GetParams("instance_key")
+    extra_data = GetParams("extra_data")
+    try:
+        if not instance_key:
+            try:
+                instance_key = instance_key_ini
+            except NameError:
+                pass
+        data = {'name': name_, 'instance': instance_key}
+        if process_token:
+            data['process'] = process_token
+        response = configFormObject.post('/api/assets/get', data=data)
+        if response.status_code != 200:
+            raise Exception(configFormObject.response_error(response))
+        payload = response.json()
+        if not payload.get('success'):
+            raise Exception(payload.get('message', 'Unknown error retrieving the asset'))
+        if 'data' not in payload:
+            raise Exception(
+                'Asset "' + str(name_) + '" returned no data. '
+                'The endpoint only resolves assets with scope "All" (global). '
+                'If the asset is tied to a specific process, use "Get All Assets" and filter by name.'
+            )
+        asset = payload['data']
+        if extra_data in (None, False, "False", "false", ""):
+            result = asset['value']
+        else:
+            proc_token, inst_key = get_process_and_instance_keys(
+                asset.get('process_id', 0), asset.get('instance_id', 0)
+            )
+            users = []
+            for _u in asset.get('users', []):
+                users.append(_u['email'])
+            result = {
+                'name': asset['name'], 'id': asset['id'],
+                'type': asset['type'], 'value': asset['value'],
+                'process_token': proc_token, 'instance_key': inst_key,
+                'users': users
+            }
+        if var_:
+            SetVar(var_, result)
+    except Exception as e:
+        PrintException()
+        raise e
+
+if module == "getAllData":
+    var_ = GetParams("result")
+    extra_data = GetParams("extra_data")
+    try:
+        response = configFormObject.post('/api/assets/list')
+        if response.status_code != 200:
+            raise Exception(configFormObject.response_error(response))
+        payload = response.json()
+        if not payload.get('success'):
+            raise Exception(payload.get('message', 'Failed to retrieve Assets'))
+        if extra_data in (None, False, "False", "false", ""):
+            result = [
+                {'name': asset['name'], 'value': asset['value']}
+                for asset in payload.get('data', [])
+            ]
+            for asset in result:
+                SetVar(asset['name'], asset['value'])
+        else:
+            result = []
+            for asset in payload.get('data', []):
+                process = asset.get('process')
+                instance = asset.get('instance')
+                result.append({
+                    'name': asset['name'], 'id': asset['id'],
+                    'type': asset['type'], 'value': asset['value'],
+                    'process_token': process.get('token') if process else None,
+                    'instance_key': instance.get('key') if instance else None,
+                    'users': [user['email'] for user in asset.get('users', [])]
+                })
+        if var_:
+            SetVar(var_, result)
+    except Exception as e:
+        PrintException()
+        raise e
+
+if module in ("addAsset", "editData"):
+    result_var = GetParams("result")
+    process_token = GetParams("process_token")
+    instance_key = GetParams("instance_key")
+    try:
+        process_id, instance_id = get_process_and_instance_id(
+            process_token, instance_key
+        )
+        data = {
+            'name': GetParams("name"),
+            'type': GetParams("type_") or "text",
+            'value': GetParams("value"),
+            'process_id': process_id,
+            'instance_id': instance_id,
+            'users': get_user_ids(GetParams("users"))
+        }
+        endpoint = '/api/assets/add'
+        if module == "editData":
+            data['id'] = GetParams("Asset_id")
+            endpoint = '/api/assets/edit'
+        response = configFormObject.post(endpoint, json_data=data)
+        if response.status_code != 200:
+            raise Exception(configFormObject.response_error(response))
+        if result_var:
+            SetVar(result_var, True)
     except Exception as e:
         PrintException()
         raise e

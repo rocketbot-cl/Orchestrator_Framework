@@ -28,10 +28,11 @@ class OrchestatorCommon:
         if ini_path:
             self.read_ini(ini_path)
 
-    def request(self, method, endpoint, data, headers, files=None, proxies=None):
+    def request(self, method, endpoint, data, headers, files=None, proxies=None, verify=True):
         url = self.server + endpoint
         response = requests.request(
-            method, url, data=data, headers=headers, files=files, proxies=proxies)
+            method, url, data=data, headers=headers, files=files, proxies=proxies,
+            verify=verify)
         response = response.json()
         if "data" in response:
             return response['data']
@@ -41,7 +42,8 @@ class OrchestatorCommon:
 
         raise Exception(response["message"])
 
-    def get_authorization_token(self, server=None, user=None, password=None, ini_path=None, proxies=None):
+    def get_authorization_token(self, server=None, user=None, password=None,
+                                ini_path=None, proxies=None, verify=True):
         if server:
             self.server = server
 
@@ -62,7 +64,8 @@ class OrchestatorCommon:
         data = {'email': self.user, 'password': self.password}
 
         self.apikey = self.request("post", "/api/auth/login", data,
-                                   headers=self.headers['FORM'], proxies=proxies)
+                                   headers=self.headers['FORM'], proxies=proxies,
+                                   verify=verify)
         return self.apikey
 
     def read_ini(self, ini_path):
@@ -77,8 +80,3 @@ class OrchestatorCommon:
             self.apikey = config.get('USER', 'apiKey')
         except ValueError:
             pass
-
-
-
-
-    

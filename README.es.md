@@ -4,7 +4,7 @@
 
 # Orchestrator Framework
   
-Este módulo permite trabajar con tareas y transacciones, imprimir logs a la consola, enviar alertas por correo electrónico o enviar una señal para detener el framework.  
+Permite administrar procesos, tareas, transacciones y Assets de NOC, además de enviar alertas, registrar logs y controlar la detención del framework.  
 
 *Read this in other languages: [English](README.md), [Português](README.pr.md), [Español](README.es.md)*
 
@@ -19,7 +19,7 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 
 
 1. Login NOC  
-Inicie sesión en NOC utilizando unda de las opciones, API Key, archivo noc.ini o credenciales.
+Autentica con NOC y abre una sesión requerida por todos los demás comandos del módulo. Soporta API Key, e-mail y contraseña, o un archivo noc.ini.
 
 2. Obtener procesos  
 Obtener todos los procesos
@@ -52,10 +52,22 @@ Envia un mensaje de alerta a los correos electrónicos configurados en el proces
 Enviar log personalizado
 
 12. Detener Framework  
-Enviar orden para detener el framework
+Envía a NOC una solicitud de detención para una instancia concreta del proceso. Este comando establece el estado de detención; no debe confundirse con ¿Debe detenerse el Framework?, que solamente consulta ese estado.
 
 13. ¿Debe detenerse el Framework?  
-Verifica si el framework debe detenerse  
+Consulta en NOC si una instancia del proceso tiene una solicitud de detención pendiente. No cambia el estado: devuelve True cuando la instancia debe detenerse y False cuando puede continuar.
+
+14. Obtener Asset Específico  
+Obtiene un Asset por nombre. Solo resuelve assets con scope global (All); los assets asociados a un proceso específico no devuelven datos — usar Obtener Todos los Assets en ese caso. Devuelve el valor, o un diccionario completo si se activan los datos adicionales.
+
+15. Obtener Todos los Assets  
+Obtiene todos los Assets accesibles para el usuario autenticado. En modo básico devuelve nombre y valor y crea una variable Rocketbot por cada Asset; con datos adicionales devuelve una lista de metadatos completos.
+
+16. Agregar Asset  
+Crea un Asset de tipo texto, contraseña o cifrado. Su alcance será global si no se indica proceso, de proceso si se indica solo el token, o de instancia si también se indica la key. Opcionalmente puede asociarse a usuarios de NOC.
+
+17. Modificar Asset  
+Actualiza un Asset existente mediante su ID. El comando envía el estado final completo del Asset: nombre, tipo, valor, alcance y usuarios. Dejar proceso e instancia vacíos convierte su alcance en global.  
 
 
 

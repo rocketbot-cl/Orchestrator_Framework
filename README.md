@@ -4,7 +4,7 @@
 
 # Orchestrator Framework
   
-This module allows working with tasks and transactions, print logs to the console, send email alerts or send a signal to stop the framework.  
+Manages NOC processes, tasks, transactions, and Assets, and also sends alerts, writes logs, and controls framework shutdown.  
 
 *Read this in other languages: [English](README.md), [Português](README.pr.md), [Español](README.es.md)*
 
@@ -19,7 +19,7 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 
 
 1. Login NOC  
-Login to NOC using one of the options, API Key, noc.ini file, or credentials.
+Authenticates with NOC and opens a session required by all other commands in this module. Supports API Key, e-mail and password, or a noc.ini file.
 
 2. Get Processes  
 Get all processes
@@ -52,10 +52,22 @@ Send an alert message to the emails set into the Orchestrator Process
 Send custom log
 
 12. Stop Framework  
-Send order to stop the framework
+Sends NOC a stop request for a specific process instance. This command sets the stop state; it must not be confused with Should Stop Framework?, which only reads that state.
 
 13. Should Stop Framework?  
-Check if the framework should stop  
+Checks NOC for a pending stop request on a process instance. It does not change the state: it returns True when the instance must stop and False when it may continue.
+
+14. Get a Specific Asset  
+Gets an Asset by name. Only resolves assets with global scope (All); assets tied to a specific process return no data — use Get All Assets in that case. Returns the value, or a full dictionary with extra data enabled.
+
+15. Get All Assets  
+Gets every Asset available to the authenticated user. Basic mode returns name and value and creates one Rocketbot variable per Asset; extra-data mode returns a list of complete metadata.
+
+16. Add Asset  
+Creates a text, password, or encrypted Asset. Its scope is global without a process, process-level with only a token, or instance-level when an instance key is also supplied. It may optionally be associated with NOC users.
+
+17. Modify Asset  
+Updates an existing Asset by ID. The command sends the complete final Asset state: name, type, value, scope, and users. Leaving process and instance empty changes its scope to global.  
 
 
 
