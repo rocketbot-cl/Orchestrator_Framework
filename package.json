@@ -1436,19 +1436,19 @@
         {
             "en": {
                 "title": "Get a Specific Asset",
-                "description": "Gets an Asset by name. Only resolves assets with global scope (All); assets tied to a specific process return no data — use Get All Assets in that case. Returns the value, or a full dictionary with extra data enabled.",
+                "description": "Gets an Asset by name. For process or instance Assets, provide the process token and optionally the instance key. Returns the value, or a full dictionary with extra data enabled.",
                 "title_options": "Select an option",
                 "options": null
             },
             "es": {
                 "title": "Obtener Asset Específico",
-                "description": "Obtiene un Asset por nombre. Solo resuelve assets con scope global (All); los assets asociados a un proceso específico no devuelven datos — usar Obtener Todos los Assets en ese caso. Devuelve el valor, o un diccionario completo si se activan los datos adicionales.",
+                "description": "Obtiene un Asset por nombre. Para Assets de proceso o instancia, indique el token del proceso y opcionalmente la key de instancia. Devuelve el valor, o un diccionario completo si se activan los datos adicionales.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Obter Asset específico",
-                "description": "Obtém um Asset pelo nome. Resolve apenas assets com escopo global (All); assets vinculados a um processo específico não retornam dados — use Obter Todos os Assets nesse caso. Retorna o valor, ou um dicionário completo com os dados adicionais habilitados.",
+                "description": "Obtém um Asset pelo nome. Para Assets de processo ou instância, informe o token do processo e opcionalmente a key da instância. Retorna o valor, ou um dicionário completo com os dados adicionais habilitados.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1782,9 +1782,9 @@
                     {
                         "type": "input",
                         "placeholder": {
-                            "es": "[usuario1@mail.com, usuario2@mail.com, ...]",
-                            "en": "[UserMail1, UserMail2, ...]",
-                            "pr": "[MailUsuario1, MailUsuario2, ...]"
+                            "es": "[usuario1@mail.com, usuario2@mail.com]",
+                            "en": "[user1@company.com, user2@company.com]",
+                            "pr": "[usuario1@empresa.com, usuario2@empresa.com]"
                         },
                         "title": {
                             "es": "Mail de usuarios:",
@@ -1792,14 +1792,14 @@
                             "pr": "Mails dos usuários"
                         },
                         "description": {
-                            "es": "Lista de e-mails de usuarios de NOC que tendrán acceso al Asset.",
-                            "en": "List of NOC user e-mail addresses that will have access to the Asset.",
-                            "pr": "Lista de e-mails de usuários do NOC que terão acesso ao Asset."
+                            "es": "Lista de e-mails de usuarios de NOC que tendrán acceso al Asset. Escríbalos sin comillas, entre corchetes y separados por coma.",
+                            "en": "List of NOC user e-mail addresses that will have access to the Asset. Write them without quotes, inside brackets, separated by commas.",
+                            "pr": "Lista de e-mails de usuários do NOC que terão acesso ao Asset. Escreva sem aspas, entre colchetes e separados por vírgula."
                         },
                         "help": {
-                            "es": "Formato: ['usuario1@empresa.com', 'usuario2@empresa.com']. Déjela vacía para no asociar usuarios.",
-                            "en": "Format: ['user1@company.com', 'user2@company.com']. Leave empty to associate no users.",
-                            "pr": "Formato: ['usuario1@empresa.com', 'usuario2@empresa.com']. Deixe vazio para não associar usuários."
+                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Déjela vacía o use [] para no asociar usuarios.",
+                            "en": "Single format: [user1@company.com, user2@company.com]. Leave empty or use [] to associate no users.",
+                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Deixe vazio ou use [] para não associar usuários."
                         },
                         "id": "users",
                         "css": "col-md-6"
@@ -1881,9 +1881,9 @@
                             "pr": "Atribuir resultado a variável:"
                         },
                         "description": {
-                            "es": "Variable donde se guarda la respuesta completa devuelta por la API de NOC.",
-                            "en": "Variable that stores the complete response returned by the NOC API.",
-                            "pr": "Variável que armazena a resposta completa retornada pela API do NOC."
+                            "es": "Variable que recibe True si el Asset fue creado correctamente.",
+                            "en": "Variable that receives True if the Asset was created successfully.",
+                            "pr": "Variavel que recebe True se o Asset foi criado com sucesso."
                         },
                         "help": {
                             "es": "Nombre de variable sin llaves {}.",
@@ -1911,19 +1911,19 @@
         {
             "en": {
                 "title": "Modify Asset",
-                "description": "Updates an existing Asset by ID. The command sends the complete final Asset state: name, type, value, scope, and users. Leaving process and instance empty changes its scope to global.",
+                "description": "Updates an existing Asset by ID. Empty fields keep the current Asset data; only supplied fields are changed.",
                 "title_options": "Select an option",
                 "options": null
             },
             "es": {
                 "title": "Modificar Asset",
-                "description": "Actualiza un Asset existente mediante su ID. El comando envía el estado final completo del Asset: nombre, tipo, valor, alcance y usuarios. Dejar proceso e instancia vacíos convierte su alcance en global.",
+                "description": "Actualiza un Asset existente mediante su ID. Los campos vacíos conservan los datos actuales del Asset; solo se modifican los campos informados.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Modificar Asset",
-                "description": "Atualiza um Asset existente pelo ID. O comando envia o estado final completo do Asset: nome, tipo, valor, escopo e usuários. Deixar processo e instância vazios altera o escopo para global.",
+                "description": "Atualiza um Asset existente pelo ID. Campos vazios mantêm os dados atuais do Asset; somente os campos informados são alterados.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1969,17 +1969,16 @@
                             "pr": "Novo nome do Asset"
                         },
                         "description": {
-                            "es": "Nombre final que tendrá el Asset después de la modificación.",
-                            "en": "Final name of the Asset after the update.",
-                            "pr": "Nome final do Asset após a modificação."
+                            "es": "Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual.",
+                            "en": "New Asset name. Leave empty to keep the current name.",
+                            "pr": "Novo nome do Asset. Deixe vazio para manter o nome atual."
                         },
                         "id": "name",
                         "css": "col-md-6",
-                        "required": true,
                         "help": {
-                            "es": "Debe enviarse aunque el nombre no cambie.",
-                            "en": "Must be supplied even when the name does not change.",
-                            "pr": "Deve ser informado mesmo quando o nome não mudar."
+                            "es": "Si se informa, debe tener al menos 3 caracteres.",
+                            "en": "When supplied, it must have at least 3 characters.",
+                            "pr": "Quando informado, deve ter pelo menos 3 caracteres."
                         }
                     },
                     {
@@ -1995,9 +1994,9 @@
                             "pr": "Novo token do processo"
                         },
                         "description": {
-                            "es": "Token final del proceso propietario. Déjelo vacío, junto con la instancia, para convertir el Asset en global.",
-                            "en": "Final owner process token. Leave it empty together with the instance to make the Asset global.",
-                            "pr": "Token final do processo proprietário. Deixe vazio junto com a instância para tornar o Asset global."
+                            "es": "Nuevo token del proceso propietario. Déjelo vacío para conservar el proceso actual.",
+                            "en": "New owner process token. Leave empty to keep the current process.",
+                            "pr": "Novo token do processo proprietário. Deixe vazio para manter o processo atual."
                         },
                         "help": {
                             "es": "Puede indicarse sin instancia para asignar el Asset al proceso completo.",
@@ -2020,14 +2019,14 @@
                             "pr": "Nova key da instância"
                         },
                         "description": {
-                            "es": "Key final de la instancia propietaria. Requiere el token del proceso.",
-                            "en": "Final owner instance key. Requires the process token.",
-                            "pr": "Key final da instância proprietária. Requer o token do processo."
+                            "es": "Nueva key de la instancia propietaria. Déjela vacía para conservar la instancia actual.",
+                            "en": "New owner instance key. Leave empty to keep the current instance.",
+                            "pr": "Nova key da instância proprietária. Deixe vazia para manter a instância atual."
                         },
                         "help": {
-                            "es": "Déjela vacía para alcance global o de proceso.",
-                            "en": "Leave empty for global or process scope.",
-                            "pr": "Deixe vazio para escopo global ou de processo."
+                            "es": "Si informa un nuevo token sin key, el Asset queda asociado al proceso completo.",
+                            "en": "When a new token is supplied without a key, the Asset is assigned to the whole process.",
+                            "pr": "Quando um novo token é informado sem key, o Asset fica associado ao processo inteiro."
                         },
                         "id": "instance_key",
                         "css": "col-md-6"
@@ -2035,9 +2034,9 @@
                     {
                         "type": "input",
                         "placeholder": {
-                            "es": "[MailUsuario1, MailUsuario2, ...]",
-                            "en": "[UserMail1, UserMail2, ...]",
-                            "pr": "[MailUsuario1, MailUsuario2, ...]"
+                            "es": "[usuario1@mail.com, usuario2@mail.com]",
+                            "en": "[user1@company.com, user2@company.com]",
+                            "pr": "[usuario1@empresa.com, usuario2@empresa.com]"
                         },
                         "title": {
                             "es": "Nuevos mails de usuarios:",
@@ -2045,14 +2044,14 @@
                             "pr": "Novos mails dos usuários"
                         },
                         "description": {
-                            "es": "Lista final de e-mails de usuarios asociados. Reemplaza la asociación anterior.",
-                            "en": "Final list of associated user e-mail addresses. Replaces the previous association.",
-                            "pr": "Lista final de e-mails de usuários associados. Substitui a associação anterior."
+                            "es": "Nueva lista de e-mails de usuarios asociados. Escríbalos sin comillas, entre corchetes y separados por coma. Déjela vacía para conservar los usuarios actuales.",
+                            "en": "New list of associated user e-mail addresses. Write them without quotes, inside brackets, separated by commas. Leave empty to keep the current users.",
+                            "pr": "Nova lista de e-mails de usuários associados. Escreva sem aspas, entre colchetes e separados por vírgula. Deixe vazia para manter os usuários atuais."
                         },
                         "help": {
-                            "es": "Formato: ['usuario1@empresa.com']. Una lista vacía elimina las asociaciones.",
-                            "en": "Format: ['user1@company.com']. An empty list removes associations.",
-                            "pr": "Formato: ['usuario1@empresa.com']. Uma lista vazia remove as associações."
+                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Use [] para quitar todos los usuarios.",
+                            "en": "Single format: [user1@company.com, user2@company.com]. Use [] to remove all users.",
+                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Use [] para remover todos os usuários."
                         },
                         "id": "users",
                         "css": "col-md-6"
@@ -2084,16 +2083,16 @@
                             "pr": "Novo tipo do Asset"
                         },
                         "description": {
-                            "es": "Tipo final del Asset: text, password o encrypted.",
-                            "en": "Final Asset type: text, password, or encrypted.",
-                            "pr": "Tipo final do Asset: text, password ou encrypted."
+                            "es": "Nuevo tipo del Asset: text, password o encrypted. Déjelo vacío para conservar el tipo actual.",
+                            "en": "New Asset type: text, password, or encrypted. Leave empty to keep the current type.",
+                            "pr": "Novo tipo do Asset: text, password ou encrypted. Deixe vazio para manter o tipo atual."
                         },
                         "id": "type_",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Si queda vacío se utiliza text.",
-                            "en": "Defaults to text when empty.",
-                            "pr": "Quando vazio, usa text."
+                            "es": "Si queda vacío no se modifica.",
+                            "en": "When empty, it is not changed.",
+                            "pr": "Quando vazio, não é alterado."
                         }
                     },
                     {
@@ -2109,16 +2108,16 @@
                             "pr": "Novo valor do Asset"
                         },
                         "description": {
-                            "es": "Valor final que se almacenará en el Asset.",
-                            "en": "Final value to store in the Asset.",
-                            "pr": "Valor final que será armazenado no Asset."
+                            "es": "Nuevo valor que se almacenará en el Asset. Déjelo vacío para conservar el valor actual.",
+                            "en": "New value to store in the Asset. Leave empty to keep the current value.",
+                            "pr": "Novo valor que será armazenado no Asset. Deixe vazio para manter o valor atual."
                         },
                         "id": "value",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Debe enviarse aunque el valor no cambie.",
-                            "en": "Must be supplied even when the value does not change.",
-                            "pr": "Deve ser informado mesmo quando o valor não mudar."
+                            "es": "Si queda vacío no se modifica.",
+                            "en": "When empty, it is not changed.",
+                            "pr": "Quando vazio, não é alterado."
                         }
                     },
                     {
@@ -2134,9 +2133,9 @@
                             "pr": "Atribuir resultado a variável:"
                         },
                         "description": {
-                            "es": "Variable donde se guarda la respuesta completa devuelta por la API de NOC.",
-                            "en": "Variable that stores the complete response returned by the NOC API.",
-                            "pr": "Variável que armazena a resposta completa retornada pela API do NOC."
+                            "es": "Variable que recibe True si el Asset fue modificado correctamente.",
+                            "en": "Variable that receives True if the Asset was updated successfully.",
+                            "pr": "Variavel que recebe True se o Asset foi modificado com sucesso."
                         },
                         "help": {
                             "es": "Nombre de variable sin llaves {}.",
@@ -2151,6 +2150,94 @@
             },
             "icon": "data:image/png;base64,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",
             "module": "editData",
+            "module_name": "Orchestrator_Framework",
+            "visible": true,
+            "options": false,
+            "father": "module",
+            "group": "scripts",
+            "linux": true,
+            "windows": true,
+            "mac": true,
+            "docker": true
+        },
+        {
+            "en": {
+                "title": "Delete Asset",
+                "description": "Deletes an existing Asset by ID.",
+                "title_options": "Select an option",
+                "options": null
+            },
+            "es": {
+                "title": "Eliminar Asset",
+                "description": "Elimina un Asset existente mediante su ID.",
+                "title_options": "Seleccione una opción",
+                "options": null
+            },
+            "pr": {
+                "title": "Excluir Asset",
+                "description": "Exclui um Asset existente pelo ID.",
+                "title_options": "Selecione uma opção",
+                "options": null
+            },
+            "form": {
+                "css": "modal-lg",
+                "inputs": [
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "Id_Asset",
+                            "en": "Id_Asset",
+                            "pr": "Id_Asset"
+                        },
+                        "title": {
+                            "es": "Id del Asset:",
+                            "en": "Asset Id:",
+                            "pr": "Id do Asset:"
+                        },
+                        "description": {
+                            "es": "ID del Asset que se desea eliminar. Puede obtenerse con Obtener Asset Específico activando datos adicionales.",
+                            "en": "ID of the Asset to delete. It can be obtained from Get a Specific Asset with extra data enabled.",
+                            "pr": "ID do Asset que será excluído. Pode ser obtido com Obter Asset específico ativando os dados adicionais."
+                        },
+                        "id": "Asset_id",
+                        "css": "col-md-12",
+                        "required": true,
+                        "help": {
+                            "es": "Obligatorio; no es el nombre del Asset.",
+                            "en": "Required; this is not the Asset name.",
+                            "pr": "Obrigatório; não é o nome do Asset."
+                        }
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": {
+                            "es": "var",
+                            "en": "var",
+                            "pr": "var"
+                        },
+                        "description": {
+                            "es": "Variable que recibe True si el Asset fue eliminado correctamente.",
+                            "en": "Variable that receives True if the Asset was deleted successfully.",
+                            "pr": "Variavel que recebe True se o Asset foi excluido com sucesso."
+                        },
+                        "title": {
+                            "es": "Asignar a variable",
+                            "en": "Set to var",
+                            "pr": "Definir como variável"
+                        },
+                        "remove_vars": true,
+                        "id": "result",
+                        "css": "col-md-12",
+                        "help": {
+                            "es": "Nombre de variable sin llaves {}.",
+                            "en": "Variable name without braces {}.",
+                            "pr": "Nome da variável sem chaves {}."
+                        }
+                    }
+                ]
+            },
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ8AAACyCAYAAABcKR0IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAA8VSURBVHhe7Z1PchPJEsazJUXYu5lZzHg5cALgBM+OMPGWD58AOAFwAuMT2JwA5gQyyxdMhM0JrHeCYYvfAmZnR0iqya+72khyS6rqruquqs5fhFC3wEbq/vRl/cnKIkHoiuy/9OvjAQ1+1udCB4yIvhzQ1y/6tDdkf9JvF/y0r8+FcJgQqe+Ksu98/L/iJbqc0/z7v+n//HfxI+KLl4kiNclYmCzQyVP6eqlfjwYRX1KoSxbiZ3bH8xjcUcSXKIqIw7U6Z2f8eEjX5/rloBDx9YBCiPSBOzbvQurYDPSzkDDsfj/z4/WM6C+YDT+e6b/qFBFf70CUy8af6DcW4t4L/WIniPh6SkbZA356X4iwGycU8fWcQoTZGOEYEw765VYQ8QmabH9Ig6tPtPdWv+AdEZ+wBHdMjrkteNWGC4r4hCoewwU5FL/W514Q8QkbyE65Q/L+gn7ykngi4hM2wh2SFzPavfAhQBGfYMJjCNB1O1DEJ5iCvE+nAhTxCcZgms6lAEV8ghWFALOxizagiE+wBrMiLjohIj6hLtwJ2Rnr41qI+IQGZPufaO9Un1gj4gsKdcmPN4rogB9BZh+vgjzBulkxksncPVil9seQbj8c0N/IOM5Be2pKO1c69SlokCk9InpimyUtztcBuFn8OBsSPTykr08O6fpsUXhAn0exIg094Bmp9/rUGBFfiyhScIaXI7p5+JS+vtnmFHxTy/W6EZDt2yYiiPhaoBTdU7qG0y2F102wm0S1FldRdnxBe8bNBBGfR1ZFV7xqTmyVCWzDr4jPA7pNdzKiW27P2YtuhchKY+TDL0YdWBGfY1h05+j5cZvurWl43QT/PqseZBiYuZ+IzxEIsSyUAxbdkeOF2RF1OgowPGSyLFPE5wAW3RlCrI9iPRmpxu7ZBfxlPNaHaxHxNYBFh7Yd3O6NixBbBSpQ6cOoMHE/EV9t1KUer4uuNFlbbHM/EV8N2O1ODun6wJfbLYKqpfowOgr3Wz/vK+KzAGGW/zxCT1a/5J3Yy+Vys+G5PryHiM+cyZzmB6HWuguVjOjZulkPEZ8ZkyHdHKRSC7ltZqQqQ6+IbwvcaP4A4bXRvksVbq680odLiPg2AOE9peuXIrxmoONRteJNxLeGUnj6VGjIgAb3Qq+IrwIRnnu44/EffXiHiG8FEZ43Hq/2ekV8C4jw/DIjWkq1EvFpuEd2HqLwfJUn6wL+cv9LH+aI+AomI7oJ0vGmtOu9QmiLiPMtwt/GLzKO1w4Ycll08l6LD3O1c1JHIQuPe4nBr9u1YdHJey2+jNTL0KfM+AuSlPiYu9DbW/HxTUVaVARJAup3fZAKj/RzX8WnLttMi2pCamF38fP0Tnxo5w3p9kifBo+iLKXeLuhvmw/tvFh6tugZslMkM85XUs509KpKFbveGRb76FMrkJWhJ8cfsYBzQbArfefjzyhr4aPjgsXXLD6+P2nB9wGLri5743wYzxvRzYk+NQZrELAzI3bkYSEc84MFmG8bCmHg+FTv1nNhulLfgiRNofzy9ijsZlbhFiGPxTTmnxtjcFS/vIFcjBBg7UqdFdz1DFOibMf2QnxFwoD5EkcIDwWvC2ezg3/mNbaM0qcNUal1NpZIXnzo3Y7o1qqdN6VdiKf2jWenfNHUAdEoN3PcKPkJfyQlPgiNH+f8OEGjdkZzlLD4xSbcYpV9HcdbpXDA+m3A1fSjlOA2XxphFx0JFtpZKTR+5OtqEWbr9ED5922tMWIKX+Tav4vfx1L6UYpEKz7tcNxlv85LzLoY6kDP1m2oy/YbbBWVrPOVRCc+iA6FtLXDOa2Twr0w525TtXBmGxBswu29O2IS36RwOuf17+4o2yKOsR4uqSPYGIlCfCy6E2wZ4Nrp2qAcULWBOyv3VnqlSNDiY9GV9e+iyEBxgZ73THp8ryRk8eWFeWJ0uyasq2uSIqGKr5PCPOyyztuS3In5rA+N4PdQWdckRUIUXy68LtKeuIdpJRQT2L2Ns6X70sstCUp8aOPNaN5Zvh32zMB70KeNwQC4jXsPKOuN64HQnO+o7VBbwTv93Bh2MeMUrmJJYdab9h4IRnzsOEj07LxzoXvWjb8A/HnObXYfmtHusyzBrOUquB2cX98gxIfwVCfR0xdoc/JTEwFaV0BwOaccAX/jjyDEh/AU0roKvJf6AlSXth0mZL/0qaPBDp+PKoQgvomDzfGcA/FgVoXDJ9KztgoJ7s1PL+tskdAk+yVG+Hrm4gthARHfsPDEtwry/JDmxN/aB3zxkOjJAlOYgfnCr32suwC9cD3ub/QIjgx5jmWn4oOjcAP/F33aSwL48rfK4j3vOuxaOR4GYeEUfMOQJfwWjwb5cp2Dz9In4WnuRjQ6Fd+c5n/ow3tg3AvJnXyDTjnkXfFD6eWLcIpTfsYyxqjbSn1r62nutnDtTHyw36oBZS248Yx2v/HtGbPAXvPLle5mO4MQEj11PdC98/G3fkk0aNBjcbYWnOlIf8QZL2a7cafG4kRCh85XTOL/EB29tx3r4n/vPBFA8AdHu6URgS6d73vR07MXXckwYufjzxzMjE5b8D1fMosOOxzZKT9qt3nQZox5O1DXGTQxMKQsDOdrymqbMU5UBJVRnTFZNYtoxZcC3LH6qA/7wL1UtWjFxyFrqax+jGBKrg+hF59xSDf3XD7isJs9mNIO6uLFnoAZ8XCRKeq8Ktki6rBb9JKzMXrNEU+z3Y34p8qcVGV2eCJtvmwfU2+oixdhKE7c+daXDE6qw8FO+GJKu38h4UC/FDwjD8s1Q0JtGM9MSnyAe5Co4H6MWZNi/jRsYh6r3E6+38laZ09OfCVoD2Y16qQI7tjkeiBZ8TFIaY9iEFen4CeFIuxfvHk1YpLi4w9+FkNqfgk3E5ISH8b1uC27tQ52cuJjF0Hl+VobvXQFh6fUqlK9M2nLpia+iW3l+RBAJ0kfpsCEv/xGow3JiA/tJtv1siUYG2wyPohedQw96zZArR19uJUkxIc2RpMdw6e0e1xM1e290C8Zo2dWxtyzrrUeIy3RKqvC7EmID0Ukm63lUGUV+veYqjMVBNxyUKT9s2tmtdyPfzaRSgXq8pCuz/SJESmIr9FW9fdr4pV7qG2eqkP52mKLrB8/W8f92LWj31+taPLY72Ectfj4xqFQeKMhlQENnuvDJTZN1UGwU6IrPlzppWb75V6yprDQow67TZo80YpPD6k4mMNdXwMZ4ZQf+VRdmbrFz6/1+uFKV2RRGhd4TKH4N18Hq3beIrGKj7vz11YlyKqAoJZDbjXFv0Hq1h5/0bH2ZBPmBb1jL/7dNPLEKL68ZrM+bgRfPOf7XUCoprmF/P9HWwbXReSJSnxoXwyJag+p3MdPGdqhwao8U9cNkUJ4zSNPNOKD8DCk4ioFqbj5fmYWlNkeblG6nivhgWjE16RhW4WPkPuDzXu4FYPZ8dVpcSk8EIv4nBaQLMbv/FV+3xRO8X/zTYyuOpVr4YEBhwhnbuIDfGjX6VFtVH5fN9sxpZ3T2Np6HCXOXAsPDJB+hDKl/B+c8I0OKq+M39O5jw/tN+SuB+GWhWc9f9wxL32lqOVhF71HdJtHdJsXwM7/pnustxMwAWGPXa/18TUMv/C13TJGGA78XvMdP30m5S61+UoRzmj+hE87C8f44HXTo7aBkKsPvcICvwutEN6ABhe+Q71D+ItP3vc3ruxwoFepB3JbFyCEVwypuBce4N/fasiNTXh8ffKNtdtYVcfXZD0IUcjc4MPW5h9h9b6+cUUmCqEQpXfwOfShTrkKm6K9n6F919oi9o1DLXAfOCDcSL/kG68fvt25VPWcRReF4/H9PUN7v03hgY3OV4JhA1xIfeoFXAD+8F7XX3BvsyINqtdM+Lq/aVt0JUbiA0iu9DVM4GMAc5U2Q24soGPpctbIFuMZjpG/GsJO0qO2EXv6kg/QETLNwPGBsfjQ+2GLdl0BwFl61HayyozlPoP2aJcCNBYfyEit3THIFnRisMzO15DKIvriSluvgi4FaCW+Id06a5g2X3FmDl9ccb0NQIBDGrRe29BKfNqlXAim0Yoze6S9Z8DjKe22uiuSlfgAh8uGI9/qjc/5wlUQTmLNGG4bdsBn5UKpNjAearFhIZ2In9XvfPPzNlcbQyqr8HvBDpXYPFAwAG3xEd08bKMt7kV8IYFlj+J8drRlEkmLrwgh2VifChYMidj9/CYXWLf5YoJDSCdJoykwbSHVP2nn4/beN/6AseTQBYdv90vW+XwujewLUyKvKf/Jik9CrhNe+Rx4TrjN529pZF9A5JjSrrdhqiTFV6wSk5DrCG/ul6T4JOS6w6f78e9OC73u5Js+FRzga9YjOedra2lkn/DlfsmJT0KuN5y3/ZISHy4Of0vF+Tzgw/2SEt+MdmKrgxIZymlSbmJhV9Zp+ATZQUVtQTckIz7dHpF1Gp5RDhMOkhEfhgG4s2G1A45gj0v3SyrsjugGa4s7WwTdF1y5X1Lig/vZ7Hoo1MOV+yXW4SjKu0n49Y8L90tOfADhF1NC+lTwgAv3S1J8CL+ZwR7/QjOaul9yiQWLyMq1Vqi9TUWSzlfCwguluHmyNHG/pJ0PyCKiNlBHh3RtXcEsaecDGSlxP//U2kcueecrKZJMd/axKR9/aJTzkKk4hyju59mW1+2N+FZBmVy9K7is93CCuuTQa1Xos7fiK4Ej6jy1VyLCZti6X+/FV6JFeMwXxNtSwfSxcz8R3wq6vFsUG7eEiI37Jd/btQUXDvuO8aFkx9Qgsxj3E+dbQ9E7bnfrr1QwdT9xvjVgfrirzQ9jx9T9RHwbEAHWJdtfKI28FhHfFsoEVUnRssPE/UR8BiBBVabpbMn2MZCvTyoR8RlySNdnGMfSp4IB20rrSm/XAtm50p5NpXXF+SwoNj9UrW1gkwKb3E+czxJxP3vWuZ84nyXFRZS2nw3r3E+crwbFqi31XFH2mXvBE35eGobhi/pAET3iZ8kb1FS5n4jPM5I3WIC28uqWWiK+lihStnZOM8qcVXmKjVX3kzZfS2CmpPjmq6O+zpastv3E+ToAewBja/k+huFF9xPn6wBM12Gb/z46oG7/5ojzdQgccEiDK33aC/CFK7dVEOfrEF1Rq1cJC2hqlIXFxfkC4BPtvdWHvYBF96VufRdBEISYIfoHFr5zi0X15icAAAAASUVORK5CYII=",
+            "module": "deleteAsset",
             "module_name": "Orchestrator_Framework",
             "visible": true,
             "options": false,

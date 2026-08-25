@@ -2,7 +2,6 @@ import pandas as pd
 import json
 import sys
 import os
-import ast
 import configparser
 
 tmp_global_obj = tmp_global_obj # type: ignore
@@ -47,25 +46,36 @@ def get_process_and_instance_id(process_token, instance_key):
             return process['id'], instance['id']
     raise Exception("The specified instance does not belong to the process")
 
-def get_user_ids(user_mails):
+def get_user_mails(user_mails):
     if not user_mails or user_mails == "[]":
         return []
     if isinstance(user_mails, str):
-        try:
-            parsed = ast.literal_eval(user_mails)
-            mails = parsed if isinstance(parsed, (list, tuple)) else [parsed]
-        except (ValueError, SyntaxError):
-            mails = [mail.strip() for mail in user_mails.strip("[]").split(",")]
+        if not (user_mails.startswith("[") and user_mails.endswith("]")):
+            raise Exception(
+                "Invalid users format. Use [user1@company.com, user2@company.com] or []"
+            )
+        if "'" in user_mails or '"' in user_mails:
+            raise Exception(
+                "Invalid users format. User mails must not use quotes"
+            )
+        mails = [mail.strip() for mail in user_mails.strip("[]").split(",")]
     else:
-        mails = user_mails
-    response = configFormObject.post('/api/users/list')
+        mails = user_mails if isinstance(user_mails, (list, tuple)) else [user_mails]
+
+    mails = [str(mail).strip().replace("\\@", "@") for mail in mails]
+    return [mail for mail in mails if mail]
+
+def asset_payload_or_raise(response, result_var, default_message):
     if response.status_code != 200:
         raise Exception(configFormObject.response_error(response))
-    users = {user['email']: user['id'] for user in response.json().get('data', [])}
-    missing = [mail for mail in mails if mail not in users]
-    if missing:
-        raise Exception("Users not found in NOC: " + ", ".join(missing))
-    return [users[mail] for mail in mails]
+    payload = configFormObject.response_payload(response)
+    if result_var:
+        SetVar(result_var, payload)
+    if not isinstance(payload, dict):
+        raise Exception(default_message)
+    if payload.get('success') is not True:
+        raise Exception(payload.get('message', default_message))
+    return payload
 
 def get_process_and_instance_keys(process_id, instance_id):
     if not process_id:
@@ -90,8 +100,8 @@ if module in ('Login', 'loginNOC'):
     var_ = _first_param('result', 'var_')
     iframe = GetParams("iframe")
     try:
-        iframe = ast.literal_eval(iframe) if isinstance(iframe, str) else (iframe or {})
-    except (ValueError, SyntaxError):
+        iframe = json.loads(iframe) if isinstance(iframe, str) else (iframe or {})
+    except (ValueError, json.JSONDecodeError):
         iframe = {}
     username = _first_param("user", "email") or iframe.get("user", "")
     password = GetParams("password") or iframe.get("password", "")
@@ -230,10 +240,11 @@ if module == 'AddTransaction':
     headers = GetParams('headers')
     var_ = GetParams('result')
 
-    transaction = ast.literal_eval(transaction)
+    transaction = json.loads(transaction) if isinstance(transaction, str) else transaction
 
     try:
-        if headers and ast.literal_eval(headers):
+        headers_value = json.loads(headers) if isinstance(headers, str) else headers
+        if headers_value:
             df = pd.DataFrame(transaction[1:], columns=transaction[0])
         else:
             df = pd.DataFrame(transaction)
@@ -260,10 +271,11 @@ if module == 'AddTransactions':
     headers = GetParams('headers')
     var_ = GetParams('result')
 
-    transactions = ast.literal_eval(transactions)
+    transactions = json.loads(transactions) if isinstance(transactions, str) else transactions
 
     try:
-        if headers and ast.literal_eval(headers):
+        headers_value = json.loads(headers) if isinstance(headers, str) else headers
+        if headers_value:
             df = pd.DataFrame(transactions[1:], columns=transactions[0])
         else:
             df = pd.DataFrame(transactions)
@@ -435,16 +447,20 @@ if module == "getData":
         if process_token:
             data['process'] = process_token
         response = configFormObject.post('/api/assets/get', data=data)
-        if response.status_code != 200:
-            raise Exception(configFormObject.response_error(response))
-        payload = response.json()
-        if not payload.get('success'):
-            raise Exception(payload.get('message', 'Unknown error retrieving the asset'))
+        payload = asset_payload_or_raise(
+            response, var_, 'Unknown error retrieving the asset'
+        )
         if 'data' not in payload:
+            if var_:
+                SetVar(var_, False)
+            scope = 'global'
+            if process_token and instance_key:
+                scope = 'process "' + str(process_token) + '" and instance "' + str(instance_key) + '"'
+            elif process_token:
+                scope = 'process "' + str(process_token) + '"'
             raise Exception(
-                'Asset "' + str(name_) + '" returned no data. '
-                'The endpoint only resolves assets with scope "All" (global). '
-                'If the asset is tied to a specific process, use "Get All Assets" and filter by name.'
+                'Asset "' + str(name_) + '" was not found or is not accessible for ' + scope + '. '
+                'Verify that the Asset exists, was not deleted, and that the process/instance values are correct.'
             )
         asset = payload['data']
         if extra_data in (None, False, "False", "false", ""):
@@ -473,11 +489,9 @@ if module == "getAllData":
     extra_data = GetParams("extra_data")
     try:
         response = configFormObject.post('/api/assets/list')
-        if response.status_code != 200:
-            raise Exception(configFormObject.response_error(response))
-        payload = response.json()
-        if not payload.get('success'):
-            raise Exception(payload.get('message', 'Failed to retrieve Assets'))
+        payload = asset_payload_or_raise(
+            response, var_, 'Failed to retrieve Assets'
+        )
         if extra_data in (None, False, "False", "false", ""):
             result = [
                 {'name': asset['name'], 'value': asset['value']}
@@ -508,24 +522,78 @@ if module in ("addAsset", "editData"):
     process_token = GetParams("process_token")
     instance_key = GetParams("instance_key")
     try:
-        process_id, instance_id = get_process_and_instance_id(
-            process_token, instance_key
-        )
+        current_asset = None
+        asset_id = None
+        if module == "editData":
+            asset_id = GetParams("Asset_id")
+            if not asset_id:
+                if result_var:
+                    SetVar(result_var, False)
+                raise Exception("Asset ID is required to edit an asset")
+            try:
+                current_asset = configFormObject.get_asset_by_id(asset_id)
+            except Exception:
+                if result_var:
+                    SetVar(result_var, False)
+                raise
+
+        raw_users = GetParams("users")
+        raw_name = GetParams("name")
+        raw_type = GetParams("type_")
+        raw_value = GetParams("value")
+
+        if module == "editData" and not process_token and not instance_key:
+            process_id = current_asset.get('process_id', 0)
+            instance_id = current_asset.get('instance_id', 0)
+        else:
+            if module == "editData" and not process_token and instance_key:
+                process = current_asset.get('process')
+                process_token = process.get('token') if process else None
+            process_id, instance_id = get_process_and_instance_id(
+                process_token, instance_key
+            )
+
+        if module == "editData" and raw_users in (None, ""):
+            user_mails = configFormObject.asset_user_mails(current_asset)
+        else:
+            user_mails = get_user_mails(raw_users)
+
         data = {
-            'name': GetParams("name"),
-            'type': GetParams("type_") or "text",
-            'value': GetParams("value"),
+            'name': raw_name or (current_asset.get('name') if current_asset else None),
+            'type': raw_type or (current_asset.get('type') if current_asset else "text"),
+            'value': raw_value if raw_value not in (None, "") else (
+                current_asset.get('value') if current_asset else raw_value
+            ),
             'process_id': process_id,
             'instance_id': instance_id,
-            'users': get_user_ids(GetParams("users"))
+            'users': user_mails
         }
         endpoint = '/api/assets/add'
         if module == "editData":
-            data['id'] = GetParams("Asset_id")
+            data['id'] = asset_id
             endpoint = '/api/assets/edit'
         response = configFormObject.post(endpoint, json_data=data)
-        if response.status_code != 200:
-            raise Exception(configFormObject.response_error(response))
+        payload = asset_payload_or_raise(
+            response, result_var, 'Failed to save Asset'
+        )
+        if result_var:
+            SetVar(result_var, True)
+    except Exception as e:
+        PrintException()
+        raise e
+
+if module == "deleteAsset":
+    result_var = GetParams("result")
+    asset_id = GetParams("Asset_id")
+    try:
+        if not asset_id:
+            if result_var:
+                SetVar(result_var, False)
+            raise Exception("Asset ID is required to delete an asset")
+        response = configFormObject.post('/api/assets/delete', json_data={'id': int(asset_id)})
+        payload = asset_payload_or_raise(
+            response, result_var, 'Failed to delete Asset'
+        )
         if result_var:
             SetVar(result_var, True)
     except Exception as e:
