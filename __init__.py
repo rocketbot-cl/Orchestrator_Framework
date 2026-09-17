@@ -3,6 +3,7 @@ import json
 import sys
 import os
 import configparser
+import ast
 
 tmp_global_obj = tmp_global_obj # type: ignore
 GetParams = GetParams # type: ignore
@@ -96,17 +97,61 @@ def get_process_and_instance_keys(process_id, instance_id):
     raise Exception("The process associated with the Asset was not found")
 
 if module in ('Login', 'loginNOC'):
-    server_ = GetParams("server_url")
-    var_ = _first_param('result', 'var_')
     iframe = GetParams("iframe")
-    try:
-        iframe = json.loads(iframe) if isinstance(iframe, str) else (iframe or {})
-    except (ValueError, json.JSONDecodeError):
+    if isinstance(iframe, str):
+        iframe = iframe.strip()
+        if iframe:
+            try:
+                iframe = json.loads(iframe)
+            except (ValueError, TypeError, AttributeError):
+                try:
+                    iframe = ast.literal_eval(iframe)
+                except (ValueError, SyntaxError, TypeError):
+                    iframe = {}
+        else:
+            iframe = {}
+    elif iframe is None:
         iframe = {}
-    username = _first_param("user", "email") or iframe.get("user", "")
-    password = GetParams("password") or iframe.get("password", "")
-    api_key = GetParams("apikey") or iframe.get("apikey", "")
-    path = _first_param("path_ini", "ruta_") or iframe.get("path_ini", "")
+    elif not isinstance(iframe, dict):
+        try:
+            iframe = dict(iframe)
+        except (ValueError, TypeError):
+            iframe = {}
+
+    server_ = GetParams("server_url")
+    if server_ is None:
+        server_ = ""
+    if isinstance(server_, str):
+        server_ = server_.strip()
+        if server_.startswith("[") and "](" in server_ and server_.endswith(")"):
+            server_ = server_[server_.find("](") + 2:-1].strip()
+        if server_:
+            server_ = server_.rstrip("/") + "/"
+
+    var_ = GetParams('result') or GetParams('var_')
+    username = (
+        GetParams("user") or GetParams("email") or
+        iframe.get("user") or iframe.get("email") or ""
+    )
+    password = GetParams("password") or iframe.get("password") or ""
+    api_key = (
+        GetParams("apikey") or GetParams("apiKey") or GetParams("api_key") or
+        iframe.get("apikey") or iframe.get("apiKey") or iframe.get("api_key") or
+        GetParams("iframe.apikey") or GetParams("iframe_apikey") or
+        GetParams("commands.apikey") or GetParams("commands_apikey") or ""
+    )
+    path = (
+        GetParams("path_ini") or GetParams("ruta_") or
+        iframe.get("path_ini") or iframe.get("ruta_") or ""
+    )
+    if isinstance(username, str):
+        username = username.strip()
+    if isinstance(password, str):
+        password = password.strip()
+    if isinstance(api_key, str):
+        api_key = api_key.strip()
+    if isinstance(path, str):
+        path = path.strip()
     ignore_ssl = GetParams("ignore_ssl")
     if ignore_ssl is None:
         ignore_ssl = iframe.get("ignore_ssl", False)
