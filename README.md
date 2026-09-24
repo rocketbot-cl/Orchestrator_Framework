@@ -19,7 +19,7 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 
 
 1. Login NOC
-Authenticates with NOC and opens a session required by all other commands in this module. Supports API Key, e-mail and password, or a noc.ini file.
+Login to NOC using one of the options, API Key, noc.ini file, or credentials.
 
 2. Get Processes
 Get all processes
@@ -52,22 +52,22 @@ Send an alert message to the emails set into the Orchestrator Process
 Send custom log
 
 12. Stop Framework
-Sends NOC a stop request for a specific process instance. This command sets the stop state; it must not be confused with Should Stop Framework?, which only reads that state.
+Send order to stop the framework
 
 13. Should Stop Framework?
-Checks NOC for a pending stop request on a process instance. It does not change the state: it returns True when the instance must stop and False when it may continue.
+Check if the framework should stop
 
 14. Get a Specific Asset
-Gets an Asset by name. For process or instance Assets, provide the process token and optionally the instance key. Returns the value, or a full dictionary with extra data enabled.
+Obtains the specific asset that is indicated
 
 15. Get All Assets
-Gets every Asset available to the authenticated user. Basic mode returns name and value and creates one Rocketbot variable per Asset; extra-data mode returns a list of complete metadata.
+Get all the Assets and assign them to the corresponding variable
 
 16. Add Asset
-Creates a text, password, or encrypted Asset. Its scope is global without a process, process-level with only a token, or instance-level when an instance key is also supplied. It may optionally be associated with NOC users.
+Add an Asset to your Orchestrator
 
 17. Modify Asset
-Updates an existing Asset by ID. Empty fields keep the current Asset data; only supplied fields are changed.
+Modifies the specific asset that is indicated
 
 18. Delete Asset
 Deletes an existing Asset by ID.
