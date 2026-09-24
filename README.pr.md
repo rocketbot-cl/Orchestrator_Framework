@@ -19,7 +19,7 @@ Para instalar o módulo no Rocketbot Studio, pode ser feito de duas formas:
 
 
 1. Login NOC
-Autentica com o NOC e abre uma sessão exigida por todos os outros comandos do módulo. Suporta API Key, e-mail e senha, ou um arquivo noc.ini.
+Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenciais.
 
 2. Obter processos
 Obter todos os processos
@@ -51,23 +51,23 @@ Envie uma mensagem de alerta para os e-mails definidos no processo do orquestrad
 11. Enviar log personalizado
 Enviar log personalizado
 
-12. Parar Framework
-Envia ao NOC uma solicitação de parada para uma instância específica do processo. Este comando define o estado de parada; não deve ser confundido com Deve parar o Framework?, que apenas consulta esse estado.
+12. Parar Framework?
+Enviar ordem para parar o framework
 
 13. Deve parar o Framework?
-Consulta no NOC se uma instância do processo possui uma solicitação de parada pendente. Não altera o estado: retorna True quando a instância deve parar e False quando pode continuar.
+Verifique se o framework deve parar
 
 14. Obter Asset específico
-Obtém um Asset pelo nome. Para Assets de processo ou instância, informe o token do processo e opcionalmente a key da instância. Retorna o valor, ou um dicionário completo com os dados adicionais habilitados.
+Obtém o ativo específico indicado
 
 15. Obter todos os Assets
-Obtém todos os Assets disponíveis para o usuário autenticado. No modo básico retorna nome e valor e cria uma variável Rocketbot por Asset; com dados adicionais retorna uma lista de metadados completos.
+Obtém todos os Assets e os atribui a variável correspondente
 
 16. Adicionar Asset
-Cria um Asset de texto, senha ou criptografado. O escopo será global sem processo, de processo somente com o token ou de instância quando também for informada a key. Opcionalmente pode ser associado a usuários do NOC.
+Adiciona um Asset ao seu Orquestrador
 
-17. Modificar Asset
-Atualiza um Asset existente pelo ID. Campos vazios mantêm os dados atuais do Asset; somente os campos informados são alterados.
+17. Modifica o ativo específico
+Modifica o ativo específico indicado
 
 18. Excluir Asset
 Exclui um Asset existente pelo ID.

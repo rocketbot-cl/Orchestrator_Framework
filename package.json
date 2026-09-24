@@ -26,19 +26,19 @@
         {
             "en": {
                 "title": "Login NOC",
-                "description": "Authenticates with NOC and opens a session required by all other commands in this module. Supports API Key, e-mail and password, or a noc.ini file.",
-                "title_options": "Select an option",
+                "description": "Login to NOC using one of the options, API Key, noc.ini file, or credentials.",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "Login NOC",
-                "description": "Autentica con NOC y abre una sesión requerida por todos los demás comandos del módulo. Soporta API Key, e-mail y contraseña, o un archivo noc.ini.",
+                "description": "Inicie sesión en NOC utilizando una de las opciones, API Key, archivo noc.ini o credenciales.",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Login NOC",
-                "description": "Autentica com o NOC e abre uma sessão exigida por todos os outros comandos do módulo. Suporta API Key, e-mail e senha, ou um arquivo noc.ini.",
+                "description": "Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenciais.",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -54,9 +54,9 @@
                             "pr": "URL Servidor"
                         },
                         "description": {
-                            "es": "URL base del servidor NOC. Es obligatoria salvo que esté definida dentro del archivo noc.ini.",
-                            "en": "Base URL of the NOC server. Required unless it is defined in the noc.ini file.",
-                            "pr": "URL base do servidor NOC. Obrigatória, exceto quando definida no arquivo noc.ini."
+                            "es": "URL del servidor a donde se conecta",
+                            "en": "Server URL",
+                            "pr": "URL do servidor para se conectar"
                         },
                         "help": {
                             "es": "Ejemplo: https://roc.myrb.io/",
@@ -1234,19 +1234,19 @@
         {
             "en": {
                 "title": "Stop Framework",
-                "description": "Sends NOC a stop request for a specific process instance. This command sets the stop state; it must not be confused with Should Stop Framework?, which only reads that state.",
-                "title_options": "Select an option",
+                "description": "Send order to stop the framework",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "Detener Framework",
-                "description": "Envía a NOC una solicitud de detención para una instancia concreta del proceso. Este comando establece el estado de detención; no debe confundirse con ¿Debe detenerse el Framework?, que solamente consulta ese estado.",
+                "description": "Enviar orden para detener el framework",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
-                "title": "Parar Framework",
-                "description": "Envia ao NOC uma solicitação de parada para uma instância específica do processo. Este comando define o estado de parada; não deve ser confundido com Deve parar o Framework?, que apenas consulta esse estado.",
+                "title": "Parar Framework?",
+                "description": "Enviar ordem para parar o framework",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1256,9 +1256,9 @@
                     {
                         "type": "input",
                         "description": {
-                            "es": "Key de la instancia del proceso que debe detenerse.",
-                            "en": "Key of the process instance that must stop.",
-                            "pr": "Key da instância do processo que deve parar."
+                            "es": "ID de la instancia del proceso a detener",
+                            "en": "ID of the process instance to stop",
+                            "pr": "ID da instância do processo a ser parada"
                         },
                         "placeholder": "a2f64d5d9988c",
                         "title": {
@@ -1278,9 +1278,9 @@
                         "type": "input",
                         "placeholder": "LGPS8DYPJCAVECEF",
                         "description": {
-                            "es": "Token del proceso cuya instancia recibirá la solicitud de detención.",
-                            "en": "Token of the process whose instance will receive the stop request.",
-                            "pr": "Token do processo cuja instância receberá a solicitação de parada."
+                            "es": "Token del proceso a detener",
+                            "en": "Token of the process to stop",
+                            "pr": "Token do processo a ser parado"
                         },
                         "title": {
                             "es": "Process Token",
@@ -1298,9 +1298,9 @@
                     {
                         "type": "input",
                         "description": {
-                            "es": "Variable que recibe True cuando NOC registra correctamente la solicitud y False cuando la operación falla.",
-                            "en": "Variable that receives True when NOC registers the request successfully and False when it fails.",
-                            "pr": "Variável que recebe True quando o NOC registra a solicitação e False quando a operação falha."
+                            "en": "Variable to store result",
+                            "es": "Variable donde guardar el resultado",
+                            "pr": "Variável para guardar o resultado"
                         },
                         "placeholder": "Variable",
                         "title": {
@@ -1335,19 +1335,19 @@
         {
             "en": {
                 "title": "Should Stop Framework?",
-                "description": "Checks NOC for a pending stop request on a process instance. It does not change the state: it returns True when the instance must stop and False when it may continue.",
-                "title_options": "Select an option",
+                "description": "Check if the framework should stop",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "¿Debe detenerse el Framework?",
-                "description": "Consulta en NOC si una instancia del proceso tiene una solicitud de detención pendiente. No cambia el estado: devuelve True cuando la instancia debe detenerse y False cuando puede continuar.",
+                "description": "Verifica si el framework debe detenerse",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Deve parar o Framework?",
-                "description": "Consulta no NOC se uma instância do processo possui uma solicitação de parada pendente. Não altera o estado: retorna True quando a instância deve parar e False quando pode continuar.",
+                "description": "Verifique se o framework deve parar",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1357,9 +1357,9 @@
                     {
                         "type": "input",
                         "description": {
-                            "es": "Key de la instancia cuyo estado de detención se desea consultar.",
-                            "en": "Key of the instance whose stop state will be checked.",
-                            "pr": "Key da instância cujo estado de parada será consultado."
+                            "es": "Variable donde debe ingresarse la instancia del proceso",
+                            "en": "Variable where the process instance must be entered",
+                            "pr": "Variável onde a instância do processo deve ser inserida"
                         },
                         "placeholder": "a2f64d5d9988c",
                         "title": {
@@ -1379,9 +1379,9 @@
                         "type": "input",
                         "placeholder": "LGPS8DYPJCAVECEF",
                         "description": {
-                            "es": "Token del proceso al que pertenece la instancia.",
-                            "en": "Token of the process that owns the instance.",
-                            "pr": "Token do processo proprietário da instância."
+                            "es": "Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no",
+                            "en": "Variable where the token of the process to be checked if it should stop or not must be entered",
+                            "pr": "Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido"
                         },
                         "title": {
                             "es": "Process Token",
@@ -1399,9 +1399,9 @@
                     {
                         "type": "input",
                         "description": {
-                            "es": "Variable booleana: True indica que el Framework debe detenerse; False indica que puede continuar.",
-                            "en": "Boolean variable: True means the Framework must stop; False means it may continue.",
-                            "pr": "Variável booleana: True indica que o Framework deve parar; False indica que pode continuar."
+                            "en": "Variable to store result",
+                            "es": "Variable donde guardar el resultado",
+                            "pr": "Variável para guardar o resultado"
                         },
                         "placeholder": "Variable",
                         "title": {
@@ -1436,19 +1436,19 @@
         {
             "en": {
                 "title": "Get a Specific Asset",
-                "description": "Gets an Asset by name. For process or instance Assets, provide the process token and optionally the instance key. Returns the value, or a full dictionary with extra data enabled.",
-                "title_options": "Select an option",
+                "description": "Obtains the specific asset that is indicated",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "Obtener Asset Específico",
-                "description": "Obtiene un Asset por nombre. Para Assets de proceso o instancia, indique el token del proceso y opcionalmente la key de instancia. Devuelve el valor, o un diccionario completo si se activan los datos adicionales.",
+                "description": "Obtiene el asset especifico que se le indique",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Obter Asset específico",
-                "description": "Obtém um Asset pelo nome. Para Assets de processo ou instância, informe o token do processo e opcionalmente a key da instância. Retorna o valor, ou um dicionário completo com os dados adicionais habilitados.",
+                "description": "Obtém o ativo específico indicado",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1468,9 +1468,9 @@
                             "pr": "Nome do Asset"
                         },
                         "description": {
-                            "es": "Nombre exacto del Asset que se desea consultar.",
-                            "en": "Exact name of the Asset to retrieve.",
-                            "pr": "Nome exato do Asset que será consultado."
+                            "es": "Nombre del asset a obtener",
+                            "en": "Name of the asset to get",
+                            "pr": "Nome do asset a ser obtido"
                         },
                         "id": "name",
                         "css": "col-md-6",
@@ -1493,14 +1493,14 @@
                             "pr": "Token do processo"
                         },
                         "help": {
-                            "es": "No es obligatorio indicar una instancia para consultar un Asset de proceso.",
-                            "en": "An instance is not required for a process-scoped Asset.",
-                            "pr": "Não é obrigatório informar uma instância para um Asset de processo."
+                            "es": "Dejar en blanco si es un Asset global",
+                            "en": "Leave blank if it is global Asset",
+                            "pr": "Deixe em branco se for um ativo global"
                         },
                         "description": {
-                            "es": "Token del proceso propietario del Asset. Déjelo vacío para consultar un Asset global.",
-                            "en": "Token of the process that owns the Asset. Leave empty for a global Asset.",
-                            "pr": "Token do processo proprietário do Asset. Deixe vazio para um Asset global."
+                            "es": "Token del proceso. Si se especifica, hay que tambien especificar la key de instancia.",
+                            "en": "Process token. If specified, you also need to specify the instance key.",
+                            "pr": "Token do processo. Se especificado, você também precisa especificar a chave da instância."
                         },
                         "id": "process_token",
                         "css": "col-md-6"
@@ -1518,16 +1518,16 @@
                             "pr": "Key de Instância"
                         },
                         "description": {
-                            "es": "Key de la instancia propietaria del Asset. Requiere un token de proceso; si el login utiliza noc.ini y queda vacío, se usa la key configurada en ese archivo.",
-                            "en": "Key of the instance that owns the Asset. Requires a process token; when login uses noc.ini and this is empty, the key from that file is used.",
-                            "pr": "Key da instância proprietária do Asset. Requer um token de processo; quando o login usa noc.ini e o campo fica vazio, é usada a key desse arquivo."
+                            "es": "Key de instancia del proceso",
+                            "en": "Instance key of the process",
+                            "pr": "Key de instância do processo"
                         },
                         "id": "instance_key",
                         "css": "col-md-12",
                         "help": {
-                            "es": "Déjelo vacío para Assets globales o asociados solamente al proceso.",
-                            "en": "Leave empty for global or process-only Assets.",
-                            "pr": "Deixe vazio para Assets globais ou associados somente ao processo."
+                            "es": "Dejar en blanco si es un Asset global",
+                            "en": "Leave blank if it is global Asset",
+                            "pr": "Deixe em branco se for um ativo global"
                         }
                     },
                     {
@@ -1543,9 +1543,9 @@
                             "pr": "Obter dados extras:"
                         },
                         "description": {
-                            "es": "Si está marcado, devuelve todos los metadatos del Asset; si no, devuelve solamente su valor.",
-                            "en": "When selected, returns all Asset metadata; otherwise returns only its value.",
-                            "pr": "Quando marcado, retorna todos os metadados do Asset; caso contrário, retorna somente o valor."
+                            "es": "Marca para obtener datos extra de los Assets",
+                            "en": "Check to obtain extra data from the Assets",
+                            "pr": "Marque para obter dados extras dos Assets"
                         },
                         "id": "extra_data",
                         "css": "col-md-6",
@@ -1568,9 +1568,9 @@
                             "pr": "Atribuir resultado a variável:"
                         },
                         "description": {
-                            "es": "Variable donde se guarda el valor del Asset o el diccionario de metadatos, según la opción seleccionada.",
-                            "en": "Variable that stores the Asset value or metadata dictionary, depending on the selected option.",
-                            "pr": "Variável que armazena o valor do Asset ou o dicionário de metadados, conforme a opção selecionada."
+                            "es": "Variable donde se guardara el resultado. Nombre de variable sin llaves {}",
+                            "en": "Variable where the result will be saved. Name of variable without {}",
+                            "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "help": {
                             "es": "Nombre de variable sin llaves {}.",
@@ -1598,19 +1598,19 @@
         {
             "en": {
                 "title": "Get All Assets",
-                "description": "Gets every Asset available to the authenticated user. Basic mode returns name and value and creates one Rocketbot variable per Asset; extra-data mode returns a list of complete metadata.",
-                "title_options": "Select an option",
+                "description": "Get all the Assets and assign them to the corresponding variable",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "Obtener Todos los Assets",
-                "description": "Obtiene todos los Assets accesibles para el usuario autenticado. En modo básico devuelve nombre y valor y crea una variable Rocketbot por cada Asset; con datos adicionales devuelve una lista de metadatos completos.",
+                "description": "Obtiene todos los Assets y los asigna a la variable correspondiente",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Obter todos os Assets",
-                "description": "Obtém todos os Assets disponíveis para o usuário autenticado. No modo básico retorna nome e valor e cria uma variável Rocketbot por Asset; com dados adicionais retorna uma lista de metadados completos.",
+                "description": "Obtém todos os Assets e os atribui a variável correspondente",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1630,9 +1630,9 @@
                             "pr": "Atribua resultado à Variável:"
                         },
                         "description": {
-                            "es": "Variable donde se guarda la lista resultante.",
-                            "en": "Variable that stores the resulting list.",
-                            "pr": "Variável que armazena a lista resultante."
+                            "es": "Variable donde se guardara el resultado. Nombre de variable sin llaves {}",
+                            "en": "Variable where the result will be saved. Name of variable without {}",
+                            "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "help": {
                             "es": "Nombre de variable sin llaves {}.",
@@ -1656,17 +1656,12 @@
                             "pr": "Obter dados extras:"
                         },
                         "description": {
-                            "es": "Si está marcado, cada elemento incluye ID, tipo, valor, token de proceso, key de instancia y usuarios. Si no, devuelve name/value y también crea variables con el nombre de cada Asset.",
-                            "en": "When selected, each item includes ID, type, value, process token, instance key, and users. Otherwise it returns name/value and also creates variables named after each Asset.",
-                            "pr": "Quando marcado, cada item inclui ID, tipo, valor, token do processo, key da instância e usuários. Caso contrário, retorna name/value e também cria variáveis com o nome de cada Asset."
+                            "es": "Marca para obtener datos extra de los Assets",
+                            "en": "Check to obtain extra data from the Assets",
+                            "pr": "Marque para obter dados extras dos Assets"
                         },
                         "id": "extra_data",
-                        "css": "col-md-6",
-                        "help": {
-                            "es": "La creación automática de variables ocurre únicamente sin datos adicionales.",
-                            "en": "Automatic variable creation occurs only without extra data.",
-                            "pr": "A criação automática de variáveis ocorre somente sem dados adicionais."
-                        }
+                        "css": "col-md-6"
                     }
                 ]
             },
@@ -1685,19 +1680,19 @@
         {
             "en": {
                 "title": "Add Asset",
-                "description": "Creates a text, password, or encrypted Asset. Its scope is global without a process, process-level with only a token, or instance-level when an instance key is also supplied. It may optionally be associated with NOC users.",
-                "title_options": "Select an option",
+                "description": "Add an Asset to your Orchestrator",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "Agregar Asset",
-                "description": "Crea un Asset de tipo texto, contraseña o cifrado. Su alcance será global si no se indica proceso, de proceso si se indica solo el token, o de instancia si también se indica la key. Opcionalmente puede asociarse a usuarios de NOC.",
+                "description": "Agrega un Asset a tu Orquestador",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
                 "title": "Adicionar Asset",
-                "description": "Cria um Asset de texto, senha ou criptografado. O escopo será global sem processo, de processo somente com o token ou de instância quando também for informada a key. Opcionalmente pode ser associado a usuários do NOC.",
+                "description": "Adiciona um Asset ao seu Orquestrador",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1717,9 +1712,9 @@
                             "pr": "Nome do Asset"
                         },
                         "description": {
-                            "es": "Nombre del nuevo Asset. Debe respetar las reglas de unicidad configuradas en NOC.",
-                            "en": "Name of the new Asset. It must follow the uniqueness rules configured in NOC.",
-                            "pr": "Nome do novo Asset. Deve respeitar as regras de unicidade configuradas no NOC."
+                            "es": "Nombre del Asset a agregar",
+                            "en": "Name of the Asset to add",
+                            "pr": "Nome do Asset a ser adicionado"
                         },
                         "id": "name",
                         "css": "col-md-6",
@@ -1742,14 +1737,14 @@
                             "pr": "Token do processo"
                         },
                         "description": {
-                            "es": "Token del proceso al que pertenecerá el Asset. Si queda vacío, se crea un Asset global.",
-                            "en": "Token of the process that will own the Asset. When empty, a global Asset is created.",
-                            "pr": "Token do processo proprietário do Asset. Quando vazio, é criado um Asset global."
+                            "es": "Token del proceso al que se le agregara el Asset",
+                            "en": "Process Token to which the Asset will be added",
+                            "pr": "Token do processo ao qual o Asset será adicionado"
                         },
                         "help": {
-                            "es": "Puede utilizarse sin key de instancia para crear un Asset de proceso.",
-                            "en": "May be used without an instance key to create a process-scoped Asset.",
-                            "pr": "Pode ser usado sem key de instância para criar um Asset de processo."
+                            "es": "Dejar en blanco si es un Asset global",
+                            "en": "Leave blank if it is global Asset",
+                            "pr": "Deixe em branco se for um ativo global"
                         },
                         "id": "process_token",
                         "css": "col-md-6"
@@ -1767,14 +1762,14 @@
                             "pr": "Key de Instância"
                         },
                         "description": {
-                            "es": "Key de la instancia a la que pertenecerá el Asset. Solo es válida cuando también se informa el token del proceso.",
-                            "en": "Key of the instance that will own the Asset. Valid only when a process token is also supplied.",
-                            "pr": "Key da instância proprietária do Asset. Válida somente quando também é informado o token do processo."
+                            "es": "Key de la instancia al que se le agregara el Asset",
+                            "en": "Instance Key to which the Asset will be added",
+                            "pr": "Key da instância ao qual o Asset será adicionado"
                         },
                         "help": {
-                            "es": "Déjela vacía para Assets globales o de proceso.",
-                            "en": "Leave empty for global or process-scoped Assets.",
-                            "pr": "Deixe vazio para Assets globais ou de processo."
+                            "es": "Dejar en blanco si es un Asset para todas las instancias",
+                            "en": "Leave blank if it is an Asset for all instances",
+                            "pr": "Deixe em branco se for um ativo para todas as instâncias"
                         },
                         "id": "instance_key",
                         "css": "col-md-6"
@@ -1782,9 +1777,9 @@
                     {
                         "type": "input",
                         "placeholder": {
-                            "es": "[usuario1@mail.com, usuario2@mail.com]",
-                            "en": "[user1@company.com, user2@company.com]",
-                            "pr": "[usuario1@empresa.com, usuario2@empresa.com]"
+                            "es": "[usuario1@mail.com, usuario2@mail.com, ...]",
+                            "en": "[usuario1@mail.com, usuario2@mail.com, ...]",
+                            "pr": "[usuario1@mail.com, usuario2@mail.com, ...]"
                         },
                         "title": {
                             "es": "Mail de usuarios:",
@@ -1792,14 +1787,14 @@
                             "pr": "Mails dos usuários"
                         },
                         "description": {
-                            "es": "Lista de e-mails de usuarios de NOC que tendrán acceso al Asset. Escríbalos sin comillas, entre corchetes y separados por coma.",
-                            "en": "List of NOC user e-mail addresses that will have access to the Asset. Write them without quotes, inside brackets, separated by commas.",
-                            "pr": "Lista de e-mails de usuários do NOC que terão acesso ao Asset. Escreva sem aspas, entre colchetes e separados por vírgula."
+                            "es": "Lista de mails de usuarios a los que se agregará el Asset. Dejar en blanco si es un Asset para todos los usuarios",
+                            "en": "List of user emails to add to the Asset. Leave blank if it is an Asset for all users.",
+                            "pr": "Lista de e-mails de usuários aos quais o Asset será adicionado. Deixar em branco se for um Asset para todos os usuários."
                         },
                         "help": {
-                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Déjela vacía o use [] para no asociar usuarios.",
-                            "en": "Single format: [user1@company.com, user2@company.com]. Leave empty or use [] to associate no users.",
-                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Deixe vazio ou use [] para não associar usuários."
+                            "es": "Formato único: [usuario1@mail.com, usuario2@mail.com, ...]. Dejar en blanco si es un Asset de todos los usuarios",
+                            "en": "Single format: [user1@mail.com, user2@mail.com, ...]. Leave blank if it is an Asset for all users.",
+                            "pr": "Formato único: [usuario1@mail.com, usuario2@mail.com, ...]. Deixar em branco se for um Asset para todos os usuários."
                         },
                         "id": "users",
                         "css": "col-md-6"
@@ -1831,17 +1826,12 @@
                             "pr": "Tipo do Asset"
                         },
                         "description": {
-                            "es": "Tipo de almacenamiento del Asset: text para texto general, password para contraseñas o encrypted para contenido cifrado.",
-                            "en": "Asset storage type: text for general text, password for passwords, or encrypted for encrypted content.",
-                            "pr": "Tipo de armazenamento do Asset: text para texto geral, password para senhas ou encrypted para conteúdo criptografado."
+                            "es": "Tipo del Asset a agregar",
+                            "en": "Type of the Asset to add",
+                            "pr": "Tipo do Asset a ser adicionado"
                         },
                         "id": "type_",
-                        "css": "col-md-6",
-                        "help": {
-                            "es": "Si queda vacío se utiliza text.",
-                            "en": "Defaults to text when empty.",
-                            "pr": "Quando vazio, usa text."
-                        }
+                        "css": "col-md-6"
                     },
                     {
                         "type": "input",
@@ -1856,17 +1846,12 @@
                             "pr": "Valor do Asset"
                         },
                         "description": {
-                            "es": "Valor que se almacenará en el Asset.",
-                            "en": "Value to store in the Asset.",
-                            "pr": "Valor que será armazenado no Asset."
+                            "es": "Valor del Asset a agregar",
+                            "en": "Value of the Asset to add",
+                            "pr": "Valor do Asset a ser adicionado"
                         },
                         "id": "value",
-                        "css": "col-md-6",
-                        "help": {
-                            "es": "El tratamiento visual y de seguridad depende del tipo seleccionado.",
-                            "en": "Display and security treatment depend on the selected type.",
-                            "pr": "A exibição e o tratamento de segurança dependem do tipo selecionado."
-                        }
+                        "css": "col-md-6"
                     },
                     {
                         "type": "input",
@@ -1881,9 +1866,9 @@
                             "pr": "Atribuir resultado a variável:"
                         },
                         "description": {
-                            "es": "Variable que recibe True si el Asset fue creado correctamente.",
-                            "en": "Variable that receives True if the Asset was created successfully.",
-                            "pr": "Variavel que recebe True se o Asset foi criado com sucesso."
+                            "es": "Variable donde se guardara el resultado. Nombre de variable sin llaves {}",
+                            "en": "Variable where the result will be saved. Name of variable without {}",
+                            "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "help": {
                             "es": "Nombre de variable sin llaves {}.",
@@ -1911,19 +1896,19 @@
         {
             "en": {
                 "title": "Modify Asset",
-                "description": "Updates an existing Asset by ID. Empty fields keep the current Asset data; only supplied fields are changed.",
-                "title_options": "Select an option",
+                "description": "Modifies the specific asset that is indicated",
+                "title_options": "Select Option",
                 "options": null
             },
             "es": {
                 "title": "Modificar Asset",
-                "description": "Actualiza un Asset existente mediante su ID. Los campos vacíos conservan los datos actuales del Asset; solo se modifican los campos informados.",
+                "description": "Modifica el asset especifico que se le indique",
                 "title_options": "Seleccione una opción",
                 "options": null
             },
             "pr": {
-                "title": "Modificar Asset",
-                "description": "Atualiza um Asset existente pelo ID. Campos vazios mantêm os dados atuais do Asset; somente os campos informados são alterados.",
+                "title": "Modifica o ativo específico",
+                "description": "Modifica o ativo específico indicado",
                 "title_options": "Selecione uma opção",
                 "options": null
             },
@@ -1943,9 +1928,9 @@
                             "pr": "Id do Asset:"
                         },
                         "description": {
-                            "es": "ID del Asset que se desea modificar. Puede obtenerse con Obtener Asset Específico activando datos adicionales.",
-                            "en": "ID of the Asset to update. It can be obtained from Get a Specific Asset with extra data enabled.",
-                            "pr": "ID do Asset que será modificado. Pode ser obtido com Obter Asset específico ativando os dados adicionais."
+                            "es": "Id del Asset a modificar",
+                            "en": "Id of the Asset to modify",
+                            "pr": "Id do Asset a ser modificado"
                         },
                         "id": "Asset_id",
                         "css": "col-md-6",
@@ -1969,9 +1954,9 @@
                             "pr": "Novo nome do Asset"
                         },
                         "description": {
-                            "es": "Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual.",
-                            "en": "New Asset name. Leave empty to keep the current name.",
-                            "pr": "Novo nome do Asset. Deixe vazio para manter o nome atual."
+                            "es": "Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual.Si existe otro Asset con el mismo nombre, no se podra modificar el asset",
+                            "en": "New Asset name. Leave empty to keep the current name. If there is another Asset with the same name, the asset cannot be modified",
+                            "pr": "Novo nome do Asset. Deixe vazio para manter o nome atual. Se existir outro Asset com o mesmo nome, o asset não poderá ser modificado."
                         },
                         "id": "name",
                         "css": "col-md-6",
@@ -1994,14 +1979,14 @@
                             "pr": "Novo token do processo"
                         },
                         "description": {
-                            "es": "Nuevo token del proceso propietario. Déjelo vacío para conservar el proceso actual.",
-                            "en": "New owner process token. Leave empty to keep the current process.",
-                            "pr": "Novo token do processo proprietário. Deixe vazio para manter o processo atual."
+                            "es": "Token del proceso que tendrá el Asset",
+                            "en": "Token of the process that the Asset will have",
+                            "pr": "Token do processo que o Asset terá"
                         },
                         "help": {
-                            "es": "Puede indicarse sin instancia para asignar el Asset al proceso completo.",
-                            "en": "May be supplied without an instance to assign the Asset to the whole process.",
-                            "pr": "Pode ser informado sem instância para atribuir o Asset ao processo inteiro."
+                            "es": "Dejar en blanco si es un Asset global",
+                            "en": "Leave blank if it is global Asset",
+                            "pr": "Deixe em branco se for um ativo global"
                         },
                         "id": "process_token",
                         "css": "col-md-6"
@@ -2019,14 +2004,14 @@
                             "pr": "Nova key da instância"
                         },
                         "description": {
-                            "es": "Nueva key de la instancia propietaria. Déjela vacía para conservar la instancia actual.",
-                            "en": "New owner instance key. Leave empty to keep the current instance.",
-                            "pr": "Nova key da instância proprietária. Deixe vazia para manter a instância atual."
+                            "es": "Key de la instancia que tendrá el Asset",
+                            "en": "Instance Key that the Asset will have",
+                            "pr": "Key da instância que o Asset terá"
                         },
                         "help": {
-                            "es": "Si informa un nuevo token sin key, el Asset queda asociado al proceso completo.",
-                            "en": "When a new token is supplied without a key, the Asset is assigned to the whole process.",
-                            "pr": "Quando um novo token é informado sem key, o Asset fica associado ao processo inteiro."
+                            "es": "Dejar en blanco si es un Asset para todas las instancias",
+                            "en": "Leave blank if it is an Asset for all instances",
+                            "pr": "Deixe em branco se for um ativo para todas as instâncias"
                         },
                         "id": "instance_key",
                         "css": "col-md-6"
@@ -2034,9 +2019,9 @@
                     {
                         "type": "input",
                         "placeholder": {
-                            "es": "[usuario1@mail.com, usuario2@mail.com]",
-                            "en": "[user1@company.com, user2@company.com]",
-                            "pr": "[usuario1@empresa.com, usuario2@empresa.com]"
+                            "es": "[usuario1@mail.com, usuario2@mail.com, ...]",
+                            "en": "[usuario1@mail.com, usuario2@mail.com, ...]",
+                            "pr": "[usuario1@mail.com, usuario2@mail.com, ...]"
                         },
                         "title": {
                             "es": "Nuevos mails de usuarios:",
@@ -2044,14 +2029,14 @@
                             "pr": "Novos mails dos usuários"
                         },
                         "description": {
-                            "es": "Nueva lista de e-mails de usuarios asociados. Escríbalos sin comillas, entre corchetes y separados por coma. Déjela vacía para conservar los usuarios actuales.",
-                            "en": "New list of associated user e-mail addresses. Write them without quotes, inside brackets, separated by commas. Leave empty to keep the current users.",
-                            "pr": "Nova lista de e-mails de usuários associados. Escreva sem aspas, entre colchetes e separados por vírgula. Deixe vazia para manter os usuários atuais."
+                            "es": "Lista de Mails de usuarios que tendrán el Asset. Usar [] si es un Asset de todos los usuarios.",
+                            "en": "List of user Mails who will have the Asset. Use [] if it is an Asset for all users.",
+                            "pr": "Lista de Mails dos usuários que terão o Asset. Usar [] se for um Asset para todos os usuários." 
                         },
                         "help": {
-                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Use [] para quitar todos los usuarios.",
-                            "en": "Single format: [user1@company.com, user2@company.com]. Use [] to remove all users.",
-                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Use [] para remover todos os usuários."
+                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Usar [] si es un Asset de todos los usuarios. Dejar en blanco si quieres mantener a todos los usuarios actuales.",
+                            "en": "Single format: [user1@company.com, user2@company.com]. Use [] if it is an Asset for all users. Leave blank if you want to keep all current users.",
+                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Usar [] se for um Asset para todos os usuários. Deixar em branco se quiser manter todos os usuários atuais."
                         },
                         "id": "users",
                         "css": "col-md-6"
@@ -2083,16 +2068,16 @@
                             "pr": "Novo tipo do Asset"
                         },
                         "description": {
-                            "es": "Nuevo tipo del Asset: text, password o encrypted. Déjelo vacío para conservar el tipo actual.",
-                            "en": "New Asset type: text, password, or encrypted. Leave empty to keep the current type.",
-                            "pr": "Novo tipo do Asset: text, password ou encrypted. Deixe vazio para manter o tipo atual."
+                            "es": "Nuevo tipo del Asset a modificar",
+                            "en": "New type of the Asset to modify",
+                            "pr": "Novo tipo do Asset a ser modificado"
                         },
                         "id": "type_",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Si queda vacío no se modifica.",
-                            "en": "When empty, it is not changed.",
-                            "pr": "Quando vazio, não é alterado."
+                            "es": "Dejar vacío no se modifica.",
+                            "en": "Leave empty to keep the current type.",
+                            "pr": "Deixe vazio para manter o tipo atual."
                         }
                     },
                     {
@@ -2108,16 +2093,16 @@
                             "pr": "Novo valor do Asset"
                         },
                         "description": {
-                            "es": "Nuevo valor que se almacenará en el Asset. Déjelo vacío para conservar el valor actual.",
-                            "en": "New value to store in the Asset. Leave empty to keep the current value.",
-                            "pr": "Novo valor que será armazenado no Asset. Deixe vazio para manter o valor atual."
+                            "es": "Nuevo valor del Asset a modificar",
+                            "en": "New value of the Asset to modify",
+                            "pr": "Novo valor do Asset a ser modificado"
                         },
                         "id": "value",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Si queda vacío no se modifica.",
-                            "en": "When empty, it is not changed.",
-                            "pr": "Quando vazio, não é alterado."
+                            "es": "Dejar vacío no se modifica.",
+                            "en": "Leave empty to keep the current value.",
+                            "pr": "Deixe vazio para manter o valor atual."
                         }
                     },
                     {
@@ -2133,9 +2118,9 @@
                             "pr": "Atribuir resultado a variável:"
                         },
                         "description": {
-                            "es": "Variable que recibe True si el Asset fue modificado correctamente.",
-                            "en": "Variable that receives True if the Asset was updated successfully.",
-                            "pr": "Variavel que recebe True se o Asset foi modificado com sucesso."
+                            "es": "Variable donde se guardara el resultado. Nombre de variable sin llaves {}",
+                            "en": "Variable where the result will be saved. Name of variable without {}",
+                            "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "help": {
                             "es": "Nombre de variable sin llaves {}.",
@@ -2195,9 +2180,9 @@
                             "pr": "Id do Asset:"
                         },
                         "description": {
-                            "es": "ID del Asset que se desea eliminar. Puede obtenerse con Obtener Asset Específico activando datos adicionales.",
-                            "en": "ID of the Asset to delete. It can be obtained from Get a Specific Asset with extra data enabled.",
-                            "pr": "ID do Asset que será excluído. Pode ser obtido com Obter Asset específico ativando os dados adicionais."
+                            "es": "ID del Asset que se desea eliminar.",
+                            "en": "ID of the Asset to delete.",
+                            "pr": "ID do Asset que será excluído."
                         },
                         "id": "Asset_id",
                         "css": "col-md-12",
@@ -2211,14 +2196,14 @@
                     {
                         "type": "input",
                         "placeholder": {
-                            "es": "var",
-                            "en": "var",
-                            "pr": "var"
+                            "es": "Variable",
+                            "en": "Variable",
+                            "pr": "Variável"
                         },
                         "description": {
-                            "es": "Variable que recibe True si el Asset fue eliminado correctamente.",
-                            "en": "Variable that receives True if the Asset was deleted successfully.",
-                            "pr": "Variavel que recebe True se o Asset foi excluido com sucesso."
+                            "es": "Variable donde se guardara el resultado. Nombre de variable sin llaves {}",
+                            "en": "Variable where the result will be saved. Name of variable without {}",
+                            "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "title": {
                             "es": "Asignar a variable",

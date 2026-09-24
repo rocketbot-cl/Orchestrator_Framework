@@ -19,7 +19,7 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 
 
 1. Login NOC
-Autentica con NOC y abre una sesión requerida por todos los demás comandos del módulo. Soporta API Key, e-mail y contraseña, o un archivo noc.ini.
+Inicie sesión en NOC utilizando una de las opciones, API Key, archivo noc.ini o credenciales.
 
 2. Obtener procesos
 Obtener todos los procesos
@@ -52,22 +52,22 @@ Envia un mensaje de alerta a los correos electrónicos configurados en el proces
 Enviar log personalizado
 
 12. Detener Framework
-Envía a NOC una solicitud de detención para una instancia concreta del proceso. Este comando establece el estado de detención; no debe confundirse con ¿Debe detenerse el Framework?, que solamente consulta ese estado.
+Enviar orden para detener el framework
 
 13. ¿Debe detenerse el Framework?
-Consulta en NOC si una instancia del proceso tiene una solicitud de detención pendiente. No cambia el estado: devuelve True cuando la instancia debe detenerse y False cuando puede continuar.
+Verifica si el framework debe detenerse
 
 14. Obtener Asset Específico
-Obtiene un Asset por nombre. Para Assets de proceso o instancia, indique el token del proceso y opcionalmente la key de instancia. Devuelve el valor, o un diccionario completo si se activan los datos adicionales.
+Obtiene el asset especifico que se le indique
 
 15. Obtener Todos los Assets
-Obtiene todos los Assets accesibles para el usuario autenticado. En modo básico devuelve nombre y valor y crea una variable Rocketbot por cada Asset; con datos adicionales devuelve una lista de metadatos completos.
+Obtiene todos los Assets y los asigna a la variable correspondiente
 
 16. Agregar Asset
-Crea un Asset de tipo texto, contraseña o cifrado. Su alcance será global si no se indica proceso, de proceso si se indica solo el token, o de instancia si también se indica la key. Opcionalmente puede asociarse a usuarios de NOC.
+Agrega un Asset a tu Orquestador
 
 17. Modificar Asset
-Actualiza un Asset existente mediante su ID. Los campos vacíos conservan los datos actuales del Asset; solo se modifican los campos informados.
+Modifica el asset especifico que se le indique
 
 18. Eliminar Asset
 Elimina un Asset existente mediante su ID.
