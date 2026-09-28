@@ -31,25 +31,25 @@ def _first_param(*names):
             return value
     return None
 
-def _clean_param(value):
+def clean_param(value):
     if isinstance(value, str):
         value = value.strip()
     return value or None
 
-def _get_login_proxies(iframe):
-    proxy_url = _clean_param(
+def get_login_proxies(iframe):
+    proxy_url = clean_param(
         GetParams("proxy_url") or iframe.get("proxy_url")
     )
-    proxy_protocol = _clean_param(
+    proxy_protocol = clean_param(
         GetParams("proxy_protocol") or iframe.get("proxy_protocol")
     ) or "https"
     if proxy_url:
         return {proxy_protocol.lower(): proxy_url}
 
-    http_proxy = _clean_param(
+    http_proxy = clean_param(
         GetParams("http_proxy") or iframe.get("http_proxy")
     )
-    https_proxy = _clean_param(
+    https_proxy = clean_param(
         GetParams("https_proxy") or iframe.get("https_proxy")
     )
     if not http_proxy and not https_proxy:
@@ -61,15 +61,15 @@ def _get_login_proxies(iframe):
         proxies["https"] = https_proxy
     return proxies
 
-def _parse_proxy_config(proxy_value):
-    proxy_value = _clean_param(proxy_value)
+def parse_proxy_config(proxy_value):
+    proxy_value = clean_param(proxy_value)
     if not proxy_value:
         return None
     if isinstance(proxy_value, dict):
         return {
             str(protocol).strip().lower(): str(url).strip()
             for protocol, url in proxy_value.items()
-            if protocol and _clean_param(url)
+            if protocol and clean_param(url)
         } or None
     if not isinstance(proxy_value, str):
         return None
@@ -94,18 +94,18 @@ def _parse_proxy_config(proxy_value):
             break
     if not isinstance(proxy_config, dict):
         raise Exception("Invalid proxy format in noc.ini. Use {'http': 'http://user:pass@host:port'}")
-    return _parse_proxy_config(proxy_config)
+    return parse_proxy_config(proxy_config)
 
-def _get_ini_proxies(path):
+def get_ini_proxies(path):
     if not path:
         return None
     ini_config = configparser.ConfigParser()
     ini_config.read(path)
     if not ini_config.has_option('NOC', 'proxy'):
         return None
-    return _parse_proxy_config(ini_config.get('NOC', 'proxy'))
+    return parse_proxy_config(ini_config.get('NOC', 'proxy'))
 
-def _merge_proxies(base_proxies, override_proxies):
+def merge_proxies(base_proxies, override_proxies):
     if not base_proxies:
         return override_proxies
     if not override_proxies:
@@ -241,7 +241,7 @@ if module in ('Login', 'loginNOC'):
     if isinstance(ignore_ssl, str):
         ignore_ssl = ignore_ssl.lower() == "true"
     verify_ssl = not ignore_ssl
-    proxies = _get_login_proxies(iframe)
+    proxies = get_login_proxies(iframe)
     instance_key_ini = None
     try:
         if path:
@@ -249,7 +249,7 @@ if module in ('Login', 'loginNOC'):
             if not ini_config.read(path):
                 raise Exception("Could not read the noc.ini file: " + path)
             instance_key_ini = ini_config.get('USER', 'key', fallback=None)
-            proxies = _merge_proxies(_get_ini_proxies(path), proxies)
+            proxies = merge_proxies(get_ini_proxies(path), proxies)
         if not ((username and password) or api_key or path):
             raise Exception("Please provide an API Key, credentials, or a noc.ini file")
         orchestrator_service = OrchestatorCommon(
