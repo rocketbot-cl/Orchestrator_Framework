@@ -85,9 +85,9 @@
                             "pr": "Proxy"
                         },
                         "description": {
-                            "es": "URL del proxy con protocolo http:// o https://. Déjelo vacío para usar la configuración del ambiente.",
-                            "en": "Proxy URL with http:// or https:// protocol. Leave empty to use the environment configuration.",
-                            "pr": "URL do proxy com protocolo http:// ou https://. Deixe vazio para usar a configuração do ambiente."
+                            "es": "URL opcional del proxy con protocolo http:// o https://.",
+                            "en": "Optional proxy URL with http:// or https:// protocol.",
+                            "pr": "URL opcional do proxy com protocolo http:// ou https://."
                         },
                         "help": {
                             "es": "Opcional. Incluya el protocolo. Ejemplo: http://usuario:clave@proxy.company.com:8080. Si usa noc.ini, puede definirlo en [NOC] como proxy={\"http\":\"http://usuario:clave@host:puerto\"}.",
