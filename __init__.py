@@ -159,7 +159,6 @@ if module in ('Login', 'loginNOC'):
     verify_ssl = not ignore_ssl
     proxy_params = {
         "proxy_url": GetParams("proxy_url"),
-        "proxy_protocol": GetParams("proxy_protocol"),
         "http_proxy": GetParams("http_proxy"),
         "https_proxy": GetParams("https_proxy")
     }

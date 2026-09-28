@@ -42,11 +42,13 @@ class OrchestatorCommon:
         proxy_url = OrchestatorCommon.clean_param(
             params.get("proxy_url") or iframe.get("proxy_url")
         )
-        proxy_protocol = OrchestatorCommon.clean_param(
-            params.get("proxy_protocol") or iframe.get("proxy_protocol")
-        ) or "https"
         if proxy_url:
-            return {proxy_protocol.lower(): proxy_url}
+            proxy_url_lower = proxy_url.lower()
+            if proxy_url_lower.startswith("http://"):
+                return {"http": proxy_url}
+            if proxy_url_lower.startswith("https://"):
+                return {"https": proxy_url}
+            raise Exception("Proxy URL must start with http:// or https://")
 
         http_proxy = OrchestatorCommon.clean_param(
             params.get("http_proxy") or iframe.get("http_proxy")

@@ -77,43 +77,6 @@
                         "style": "height:165px;"
                     },
                     {
-                        "type": "select",
-                        "title": {
-                            "es": "Protocolo Proxy",
-                            "en": "Proxy Protocol",
-                            "pr": "Protocolo Proxy"
-                        },
-                        "description": {
-                            "es": "Protocolo al que aplica el proxy configurado.",
-                            "en": "Protocol where the configured proxy applies.",
-                            "pr": "Protocolo ao qual o proxy configurado se aplica."
-                        },
-                        "id": "proxy_protocol",
-                        "css": "col-md-4",
-                        "default": "",
-                        "options": [
-                            {
-                                "title": "HTTPS",
-                                "value": "https"
-                            },
-                            {
-                                "title": "HTTP",
-                                "value": "http"
-                            }
-                        ],
-                        "required": false,
-                        "placeholder": {
-                            "es": "Seleccione una opción",
-                            "en": "Select an option",
-                            "pr": "Selecione uma opção"
-                        },
-                        "help": {
-                            "es": "Opcional. Seleccione solo si configura el campo Proxy manualmente.",
-                            "en": "Optional. Select only when setting the Proxy field manually.",
-                            "pr": "Opcional. Selecione somente ao configurar o campo Proxy manualmente."
-                        }
-                    },
-                    {
                         "type": "input",
                         "placeholder": "http://proxy.company.com:8080",
                         "title": {
@@ -122,17 +85,17 @@
                             "pr": "Proxy"
                         },
                         "description": {
-                            "es": "URL del proxy. Déjelo vacío para usar la configuración del ambiente.",
-                            "en": "Proxy URL. Leave empty to use the environment configuration.",
-                            "pr": "URL do proxy. Deixe vazio para usar a configuração do ambiente."
+                            "es": "URL del proxy con protocolo http:// o https://. Déjelo vacío para usar la configuración del ambiente.",
+                            "en": "Proxy URL with http:// or https:// protocol. Leave empty to use the environment configuration.",
+                            "pr": "URL do proxy com protocolo http:// ou https://. Deixe vazio para usar a configuração do ambiente."
                         },
                         "help": {
-                            "es": "Opcional. Ejemplo: http://usuario:clave@proxy.company.com:8080. Si usa noc.ini, puede definirlo en [NOC] como proxy={\"http\":\"http://usuario:clave@host:puerto\"}.",
-                            "en": "Optional. Example: http://user:password@proxy.company.com:8080. With noc.ini, set it in [NOC] as proxy={\"http\":\"http://user:password@host:port\"}.",
-                            "pr": "Opcional. Exemplo: http://usuario:senha@proxy.company.com:8080. Com noc.ini, defina em [NOC] como proxy={\"http\":\"http://usuario:senha@host:porta\"}."
+                            "es": "Opcional. Incluya el protocolo. Ejemplo: http://usuario:clave@proxy.company.com:8080. Si usa noc.ini, puede definirlo en [NOC] como proxy={\"http\":\"http://usuario:clave@host:puerto\"}.",
+                            "en": "Optional. Include the protocol. Example: http://user:password@proxy.company.com:8080. With noc.ini, set it in [NOC] as proxy={\"http\":\"http://user:password@host:port\"}.",
+                            "pr": "Opcional. Inclua o protocolo. Exemplo: http://usuario:senha@proxy.company.com:8080. Com noc.ini, defina em [NOC] como proxy={\"http\":\"http://usuario:senha@host:porta\"}."
                         },
                         "id": "proxy_url",
-                        "css": "col-md-8",
+                        "css": "col-md-12",
                         "data_type": "str",
                         "default": null,
                         "required": false
