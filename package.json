@@ -93,10 +93,6 @@
                         "default": "",
                         "options": [
                             {
-                                "title": "None",
-                                "value": ""
-                            },
-                            {
                                 "title": "HTTPS",
                                 "value": "https"
                             },
