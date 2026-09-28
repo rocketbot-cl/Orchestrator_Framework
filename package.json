@@ -59,9 +59,9 @@
                             "pr": "URL do servidor para se conectar"
                         },
                         "help": {
-                            "es": "Ejemplo: https://roc.myrb.io/",
-                            "en": "Example: https://roc.myrb.io/",
-                            "pr": "Exemplo: https://roc.myrb.io/"
+                            "es": "Opcional si usa noc.ini con server configurado. Requerido para API Key o credenciales sin noc.ini.",
+                            "en": "Optional when using noc.ini with server set. Required for API Key or credentials without noc.ini.",
+                            "pr": "Opcional ao usar noc.ini com server configurado. Obrigatório para API Key ou credenciais sem noc.ini."
                         },
                         "id": "server_url",
                         "css": "col-md-12",
@@ -75,6 +75,71 @@
                         "src": "index.html",
                         "css": "col-md-12",
                         "style": "height:165px;"
+                    },
+                    {
+                        "type": "select",
+                        "title": {
+                            "es": "Protocolo Proxy",
+                            "en": "Proxy Protocol",
+                            "pr": "Protocolo Proxy"
+                        },
+                        "description": {
+                            "es": "Protocolo al que aplica el proxy configurado.",
+                            "en": "Protocol where the configured proxy applies.",
+                            "pr": "Protocolo ao qual o proxy configurado se aplica."
+                        },
+                        "id": "proxy_protocol",
+                        "css": "col-md-4",
+                        "default": "",
+                        "options": [
+                            {
+                                "title": "None",
+                                "value": ""
+                            },
+                            {
+                                "title": "HTTPS",
+                                "value": "https"
+                            },
+                            {
+                                "title": "HTTP",
+                                "value": "http"
+                            }
+                        ],
+                        "required": false,
+                        "placeholder": {
+                            "es": "Seleccione una opción",
+                            "en": "Select an option",
+                            "pr": "Selecione uma opção"
+                        },
+                        "help": {
+                            "es": "Opcional. Seleccione solo si configura el campo Proxy manualmente.",
+                            "en": "Optional. Select only when setting the Proxy field manually.",
+                            "pr": "Opcional. Selecione somente ao configurar o campo Proxy manualmente."
+                        }
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": "http://proxy.company.com:8080",
+                        "title": {
+                            "es": "Proxy",
+                            "en": "Proxy",
+                            "pr": "Proxy"
+                        },
+                        "description": {
+                            "es": "URL del proxy. Déjelo vacío para usar la configuración del ambiente.",
+                            "en": "Proxy URL. Leave empty to use the environment configuration.",
+                            "pr": "URL do proxy. Deixe vazio para usar a configuração do ambiente."
+                        },
+                        "help": {
+                            "es": "Opcional. Ejemplo: http://usuario:clave@proxy.company.com:8080. Si usa noc.ini, puede definirlo en [NOC] como proxy={\"http\":\"http://usuario:clave@host:puerto\"}.",
+                            "en": "Optional. Example: http://user:password@proxy.company.com:8080. With noc.ini, set it in [NOC] as proxy={\"http\":\"http://user:password@host:port\"}.",
+                            "pr": "Opcional. Exemplo: http://usuario:senha@proxy.company.com:8080. Com noc.ini, defina em [NOC] como proxy={\"http\":\"http://usuario:senha@host:porta\"}."
+                        },
+                        "id": "proxy_url",
+                        "css": "col-md-8",
+                        "data_type": "str",
+                        "default": null,
+                        "required": false
                     },
                     {
                         "title": {
@@ -91,9 +156,9 @@
                         "id": "ignore_ssl",
                         "type": "checkbox",
                         "help": {
-                            "es": "Utilice esta opción únicamente en entornos controlados.",
-                            "en": "Use this option only in controlled environments.",
-                            "pr": "Use esta opção somente em ambientes controlados."
+                            "es": "Opcional. Use solo en entornos controlados.",
+                            "en": "Optional. Use only in controlled environments.",
+                            "pr": "Opcional. Use somente em ambientes controlados."
                         }
                     },
                     {
@@ -117,9 +182,9 @@
                         "id": "result",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Nombre de variable sin llaves {}.",
-                            "en": "Variable name without braces {}.",
-                            "pr": "Nome da variável sem chaves {}."
+                            "es": "Opcional. Nombre de variable sin llaves {} para guardar True o False.",
+                            "en": "Optional. Variable name without braces {} to store True or False.",
+                            "pr": "Opcional. Nome da variável sem chaves {} para salvar True ou False."
                         }
                     }
                 ]
@@ -2031,7 +2096,7 @@
                         "description": {
                             "es": "Lista de Mails de usuarios que tendrán el Asset. Usar [] si es un Asset de todos los usuarios.",
                             "en": "List of user Mails who will have the Asset. Use [] if it is an Asset for all users.",
-                            "pr": "Lista de Mails dos usuários que terão o Asset. Usar [] se for um Asset para todos os usuários." 
+                            "pr": "Lista de Mails dos usuários que terão o Asset. Usar [] se for um Asset para todos os usuários."
                         },
                         "help": {
                             "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Usar [] si es un Asset de todos los usuarios. Dejar en blanco si quieres mantener a todos los usuarios actuales.",
