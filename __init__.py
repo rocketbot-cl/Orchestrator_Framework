@@ -2,7 +2,6 @@ import pandas as pd
 import json
 import sys
 import os
-import configparser
 import ast
 
 tmp_global_obj = tmp_global_obj # type: ignore
@@ -30,89 +29,6 @@ def _first_param(*names):
         if value not in (None, ""):
             return value
     return None
-
-def clean_param(value):
-    if isinstance(value, str):
-        value = value.strip()
-    return value or None
-
-def get_login_proxies(iframe):
-    proxy_url = clean_param(
-        GetParams("proxy_url") or iframe.get("proxy_url")
-    )
-    proxy_protocol = clean_param(
-        GetParams("proxy_protocol") or iframe.get("proxy_protocol")
-    ) or "https"
-    if proxy_url:
-        return {proxy_protocol.lower(): proxy_url}
-
-    http_proxy = clean_param(
-        GetParams("http_proxy") or iframe.get("http_proxy")
-    )
-    https_proxy = clean_param(
-        GetParams("https_proxy") or iframe.get("https_proxy")
-    )
-    if not http_proxy and not https_proxy:
-        return None
-    proxies = {}
-    if http_proxy:
-        proxies["http"] = http_proxy
-    if https_proxy:
-        proxies["https"] = https_proxy
-    return proxies
-
-def parse_proxy_config(proxy_value):
-    proxy_value = clean_param(proxy_value)
-    if not proxy_value:
-        return None
-    if isinstance(proxy_value, dict):
-        return {
-            str(protocol).strip().lower(): str(url).strip()
-            for protocol, url in proxy_value.items()
-            if protocol and clean_param(url)
-        } or None
-    if not isinstance(proxy_value, str):
-        return None
-
-    normalized_proxy = (
-        proxy_value
-        .replace("\\:", ":")
-        .replace("\\/", "/")
-        .replace("\\@", "@")
-    )
-    proxy_candidates = [normalized_proxy]
-    if not normalized_proxy.startswith("{") and normalized_proxy.endswith("}"):
-        proxy_candidates.append("{" + normalized_proxy)
-    for candidate in proxy_candidates:
-        for parser in (json.loads, ast.literal_eval):
-            try:
-                proxy_config = parser(candidate)
-                break
-            except (ValueError, SyntaxError, TypeError):
-                proxy_config = None
-        if isinstance(proxy_config, dict):
-            break
-    if not isinstance(proxy_config, dict):
-        raise Exception("Invalid proxy format in noc.ini. Use {'http': 'http://user:pass@host:port'}")
-    return parse_proxy_config(proxy_config)
-
-def get_ini_proxies(path):
-    if not path:
-        return None
-    ini_config = configparser.ConfigParser()
-    ini_config.read(path)
-    if not ini_config.has_option('NOC', 'proxy'):
-        return None
-    return parse_proxy_config(ini_config.get('NOC', 'proxy'))
-
-def merge_proxies(base_proxies, override_proxies):
-    if not base_proxies:
-        return override_proxies
-    if not override_proxies:
-        return base_proxies
-    merged_proxies = dict(base_proxies)
-    merged_proxies.update(override_proxies)
-    return merged_proxies
 
 def get_process_and_instance_id(process_token, instance_key):
     if not process_token:
@@ -241,21 +157,24 @@ if module in ('Login', 'loginNOC'):
     if isinstance(ignore_ssl, str):
         ignore_ssl = ignore_ssl.lower() == "true"
     verify_ssl = not ignore_ssl
-    proxies = get_login_proxies(iframe)
+    proxy_params = {
+        "proxy_url": GetParams("proxy_url"),
+        "proxy_protocol": GetParams("proxy_protocol"),
+        "http_proxy": GetParams("http_proxy"),
+        "https_proxy": GetParams("https_proxy")
+    }
+    proxies = OrchestatorCommon.get_login_proxies(proxy_params, iframe)
     instance_key_ini = None
     try:
-        if path:
-            ini_config = configparser.ConfigParser()
-            if not ini_config.read(path):
-                raise Exception("Could not read the noc.ini file: " + path)
-            instance_key_ini = ini_config.get('USER', 'key', fallback=None)
-            proxies = merge_proxies(get_ini_proxies(path), proxies)
         if not ((username and password) or api_key or path):
             raise Exception("Please provide an API Key, credentials, or a noc.ini file")
         orchestrator_service = OrchestatorCommon(
             server=server_, user=username, password=password,
             ini_path=path, apikey=api_key
         )
+        if path:
+            instance_key_ini = orchestrator_service.instance
+            proxies = OrchestatorCommon.merge_proxies(orchestrator_service.proxies, proxies)
         token = orchestrator_service.get_authorization_token(
             proxies=proxies, verify=verify_ssl
         )
