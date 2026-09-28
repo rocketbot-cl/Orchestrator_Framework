@@ -31,6 +31,89 @@ def _first_param(*names):
             return value
     return None
 
+def _clean_param(value):
+    if isinstance(value, str):
+        value = value.strip()
+    return value or None
+
+def _get_login_proxies(iframe):
+    proxy_url = _clean_param(
+        GetParams("proxy_url") or iframe.get("proxy_url")
+    )
+    proxy_protocol = _clean_param(
+        GetParams("proxy_protocol") or iframe.get("proxy_protocol")
+    ) or "https"
+    if proxy_url:
+        return {proxy_protocol.lower(): proxy_url}
+
+    http_proxy = _clean_param(
+        GetParams("http_proxy") or iframe.get("http_proxy")
+    )
+    https_proxy = _clean_param(
+        GetParams("https_proxy") or iframe.get("https_proxy")
+    )
+    if not http_proxy and not https_proxy:
+        return None
+    proxies = {}
+    if http_proxy:
+        proxies["http"] = http_proxy
+    if https_proxy:
+        proxies["https"] = https_proxy
+    return proxies
+
+def _parse_proxy_config(proxy_value):
+    proxy_value = _clean_param(proxy_value)
+    if not proxy_value:
+        return None
+    if isinstance(proxy_value, dict):
+        return {
+            str(protocol).strip().lower(): str(url).strip()
+            for protocol, url in proxy_value.items()
+            if protocol and _clean_param(url)
+        } or None
+    if not isinstance(proxy_value, str):
+        return None
+
+    normalized_proxy = (
+        proxy_value
+        .replace("\\:", ":")
+        .replace("\\/", "/")
+        .replace("\\@", "@")
+    )
+    proxy_candidates = [normalized_proxy]
+    if not normalized_proxy.startswith("{") and normalized_proxy.endswith("}"):
+        proxy_candidates.append("{" + normalized_proxy)
+    for candidate in proxy_candidates:
+        for parser in (json.loads, ast.literal_eval):
+            try:
+                proxy_config = parser(candidate)
+                break
+            except (ValueError, SyntaxError, TypeError):
+                proxy_config = None
+        if isinstance(proxy_config, dict):
+            break
+    if not isinstance(proxy_config, dict):
+        raise Exception("Invalid proxy format in noc.ini. Use {'http': 'http://user:pass@host:port'}")
+    return _parse_proxy_config(proxy_config)
+
+def _get_ini_proxies(path):
+    if not path:
+        return None
+    ini_config = configparser.ConfigParser()
+    ini_config.read(path)
+    if not ini_config.has_option('NOC', 'proxy'):
+        return None
+    return _parse_proxy_config(ini_config.get('NOC', 'proxy'))
+
+def _merge_proxies(base_proxies, override_proxies):
+    if not base_proxies:
+        return override_proxies
+    if not override_proxies:
+        return base_proxies
+    merged_proxies = dict(base_proxies)
+    merged_proxies.update(override_proxies)
+    return merged_proxies
+
 def get_process_and_instance_id(process_token, instance_key):
     if not process_token:
         if instance_key:
