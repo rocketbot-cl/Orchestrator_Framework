@@ -1719,8 +1719,8 @@
                         "id": "name",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Obligatorio.",
-                            "en": "Required.",
+                            "es": "Obligatorio. Solo letras y números (A-Z, a-z, 0-9), mínimo 3 caracteres.",
+                            "en": "Required. Letters and numbers only (A-Z, a-z, 0-9), at least 3 characters.",
                             "pr": "Obrigatório."
                         }
                     },
@@ -1961,8 +1961,8 @@
                         "id": "name",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Si se informa, debe tener al menos 3 caracteres.",
-                            "en": "When supplied, it must have at least 3 characters.",
+                            "es": "Si se informa, debe tener al menos 3 caracteres. Solo letras y números (A-Z, a-z, 0-9).",
+                            "en": "When supplied, it must have at least 3 characters. Letters and numbers only (A-Z, a-z, 0-9).",
                             "pr": "Quando informado, deve ter pelo menos 3 caracteres."
                         }
                     },

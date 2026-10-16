@@ -4,6 +4,7 @@ import sys
 import os
 import configparser
 import ast
+import re
 
 tmp_global_obj = tmp_global_obj # type: ignore
 GetParams = GetParams # type: ignore
@@ -65,6 +66,18 @@ def get_user_mails(user_mails):
 
     mails = [str(mail).strip().replace("\\@", "@") for mail in mails]
     return [mail for mail in mails if mail]
+
+def validate_asset_name(name, required):
+    if not name:
+        if required:
+            raise Exception("Asset name is required")
+        return
+    if not re.fullmatch(r'[A-Za-z0-9]+', name):
+        raise Exception(
+            "Asset name must contain only letters and numbers (A-Z, a-z, 0-9): " + name
+        )
+    if len(name) < 3:
+        raise Exception("Asset name must have at least 3 characters")
 
 def asset_payload_or_raise(response, result_var, default_message):
     if response.status_code != 200:
@@ -567,6 +580,9 @@ if module in ("addAsset", "editData"):
     process_token = GetParams("process_token")
     instance_key = GetParams("instance_key")
     try:
+        raw_name = GetParams("name")
+        validate_asset_name(raw_name, required=(module == "addAsset"))
+
         current_asset = None
         asset_id = None
         if module == "editData":
@@ -583,7 +599,6 @@ if module in ("addAsset", "editData"):
                 raise
 
         raw_users = GetParams("users")
-        raw_name = GetParams("name")
         raw_type = GetParams("type_")
         raw_value = GetParams("value")
 
@@ -624,6 +639,8 @@ if module in ("addAsset", "editData"):
         if result_var:
             SetVar(result_var, True)
     except Exception as e:
+        if result_var:
+            SetVar(result_var, False)
         PrintException()
         raise e
 
