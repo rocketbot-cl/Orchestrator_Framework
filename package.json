@@ -1787,14 +1787,14 @@
                             "pr": "Mails dos usuários"
                         },
                         "description": {
-                            "es": "Lista de mails de usuarios a los que se agregará el Asset. Dejar en blanco si es un Asset para todos los usuarios",
-                            "en": "List of user emails to add to the Asset. Leave blank if it is an Asset for all users.",
-                            "pr": "Lista de e-mails de usuários aos quais o Asset será adicionado. Deixar em branco se for um Asset para todos os usuários."
+                            "es": "Lista de mails de usuarios a los que se agregará el Asset. Dejar vacío si el Asset no tiene usuarios vinculados",
+                            "en": "List of user emails to add to the Asset. Leave empty if the Asset has no linked users.",
+                            "pr": "Lista de e-mails de usuários aos quais o Asset será adicionado. Deixar vazio se o Asset não tiver usuários vinculados."
                         },
                         "help": {
-                            "es": "Formato único: [usuario1@mail.com, usuario2@mail.com, ...]. Dejar en blanco si es un Asset de todos los usuarios",
-                            "en": "Single format: [user1@mail.com, user2@mail.com, ...]. Leave blank if it is an Asset for all users.",
-                            "pr": "Formato único: [usuario1@mail.com, usuario2@mail.com, ...]. Deixar em branco se for um Asset para todos os usuários."
+                            "es": "Formato único: [usuario1@mail.com, usuario2@mail.com, ...]. Dejar vacío si el Asset no tiene usuarios vinculados.",
+                            "en": "Single format: [user1@mail.com, user2@mail.com, ...]. Leave empty if the Asset has no linked users.",
+                            "pr": "Formato único: [usuario1@mail.com, usuario2@mail.com, ...]. Deixar vazio se o Asset não tiver usuários vinculados."
                         },
                         "id": "users",
                         "css": "col-md-6"
@@ -1954,7 +1954,7 @@
                             "pr": "Novo nome do Asset"
                         },
                         "description": {
-                            "es": "Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual.Si existe otro Asset con el mismo nombre, no se podra modificar el asset",
+                            "es": "Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual. Si existe otro Asset con el mismo nombre, no se podrá modificar el asset",
                             "en": "New Asset name. Leave empty to keep the current name. If there is another Asset with the same name, the asset cannot be modified",
                             "pr": "Novo nome do Asset. Deixe vazio para manter o nome atual. Se existir outro Asset com o mesmo nome, o asset não poderá ser modificado."
                         },
@@ -1984,9 +1984,9 @@
                             "pr": "Token do processo que o Asset terá"
                         },
                         "help": {
-                            "es": "Dejar en blanco si es un Asset global",
-                            "en": "Leave blank if it is global Asset",
-                            "pr": "Deixe em branco se for um ativo global"
+                            "es": "Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.",
+                            "en": "Leave empty to keep the current process. Type NONE to remove the process (and the instance). Empty for a global Asset when creating.",
+                            "pr": "Deixe vazio para manter o processo atual. Digite NONE para remover o processo (e a instância). Vazio para um Asset global ao criar."
                         },
                         "id": "process_token",
                         "css": "col-md-6"
@@ -2009,9 +2009,9 @@
                             "pr": "Key da instância que o Asset terá"
                         },
                         "help": {
-                            "es": "Dejar en blanco si es un Asset para todas las instancias",
-                            "en": "Leave blank if it is an Asset for all instances",
-                            "pr": "Deixe em branco se for um ativo para todas as instâncias"
+                            "es": "Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).",
+                            "en": "Leave empty to keep the current instance. Type NONE to remove the instance (the process is kept).",
+                            "pr": "Deixe vazio para manter a instância atual. Digite NONE para remover a instância (o processo é mantido)."
                         },
                         "id": "instance_key",
                         "css": "col-md-6"
@@ -2029,14 +2029,14 @@
                             "pr": "Novos mails dos usuários"
                         },
                         "description": {
-                            "es": "Lista de Mails de usuarios que tendrán el Asset. Usar [] si es un Asset de todos los usuarios.",
-                            "en": "List of user Mails who will have the Asset. Use [] if it is an Asset for all users.",
-                            "pr": "Lista de Mails dos usuários que terão o Asset. Usar [] se for um Asset para todos os usuários." 
+                            "es": "Lista de Mails de usuarios que tendrán el Asset. Escriba NONE para quitar todos los usuarios.",
+                            "en": "List of user Mails who will have the Asset. Type NONE to remove all users.",
+                            "pr": "Lista de Mails dos usuários que terão o Asset. Digite NONE para remover todos os usuários."
                         },
                         "help": {
-                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Usar [] si es un Asset de todos los usuarios. Dejar en blanco si quieres mantener a todos los usuarios actuales.",
-                            "en": "Single format: [user1@company.com, user2@company.com]. Use [] if it is an Asset for all users. Leave blank if you want to keep all current users.",
-                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Usar [] se for um Asset para todos os usuários. Deixar em branco se quiser manter todos os usuários atuais."
+                            "es": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Escriba NONE para quitar todos los usuarios. Dejar vacío para mantener los usuarios actuales.",
+                            "en": "Single format: [user1@company.com, user2@company.com]. Type NONE to remove all users. Leave empty to keep the current users.",
+                            "pr": "Formato único: [usuario1@empresa.com, usuario2@empresa.com]. Digite NONE para remover todos os usuários. Deixar vazio para manter os usuários atuais."
                         },
                         "id": "users",
                         "css": "col-md-6"

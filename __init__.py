@@ -49,23 +49,32 @@ def get_process_and_instance_id(process_token, instance_key):
     raise Exception("The specified instance does not belong to the process")
 
 def get_user_mails(user_mails):
-    if not user_mails or user_mails == "[]":
+    mail_pattern = r'[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}'
+    if not user_mails:
         return []
     if isinstance(user_mails, str):
-        if not (user_mails.startswith("[") and user_mails.endswith("]")):
+        text = user_mails.strip()
+        if not (text.startswith("[") and text.endswith("]")):
             raise Exception(
-                "Invalid users format. Use [user1@company.com, user2@company.com] or []"
+                "Invalid users format. Use [user1@company.com, user2@company.com]"
             )
-        if "'" in user_mails or '"' in user_mails:
+        if "'" in text or '"' in text:
             raise Exception(
                 "Invalid users format. User mails must not use quotes"
             )
-        mails = [mail.strip() for mail in user_mails.strip("[]").split(",")]
+        if not text[1:-1].strip():
+            raise Exception(
+                "Invalid users format. Enter at least one user mail between brackets"
+            )
+        mails = [mail.strip() for mail in text[1:-1].split(",")]
     else:
         mails = user_mails if isinstance(user_mails, (list, tuple)) else [user_mails]
 
     mails = [str(mail).strip().replace("\\@", "@") for mail in mails]
-    return [mail for mail in mails if mail]
+    for mail in mails:
+        if not re.fullmatch(mail_pattern, mail):
+            raise Exception("Invalid user mail: '" + mail + "'")
+    return mails
 
 def validate_asset_name(name, required):
     if not name:
@@ -580,6 +589,7 @@ if module in ("addAsset", "editData"):
     process_token = GetParams("process_token")
     instance_key = GetParams("instance_key")
     try:
+        is_none = lambda value: isinstance(value, str) and value.strip().upper() == 'NONE'
         raw_name = GetParams("name")
         validate_asset_name(raw_name, required=(module == "addAsset"))
 
@@ -602,21 +612,36 @@ if module in ("addAsset", "editData"):
         raw_type = GetParams("type_")
         raw_value = GetParams("value")
 
-        if module == "editData" and not process_token and not instance_key:
-            process_id = current_asset.get('process_id', 0)
-            instance_id = current_asset.get('instance_id', 0)
-        else:
-            if module == "editData" and not process_token and instance_key:
-                process = current_asset.get('process')
-                process_token = process.get('token') if process else None
-            process_id, instance_id = get_process_and_instance_id(
-                process_token, instance_key
-            )
-
         if module == "editData" and raw_users in (None, ""):
             user_mails = configFormObject.asset_user_mails(current_asset)
+        elif module == "editData" and is_none(raw_users):
+            user_mails = []
         else:
             user_mails = get_user_mails(raw_users)
+
+        if module == "editData":
+            if is_none(process_token):
+                if instance_key and not is_none(instance_key):
+                    raise Exception("An instance cannot be specified without a process")
+                process_id, instance_id = 0, 0
+            elif process_token:
+                process_id, instance_id = get_process_and_instance_id(
+                    process_token, None if is_none(instance_key) else instance_key
+                )
+            elif is_none(instance_key):
+                process_id, instance_id = current_asset.get('process_id', 0), 0
+            elif instance_key:
+                process = current_asset.get('process')
+                current_token = process.get('token') if process else None
+                process_id, instance_id = get_process_and_instance_id(current_token, instance_key)
+            else:
+                process_id = current_asset.get('process_id', 0)
+                instance_id = current_asset.get('instance_id', 0)
+        else:
+            process_id, instance_id = get_process_and_instance_id(
+                None if is_none(process_token) else process_token,
+                None if is_none(instance_key) else instance_key
+            )
 
         data = {
             'name': raw_name or (current_asset.get('name') if current_asset else None),

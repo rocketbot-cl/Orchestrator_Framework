@@ -168,7 +168,7 @@ Agrega un Asset a tu Orquestador
 |Nombre de Asset|Nombre del Asset a agregar|NuevoAsset|
 |Token del proceso|Token del proceso al que se le agregara el Asset|27FEXKIXFRFDUNVD|
 |Key de Instancia|Key de la instancia al que se le agregara el Asset|6241c3a1dd96f8f92f|
-|Mail de usuarios|Lista de mails de usuarios a los que se agregará el Asset. Dejar en blanco si es un Asset para todos los usuarios|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Mail de usuarios|Lista de mails de usuarios a los que se agregará el Asset. Dejar vacío si el Asset no tiene usuarios vinculados|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Tipo del Asset|Tipo del Asset a agregar|General|
 |Valor del Asset|Valor del Asset a agregar|Un valor|
 |Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
@@ -179,10 +179,10 @@ Modifica el asset especifico que se le indique
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Id del Asset|Id del Asset a modificar|Id_Asset|
-|Nuevo nombre de Asset|Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual.Si existe otro Asset con el mismo nombre, no se podra modificar el asset|NuevoAsset|
+|Nuevo nombre de Asset|Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual. Si existe otro Asset con el mismo nombre, no se podrá modificar el asset|NuevoAsset|
 |Nuevo token del proceso|Token del proceso que tendrá el Asset|27FEXKIXFRFDUNVD|
 |Nueva key de la instancia|Key de la instancia que tendrá el Asset|6241c3a1dd96f8f92f|
-|Nuevos mails de usuarios|Lista de Mails de usuarios que tendrán el Asset. Usar [] si es un Asset de todos los usuarios.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Nuevos mails de usuarios|Lista de Mails de usuarios que tendrán el Asset. Escriba NONE para quitar todos los usuarios.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Nuevo tipo del Asset|Nuevo tipo del Asset a modificar|General|
 |Nuevo valor del Asset|Nuevo valor del Asset a modificar|Un valor|
 |Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
