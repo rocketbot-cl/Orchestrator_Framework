@@ -168,7 +168,7 @@ Adiciona um Asset ao seu Orquestrador
 |Nome do Asset|Nome do Asset a ser adicionado|NovoAsset|
 |Token do processo|Token do processo ao qual o Asset será adicionado|27FEXKIXFRFDUNVD|
 |Key de Instância|Key da instância ao qual o Asset será adicionado|6241c3a1dd96f8f92f|
-|Mails dos usuários|Lista de e-mails de usuários aos quais o Asset será adicionado. Deixar em branco se for um Asset para todos os usuários.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Mails dos usuários|Lista de e-mails de usuários aos quais o Asset será adicionado. Deixar vazio se o Asset não tiver usuários vinculados.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Tipo do Asset|Tipo do Asset a ser adicionado|Geral|
 |Valor do Asset|Valor do Asset a ser adicionado|Um valor|
 |Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
@@ -182,7 +182,7 @@ Modifica o ativo específico indicado
 |Novo nome do Asset|Novo nome do Asset. Deixe vazio para manter o nome atual. Se existir outro Asset com o mesmo nome, o asset não poderá ser modificado.|NovoAsset|
 |Novo token do processo|Token do processo que o Asset terá|27FEXKIXFRFDUNVD|
 |Nova key da instância|Key da instância que o Asset terá|6241c3a1dd96f8f92f|
-|Novos mails dos usuários|Lista de Mails dos usuários que terão o Asset. Usar [] se for um Asset para todos os usuários.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Novos mails dos usuários|Lista de Mails dos usuários que terão o Asset. Digite NONE para remover todos os usuários.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Novo tipo do Asset|Novo tipo do Asset a ser modificado|Geral|
 |Novo valor do Asset|Novo valor do Asset a ser modificado|Um valor|
 |Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|

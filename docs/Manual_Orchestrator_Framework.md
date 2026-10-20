@@ -168,7 +168,7 @@ Add an Asset to your Orchestrator
 |Asset Name|Name of the Asset to add|NewAsset|
 |Process token|Process Token to which the Asset will be added|27FEXKIXFRFDUNVD|
 |Instance Key|Instance Key to which the Asset will be added|6241c3a1dd96f8f92f|
-|User mails|List of user emails to add to the Asset. Leave blank if it is an Asset for all users.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|User mails|List of user emails to add to the Asset. Leave empty if the Asset has no linked users.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Asset type|Type of the Asset to add|General|
 |Asset Value|Value of the Asset to add|A value|
 |Assign result to Variable|Variable where the result will be saved. Name of variable without {}|Variable|
@@ -182,7 +182,7 @@ Modifies the specific asset that is indicated
 |New Asset Name|New Asset name. Leave empty to keep the current name. If there is another Asset with the same name, the asset cannot be modified|NewAsset|
 |New process token|Token of the process that the Asset will have|27FEXKIXFRFDUNVD|
 |New instance Key|Instance Key that the Asset will have|6241c3a1dd96f8f92f|
-|New User Mails|List of user Mails who will have the Asset. Use [] if it is an Asset for all users.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|New User Mails|List of user Mails who will have the Asset. Type NONE to remove all users.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |New Asset type|New type of the Asset to modify|General|
 |New Asset Value|New value of the Asset to modify|A value|
 |Assign result to Variable|Variable where the result will be saved. Name of variable without {}|Variable|
