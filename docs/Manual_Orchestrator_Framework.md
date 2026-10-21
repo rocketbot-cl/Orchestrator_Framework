@@ -27,19 +27,11 @@ Login to NOC using one of the options, API Key, noc.ini file, or credentials.
 |API KEY|User APIKey|eyJ0eXAiOiJKV2QiLCJhbGciOiJIUzI1MiJ9.eyJpc3MiOiJudHRwczpcL1wvZGV2My5teXJiLmlwXC9hcGlcL3VzZXJzXC9hcGlrZXlcL2dlbmVyYXRlIiwiaWF0IjoxNjg5MDI0NDI2LCJleHAiOjE3NTIwOTY0MjYsIm5iZiI6MTY4OTAyNDQyNiwianRpIjoiSUxQQWRoY3F3NkM1RmllUCIsInN1YiI6MzIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJub2MiOm51bGx9.HZ4oFuOXL_VBlqAHyWkgJQr29bbBLSBnmcx6ij27zaI|
 |Set to var|Variable to store result without {}|var|
 
-### Get Processes
-  
-Get all processes
-|Parameters|Description|example|
-| --- | --- | --- |
-|Assign result to a Variable|Variable to store result|Variable|
-
 ### Get Tasks
   
 Get task
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
 |Assign result to a Variable|Variable to store result|Variable|
 
 ### Create Task
@@ -47,7 +39,7 @@ Get task
 Adds a new task
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
+|Task name|Variable where the name of the task must be entered|Task name|
 |Task Key|Variable to store new Task key, without {}|key|
 |Assign result to a Variable|Variable to store result|Variable|
 
@@ -56,7 +48,6 @@ Adds a new task
 Set the priority of a task
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Priority|Priority for the task||
 |Assign result to a Variable|Variable to store result|Variable|
@@ -66,7 +57,6 @@ Set the priority of a task
 Add one new transaction
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Transaction|Transaction to send. The input must be a list of lists, being the headers the first value of the main list.|[['Header1', 'Header2', 'Header3'],[1, 2, 3]]|
 |Has Headers|Si está marcado, tomará la primera lista como los títulos de las transacción.|True|
@@ -77,7 +67,6 @@ Add one new transaction
 Add new transactions
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Transactions|Transactions to send. The input must be a list of lists, being the headers the first value of the main list.|[['Header1', 'Header2', 'Header3'],[1, 2, 3],[4, 5, 6],[7, 8, 9]]|
 |Has Headers|Si está marcado, tomará la primera lista como los títulos de las transacciones.|True|
@@ -88,7 +77,6 @@ Add new transactions
 Get every unprocessed transactions from a task
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Assign result to a Variable|Variable to store result|Variable|
 
@@ -97,7 +85,7 @@ Get every unprocessed transactions from a task
 Change the status of a transaction
 |Parameters|Description|example|
 | --- | --- | --- |
-|Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
+|Set state||-|
 |Task Key|Task Key||
 |Transaction ID|Transaction ID||
 |Status|Select the status of the transaction||
@@ -120,6 +108,7 @@ Send custom log
 |Process instance|Variable where the process instance must be entered|a2f64d5d9988c|
 |Process Token|Variable where the token of the process to be checked if it should stop or not must be entered|LGPS8DYPJCAVECEF|
 |Message|Message to be sent to the email defined in the process alert||
+|Type|Select the type of log to send.|info|
 
 ### Stop Framework
   

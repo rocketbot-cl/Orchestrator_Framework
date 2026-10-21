@@ -21,40 +21,37 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Login NOC  
 Inicie sesión en NOC utilizando unda de las opciones, API Key, archivo noc.ini o credenciales.
 
-2. Obtener procesos  
-Obtener todos los procesos
-
-3. Obtener Tareas  
+2. Obtener Tareas  
 Obtener tareas
 
-4. Crear Tarea  
+3. Crear Tarea  
 Agrega una nueva tarea
 
-5. Establecer Prioridad  
+4. Establecer Prioridad  
 Establecer la prioridad de una tarea
 
-6. Agregar Transacción  
+5. Agregar Transacción  
 Agrega una nueva transacción
 
-7. Agregar multiples Transacciones  
+6. Agregar multiples Transacciones  
 Agrega nuevas transacción
 
-8. Obtener transacciones sin procesar  
+7. Obtener transacciones sin procesar  
 Obtenga todas las transacciones no procesadas de una tarea
 
-9. Establecer estado  
+8. Establecer estado  
 Cambiar el estado de una transacción
 
-10. Enviar alerta  
+9. Enviar alerta  
 Envia un mensaje de alerta a los correos electrónicos configurados en el proceso de orquestador
 
-11. Enviar log personalizado  
+10. Enviar log personalizado  
 Enviar log personalizado
 
-12. Detener Framework  
+11. Detener Framework  
 Enviar orden para detener el framework
 
-13. ¿Debe detenerse el Framework?  
+12. ¿Debe detenerse el Framework?  
 Verifica si el framework debe detenerse  
 
 

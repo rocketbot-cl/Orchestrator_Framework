@@ -27,19 +27,11 @@ Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenci
 |API KEY|User APIKey|eyJ0eXAiOiJKV2QiLCJhbGciOiJIUzI1MiJ9.eyJpc3MiOiJudHRwczpcL1wvZGV2My5teXJiLmlwXC9hcGlcL3VzZXJzXC9hcGlrZXlcL2dlbmVyYXRlIiwiaWF0IjoxNjg5MDI0NDI2LCJleHAiOjE3NTIwOTY0MjYsIm5iZiI6MTY4OTAyNDQyNiwianRpIjoiSUxQQWRoY3F3NkM1RmllUCIsInN1YiI6MzIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJub2MiOm51bGx9.HZ4oFuOXL_VBlqAHyWkgJQr29bbBLSBnmcx6ij27zaI|
 |Definir como variável|Variável para guardar resultado sem {}|var|
 
-### Obter processos
-  
-Obter todos os processos
-|Parâmetros|Descrição|exemplo|
-| --- | --- | --- |
-|Atribuir resultado à variável|Variável para guardar|Variable|
-
 ### Obter Tarefas
   
 Obter tarefas
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
 ### Criar Tarefa
@@ -47,7 +39,7 @@ Obter tarefas
 Adiciona uma nova tarefa
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
+|Nome da tarefa|Variável onde o nome da tarefa deve ser inserido|Task name|
 |Task Key|Variável para guardar a key da nova tarefa, sem {}|key|
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
@@ -56,7 +48,6 @@ Adiciona uma nova tarefa
 Estabelecer a prioridade de uma tarefa
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Prioridade|Prioridade da tarefa||
 |Atribuir resultado à variável|Variável para guardar|Variable|
@@ -66,7 +57,6 @@ Estabelecer a prioridade de uma tarefa
 Adicionar uma nova transação
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Transação|Transação a enviar. A entrada deve ser uma lista de listas, sendo os cabeçalhos o primeiro valor da lista principal.|[['Header1', 'Header2', 'Header3'],[1, 2, 3]]|
 |Tem Cabeçalhos|Se marcada, levará a primeira lista como o título da transação..|True|
@@ -77,7 +67,6 @@ Adicionar uma nova transação
 Adicionar novas transações
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Transações|Transações a enviar. A entrada deve ser uma lista de listas, sendo os cabeçalhos o primeiro valor da lista principal.|[['Header1', 'Header2', 'Header3'],[1, 2, 3],[4, 5, 6],[7, 8, 9]]|
 |Tem Cabeçalhos|Se marcada, levará a primeira lista como os títulos das transações.|True|
@@ -88,7 +77,6 @@ Adicionar novas transações
 Obter todas as transações não processadas de uma tarefa
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
@@ -97,7 +85,7 @@ Obter todas as transações não processadas de uma tarefa
 Alterar o estado de uma transação
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
+|Definir estado||-|
 |Task Key|Task Key||
 |Transaction ID|Transaction ID||
 |Estado|Selecione o estado da transação||
@@ -120,6 +108,7 @@ Enviar log personalizado
 |Instância do processo|Variável onde a instância do processo deve ser inserida|a2f64d5d9988c|
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Mensagem|Mensagem a enviar para o email definido no alerta do processo||
+|Tipo|Selecione o tipo de log a enviar.|info|
 
 ### Parar Framework?
   

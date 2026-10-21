@@ -27,19 +27,11 @@ Inicie sesión en NOC utilizando unda de las opciones, API Key, archivo noc.ini 
 |API KEY|User APIKey|eyJ0eXAiOiJKV2QiLCJhbGciOiJIUzI1MiJ9.eyJpc3MiOiJudHRwczpcL1wvZGV2My5teXJiLmlwXC9hcGlcL3VzZXJzXC9hcGlrZXlcL2dlbmVyYXRlIiwiaWF0IjoxNjg5MDI0NDI2LCJleHAiOjE3NTIwOTY0MjYsIm5iZiI6MTY4OTAyNDQyNiwianRpIjoiSUxQQWRoY3F3NkM1RmllUCIsInN1YiI6MzIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJub2MiOm51bGx9.HZ4oFuOXL_VBlqAHyWkgJQr29bbBLSBnmcx6ij27zaI|
 |Asignar a variable|Variable donde guardar resultado sin {}|var|
 
-### Obtener procesos
-  
-Obtener todos los procesos
-|Parámetros|Descripción|ejemplo|
-| --- | --- | --- |
-|Asignar resultado a Variable|Variable donde guardar|Variable|
-
 ### Obtener Tareas
   
 Obtener tareas
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
 ### Crear Tarea
@@ -47,7 +39,7 @@ Obtener tareas
 Agrega una nueva tarea
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
+|Nombre de la tarea|Variable donde debe ingresarse el nombre de la tarea|Task name|
 |Task Key|Variable donde guardar la key de la nueva tarea, sin {}|key|
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
@@ -56,7 +48,6 @@ Agrega una nueva tarea
 Establecer la prioridad de una tarea
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Prioridad|Prioridad de la tarea||
 |Asignar resultado a Variable|Variable donde guardar|Variable|
@@ -66,7 +57,6 @@ Establecer la prioridad de una tarea
 Agrega una nueva transacción
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Transacción|Transacción a enviar. La entrada debe ser una lista de listas, siendo los encabezados el primer valor de la lista principal.|[['Header1', 'Header2', 'Header3'],[1, 2, 3]]|
 |Tiene Encabezados|If checked, it will take the first list as the transaction title.|True|
@@ -77,7 +67,6 @@ Agrega una nueva transacción
 Agrega nuevas transacción
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Transacciones|Transacciones a enviar. La entrada debe ser una lista de listas, siendo los encabezados el primer valor de la lista principal.|[['Header1', 'Header2', 'Header3'],[1, 2, 3],[4, 5, 6],[7, 8, 9]]|
 |Tiene Encabezados|If checked, it will take the first list as the transactions titles.|True|
@@ -88,7 +77,6 @@ Agrega nuevas transacción
 Obtenga todas las transacciones no procesadas de una tarea
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Task Key|Task Key||
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
@@ -97,7 +85,7 @@ Obtenga todas las transacciones no procesadas de una tarea
 Cambiar el estado de una transacción
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
+|Establecer estado||-|
 |Task Key|Task Key||
 |Transaction ID|Transaction ID||
 |Estado|Seleccione el estado de la transaccion||
@@ -120,6 +108,7 @@ Enviar log personalizado
 |Instancia del proceso|Variable donde debe ingresarse la instancia del proceso|a2f64d5d9988c|
 |Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Mensaje|Mensaje que se enviara al correo definido en el alerta del proceso||
+|Tipo|Seleccionar el tipo de log a enviar.|info|
 
 ### Detener Framework
   
