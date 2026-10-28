@@ -2003,9 +2003,9 @@
                             "pr": "Novo token do processo"
                         },
                         "description": {
-                            "es": "Token del proceso que tendrá el Asset",
-                            "en": "Token of the process that the Asset will have",
-                            "pr": "Token do processo que o Asset terá"
+                            "es": "Token del proceso que tendrá el Asset. Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.",
+                            "en": "Token of the process that the Asset will have. Leave empty to keep the current process. Type NONE to remove the process (and the instance). Empty for a global Asset when creating.",
+                            "pr": "Token do processo que o Asset terá. Deixe vazio para manter o processo atual. Digite NONE para remover o processo (e a instância). Vazio para um Asset global ao criar."
                         },
                         "help": {
                             "es": "Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.",
@@ -2028,9 +2028,9 @@
                             "pr": "Nova key da instância"
                         },
                         "description": {
-                            "es": "Key de la instancia que tendrá el Asset",
-                            "en": "Instance Key that the Asset will have",
-                            "pr": "Key da instância que o Asset terá"
+                            "es": "Key de la instancia que tendrá el Asset. Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).",
+                            "en": "Instance Key that the Asset will have. Leave empty to keep the current instance. Type NONE to remove the instance (the process is kept).",
+                            "pr": "Key da instância que o Asset terá. Deixe vazio para manter a instância atual. Digite NONE para remover a instância (o processo é mantido)."
                         },
                         "help": {
                             "es": "Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).",
