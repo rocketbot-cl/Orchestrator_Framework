@@ -44,10 +44,8 @@ class OrchestatorCommon:
         )
         if proxy_url:
             proxy_url_lower = proxy_url.lower()
-            if proxy_url_lower.startswith("http://"):
-                return {"http": proxy_url}
-            if proxy_url_lower.startswith("https://"):
-                return {"https": proxy_url}
+            if proxy_url_lower.startswith(("http://", "https://")):
+                return {"http": proxy_url, "https": proxy_url}
             raise Exception("Proxy URL must start with http:// or https://")
 
         http_proxy = OrchestatorCommon.clean_param(
