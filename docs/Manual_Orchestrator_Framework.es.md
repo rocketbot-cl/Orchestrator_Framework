@@ -26,7 +26,7 @@ Inicie sesión en NOC utilizando una de las opciones, API Key, archivo noc.ini o
 |URL Servidor|URL del servidor a donde se conecta|https://roc.myrb.io/|
 ||||
 |Ignorar SSL|Desactiva la validación del certificado SSL durante la autenticación y las solicitudes de Assets.||
-|Asignar a variable|Variable que recibe True cuando la conexión se establece correctamente y False cuando falla.|var|
+|Asignar resultado a Variable|Variable que recibe True cuando la conexión se establece correctamente y False cuando falla.|var|
 
 ### Obtener procesos
 
@@ -157,8 +157,8 @@ Obtiene el asset especifico que se le indique
 Obtiene todos los Assets y los asigna a la variable correspondiente
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
 |Obtener datos adicionales|Marca para obtener datos extra de los Assets|True|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
 
 ### Agregar Asset
 
@@ -180,8 +180,8 @@ Modifica el asset especifico que se le indique
 | --- | --- | --- |
 |Id del Asset|Id del Asset a modificar|Id_Asset|
 |Nuevo nombre de Asset|Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual. Si existe otro Asset con el mismo nombre, no se podrá modificar el asset|NuevoAsset|
-|Nuevo token del proceso|Token del proceso que tendrá el Asset|27FEXKIXFRFDUNVD|
-|Nueva key de la instancia|Key de la instancia que tendrá el Asset|6241c3a1dd96f8f92f|
+|Nuevo token del proceso|Token del proceso que tendrá el Asset. Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.|27FEXKIXFRFDUNVD|
+|Nueva key de la instancia|Key de la instancia que tendrá el Asset. Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).|6241c3a1dd96f8f92f|
 |Nuevos mails de usuarios|Lista de Mails de usuarios que tendrán el Asset. Escriba NONE para quitar todos los usuarios.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Nuevo tipo del Asset|Nuevo tipo del Asset a modificar|General|
 |Nuevo valor del Asset|Nuevo valor del Asset a modificar|Un valor|
@@ -193,4 +193,4 @@ Elimina un Asset existente mediante su ID.
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Id del Asset|ID del Asset que se desea eliminar.|Id_Asset|
-|Asignar a variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|

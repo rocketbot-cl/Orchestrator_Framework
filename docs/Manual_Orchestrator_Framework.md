@@ -26,7 +26,7 @@ Login to NOC using one of the options, API Key, noc.ini file, or credentials.
 |URL Server|Server URL|https://roc.myrb.io/|
 ||||
 |Ignore SSL|Disables SSL certificate validation during authentication and Asset requests.||
-|Set to var|Variable that receives True when the connection succeeds and False when it fails.|var|
+|Assign result to Variable|Variable that receives True when the connection succeeds and False when it fails.|var|
 
 ### Get Processes
 
@@ -157,8 +157,8 @@ Obtains the specific asset that is indicated
 Get all the Assets and assign them to the corresponding variable
 |Parameters|Description|example|
 | --- | --- | --- |
-|Assign result to Variable|Variable where the result will be saved. Name of variable without {}|Variable|
 |Obtain extra data|Check to obtain extra data from the Assets|True|
+|Assign result to Variable|Variable where the result will be saved. Name of variable without {}|Variable|
 
 ### Add Asset
 
@@ -180,8 +180,8 @@ Modifies the specific asset that is indicated
 | --- | --- | --- |
 |Asset Id|Id of the Asset to modify|Id_Asset|
 |New Asset Name|New Asset name. Leave empty to keep the current name. If there is another Asset with the same name, the asset cannot be modified|NewAsset|
-|New process token|Token of the process that the Asset will have|27FEXKIXFRFDUNVD|
-|New instance Key|Instance Key that the Asset will have|6241c3a1dd96f8f92f|
+|New process token|Token of the process that the Asset will have. Leave empty to keep the current process. Type NONE to remove the process (and the instance). Empty for a global Asset when creating.|27FEXKIXFRFDUNVD|
+|New instance Key|Instance Key that the Asset will have. Leave empty to keep the current instance. Type NONE to remove the instance (the process is kept).|6241c3a1dd96f8f92f|
 |New User Mails|List of user Mails who will have the Asset. Type NONE to remove all users.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |New Asset type|New type of the Asset to modify|General|
 |New Asset Value|New value of the Asset to modify|A value|
@@ -193,4 +193,4 @@ Deletes an existing Asset by ID.
 |Parameters|Description|example|
 | --- | --- | --- |
 |Asset Id|ID of the Asset to delete.|Id_Asset|
-|Set to var|Variable where the result will be saved. Name of variable without {}|Variable|
+|Assign result to Variable|Variable where the result will be saved. Name of variable without {}|Variable|

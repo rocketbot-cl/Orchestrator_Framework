@@ -26,7 +26,7 @@ Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenci
 |URL Servidor|URL do servidor para se conectar|https://roc.myrb.io/|
 ||||
 |Ignorar SSL|Desativa a validação do certificado SSL durante a autenticação e as solicitações de Assets.||
-|Definir como variável|Variável que recebe True quando a conexão é estabelecida e False quando falha.|var|
+|Atribuir resultado a variável|Variável que recebe True quando a conexão é estabelecida e False quando falha.|var|
 
 ### Obter processos
 
@@ -157,8 +157,8 @@ Obtém o ativo específico indicado
 Obtém todos os Assets e os atribui a variável correspondente
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Atribua resultado à Variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
 |Obter dados extras|Marque para obter dados extras dos Assets|True|
+|Atribua resultado à Variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
 
 ### Adicionar Asset
 
@@ -180,8 +180,8 @@ Modifica o ativo específico indicado
 | --- | --- | --- |
 |Id do Asset|Id do Asset a ser modificado|Id_Asset|
 |Novo nome do Asset|Novo nome do Asset. Deixe vazio para manter o nome atual. Se existir outro Asset com o mesmo nome, o asset não poderá ser modificado.|NovoAsset|
-|Novo token do processo|Token do processo que o Asset terá|27FEXKIXFRFDUNVD|
-|Nova key da instância|Key da instância que o Asset terá|6241c3a1dd96f8f92f|
+|Novo token do processo|Token do processo que o Asset terá. Deixar vazio para manter o processo atual. Digite NONE para remover o processo (e a instância). Vazio para um Asset global ao criar.|27FEXKIXFRFDUNVD|
+|Nova key da instância|Key da instância que o Asset terá. Deixar vazio para manter a instância atual. Digite NONE para remover a instância (o processo é mantido).|6241c3a1dd96f8f92f|
 |Novos mails dos usuários|Lista de Mails dos usuários que terão o Asset. Digite NONE para remover todos os usuários.|[usuario1@mail.com, usuario2@mail.com, ...]|
 |Novo tipo do Asset|Novo tipo do Asset a ser modificado|Geral|
 |Novo valor do Asset|Novo valor do Asset a ser modificado|Um valor|
@@ -193,4 +193,4 @@ Exclui um Asset existente pelo ID.
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Id do Asset|ID do Asset que será excluído.|Id_Asset|
-|Definir como variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
+|Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
