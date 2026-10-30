@@ -3,59 +3,74 @@
 
 
 # Orchestrator Framework
-  
-This module allows working with tasks and transactions, print logs to the console, send email alerts or send a signal to stop the framework.  
+
+Manages NOC processes, tasks, transactions, and Assets, and also sends alerts, writes logs, and controls framework shutdown.
 
 *Read this in other languages: [English](README.md), [Português](README.pr.md), [Español](README.es.md)*
 
 ## How to install this module
-  
+
 To install the module in Rocketbot Studio, it can be done in two ways:
 1. Manual: __Download__ the .zip file and unzip it in the modules folder. The folder name must be the same as the module and inside it must have the following files and folders: \__init__.py, package.json, docs, example and libs. If you have the application open, refresh your browser to be able to use the new module.
-2. Automatic: When entering Rocketbot Studio on the right margin you will find the **Addons** section, select **Install Mods**, search for the desired module and press install.  
+2. Automatic: When entering Rocketbot Studio on the right margin you will find the **Addons** section, select **Install Mods**, search for the desired module and press install.
 
 
 ## Overview
 
 
-1. Login NOC  
+1. Login NOC
 Login to NOC using one of the options, API Key, noc.ini file, or credentials.
 
-2. Get Processes  
+2. Get Processes
 Get all processes
 
-3. Get Tasks  
+3. Get Tasks
 Get task
 
-4. Create Task  
+4. Create Task
 Adds a new task
 
-5. Set Priority  
+5. Set Priority
 Set the priority of a task
 
-6. Add Transaction  
+6. Add Transaction
 Add one new transaction
 
-7. Add multiple Transactions  
+7. Add multiple Transactions
 Add new transactions
 
-8. Get unprocessed transactions  
+8. Get unprocessed transactions
 Get every unprocessed transactions from a task
 
-9. Set status  
+9. Set status
 Change the status of a transaction
 
-10. Send alert  
+10. Send alert
 Send an alert message to the emails set into the Orchestrator Process
 
-11. Send custom log  
+11. Send custom log
 Send custom log
 
-12. Stop Framework  
+12. Stop Framework
 Send order to stop the framework
 
-13. Should Stop Framework?  
-Check if the framework should stop  
+13. Should Stop Framework?
+Check if the framework should stop
+
+14. Get a Specific Asset
+Obtains the specific asset that is indicated
+
+15. Get All Assets
+Get all the Assets and assign them to the corresponding variable
+
+16. Add Asset
+Add an Asset to your Orchestrator
+
+17. Modify Asset
+Modifies the specific asset that is indicated
+
+18. Delete Asset
+Deletes an existing Asset by ID.
 
 
 
@@ -71,6 +86,6 @@ Check if the framework should stop
 ### Dependencies
 
 ### License
-  
-![MIT](https://camo.githubusercontent.com/107590fac8cbd65071396bb4d04040f76cde5bde/687474703a2f2f696d672e736869656c64732e696f2f3a6c6963656e73652d6d69742d626c75652e7376673f7374796c653d666c61742d737175617265)  
+
+![MIT](https://camo.githubusercontent.com/107590fac8cbd65071396bb4d04040f76cde5bde/687474703a2f2f696d672e736869656c64732e696f2f3a6c6963656e73652d6d69742d626c75652e7376673f7374796c653d666c61742d737175617265)
 [MIT](http://opensource.org/licenses/mit-license.ph)
