@@ -87,7 +87,7 @@
                             "en": "Disables SSL certificate validation during authentication and Asset requests.",
                             "pr": "Desativa a validação do certificado SSL durante a autenticação e as solicitações de Assets."
                         },
-                        "css": "col-md-12",
+                        "css": "col-md-6",
                         "id": "ignore_ssl",
                         "type": "checkbox",
                         "help": {
@@ -109,9 +109,9 @@
                             "pr": "Variável que recebe True quando a conexão é estabelecida e False quando falha."
                         },
                         "title": {
-                            "es": "Asignar a variable",
-                            "en": "Set to var",
-                            "pr": "Definir como variável"
+                            "es": "Asignar resultado a Variable:",
+                            "en": "Assign result to Variable:",
+                            "pr": "Atribuir resultado a variável:"
                         },
                         "remove_vars": true,
                         "id": "result",
@@ -1618,6 +1618,26 @@
                 "css": "modal-lg",
                 "inputs": [
                     {
+                        "type": "checkbox",
+                        "placeholder": {
+                            "es": "True",
+                            "en": "True",
+                            "pr": "True"
+                        },
+                        "title": {
+                            "es": "Obtener datos adicionales:",
+                            "en": "Obtain extra data:",
+                            "pr": "Obter dados extras:"
+                        },
+                        "description": {
+                            "es": "Marca para obtener datos extra de los Assets",
+                            "en": "Check to obtain extra data from the Assets",
+                            "pr": "Marque para obter dados extras dos Assets"
+                        },
+                        "id": "extra_data",
+                        "css": "col-md-6"
+                    },
+                    {
                         "type": "input",
                         "placeholder": {
                             "es": "Variable",
@@ -1641,26 +1661,6 @@
                         },
                         "remove_vars": true,
                         "id": "result",
-                        "css": "col-md-12"
-                    },
-                    {
-                        "type": "checkbox",
-                        "placeholder": {
-                            "es": "True",
-                            "en": "True",
-                            "pr": "True"
-                        },
-                        "title": {
-                            "es": "Obtener datos adicionales:",
-                            "en": "Obtain extra data:",
-                            "pr": "Obter dados extras:"
-                        },
-                        "description": {
-                            "es": "Marca para obtener datos extra de los Assets",
-                            "en": "Check to obtain extra data from the Assets",
-                            "pr": "Marque para obter dados extras dos Assets"
-                        },
-                        "id": "extra_data",
                         "css": "col-md-6"
                     }
                 ]
@@ -1979,9 +1979,9 @@
                             "pr": "Novo token do processo"
                         },
                         "description": {
-                            "es": "Token del proceso que tendrá el Asset",
-                            "en": "Token of the process that the Asset will have",
-                            "pr": "Token do processo que o Asset terá"
+                            "es": "Token del proceso que tendrá el Asset. Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.",
+                            "en": "Token of the process that the Asset will have. Leave empty to keep the current process. Type NONE to remove the process (and the instance). Empty for a global Asset when creating.",
+                            "pr": "Token do processo que o Asset terá. Deixar vazio para manter o processo atual. Digite NONE para remover o processo (e a instância). Vazio para um Asset global ao criar."
                         },
                         "help": {
                             "es": "Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.",
@@ -2004,9 +2004,9 @@
                             "pr": "Nova key da instância"
                         },
                         "description": {
-                            "es": "Key de la instancia que tendrá el Asset",
-                            "en": "Instance Key that the Asset will have",
-                            "pr": "Key da instância que o Asset terá"
+                            "es": "Key de la instancia que tendrá el Asset. Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).",
+                            "en": "Instance Key that the Asset will have. Leave empty to keep the current instance. Type NONE to remove the instance (the process is kept).",
+                            "pr": "Key da instância que o Asset terá. Deixar vazio para manter a instância atual. Digite NONE para remover a instância (o processo é mantido)."
                         },
                         "help": {
                             "es": "Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).",
@@ -2206,9 +2206,9 @@
                             "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "title": {
-                            "es": "Asignar a variable",
-                            "en": "Set to var",
-                            "pr": "Definir como variável"
+                            "es": "Asignar resultado a Variable:",
+                            "en": "Assign result to Variable:",
+                            "pr": "Atribuir resultado a variável:"
                         },
                         "remove_vars": true,
                         "id": "result",
