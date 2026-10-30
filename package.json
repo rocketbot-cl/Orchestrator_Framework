@@ -111,7 +111,7 @@
                             "en": "Disables SSL certificate validation during authentication and Asset requests.",
                             "pr": "Desativa a validação do certificado SSL durante a autenticação e as solicitações de Assets."
                         },
-                        "css": "col-md-12",
+                        "css": "col-md-6",
                         "id": "ignore_ssl",
                         "type": "checkbox",
                         "help": {
@@ -133,9 +133,9 @@
                             "pr": "Variável que recebe True quando a conexão é estabelecida e False quando falha."
                         },
                         "title": {
-                            "es": "Asignar a variable",
-                            "en": "Set to var",
-                            "pr": "Definir como variável"
+                            "es": "Asignar resultado a Variable:",
+                            "en": "Assign result to Variable:",
+                            "pr": "Atribuir resultado a variável:"
                         },
                         "remove_vars": true,
                         "id": "result",
@@ -1642,6 +1642,26 @@
                 "css": "modal-lg",
                 "inputs": [
                     {
+                        "type": "checkbox",
+                        "placeholder": {
+                            "es": "True",
+                            "en": "True",
+                            "pr": "True"
+                        },
+                        "title": {
+                            "es": "Obtener datos adicionales:",
+                            "en": "Obtain extra data:",
+                            "pr": "Obter dados extras:"
+                        },
+                        "description": {
+                            "es": "Marca para obtener datos extra de los Assets",
+                            "en": "Check to obtain extra data from the Assets",
+                            "pr": "Marque para obter dados extras dos Assets"
+                        },
+                        "id": "extra_data",
+                        "css": "col-md-6"
+                    },
+                    {
                         "type": "input",
                         "placeholder": {
                             "es": "Variable",
@@ -1665,26 +1685,6 @@
                         },
                         "remove_vars": true,
                         "id": "result",
-                        "css": "col-md-12"
-                    },
-                    {
-                        "type": "checkbox",
-                        "placeholder": {
-                            "es": "True",
-                            "en": "True",
-                            "pr": "True"
-                        },
-                        "title": {
-                            "es": "Obtener datos adicionales:",
-                            "en": "Obtain extra data:",
-                            "pr": "Obter dados extras:"
-                        },
-                        "description": {
-                            "es": "Marca para obtener datos extra de los Assets",
-                            "en": "Check to obtain extra data from the Assets",
-                            "pr": "Marque para obter dados extras dos Assets"
-                        },
-                        "id": "extra_data",
                         "css": "col-md-6"
                     }
                 ]
@@ -2230,9 +2230,9 @@
                             "pr": "Variável onde o resultado será salvo. Nome da variável sem chaves {}"
                         },
                         "title": {
-                            "es": "Asignar a variable",
-                            "en": "Set to var",
-                            "pr": "Definir como variável"
+                            "es": "Asignar resultado a Variable:",
+                            "en": "Assign result to Variable:",
+                            "pr": "Atribuir resultado a variável:"
                         },
                         "remove_vars": true,
                         "id": "result",
