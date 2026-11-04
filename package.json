@@ -7,7 +7,7 @@
         "pr": "Permite administrar processos, tarefas, transações e Assets do NOC, além de enviar alertas, registrar logs e controlar a parada do framework."
     },
     "disclaimer": "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.",
-    "version": "1.5.4",
+    "version": "1.5.5",
     "license": "MIT",
     "homepage": "http://rocketbot.com",
     "linux": true,
@@ -59,9 +59,9 @@
                             "pr": "URL do servidor para se conectar"
                         },
                         "help": {
-                            "es": "Ejemplo: https://roc.myrb.io/",
-                            "en": "Example: https://roc.myrb.io/",
-                            "pr": "Exemplo: https://roc.myrb.io/"
+                            "es": "Opcional si usa noc.ini con server configurado. Requerido para API Key o credenciales sin noc.ini.",
+                            "en": "Optional when using noc.ini with server set. Required for API Key or credentials without noc.ini.",
+                            "pr": "Opcional ao usar noc.ini com server configurado. Obrigatório para API Key ou credenciais sem noc.ini."
                         },
                         "id": "server_url",
                         "css": "col-md-12",
@@ -75,6 +75,30 @@
                         "src": "index.html",
                         "css": "col-md-12",
                         "style": "height:165px;"
+                    },
+                    {
+                        "type": "input",
+                        "placeholder": "http://proxy.company.com:8080",
+                        "title": {
+                            "es": "Proxy",
+                            "en": "Proxy",
+                            "pr": "Proxy"
+                        },
+                        "description": {
+                            "es": "URL opcional del proxy con protocolo http:// o https://.",
+                            "en": "Optional proxy URL with http:// or https:// protocol.",
+                            "pr": "URL opcional do proxy com protocolo http:// ou https://."
+                        },
+                        "help": {
+                            "es": "Opcional. Incluya el protocolo. Ejemplo: http://usuario:clave@proxy.company.com:8080. Si usa noc.ini, puede definirlo en [NOC] como proxy={\"http\":\"http://usuario:clave@host:puerto\"}.",
+                            "en": "Optional. Include the protocol. Example: http://user:password@proxy.company.com:8080. With noc.ini, set it in [NOC] as proxy={\"http\":\"http://user:password@host:port\"}.",
+                            "pr": "Opcional. Inclua o protocolo. Exemplo: http://usuario:senha@proxy.company.com:8080. Com noc.ini, defina em [NOC] como proxy={\"http\":\"http://usuario:senha@host:porta\"}."
+                        },
+                        "id": "proxy_url",
+                        "css": "col-md-12",
+                        "data_type": "str",
+                        "default": null,
+                        "required": false
                     },
                     {
                         "title": {
@@ -91,9 +115,9 @@
                         "id": "ignore_ssl",
                         "type": "checkbox",
                         "help": {
-                            "es": "Utilice esta opción únicamente en entornos controlados.",
-                            "en": "Use this option only in controlled environments.",
-                            "pr": "Use esta opção somente em ambientes controlados."
+                            "es": "Opcional. Use solo en entornos controlados.",
+                            "en": "Optional. Use only in controlled environments.",
+                            "pr": "Opcional. Use somente em ambientes controlados."
                         }
                     },
                     {
@@ -117,9 +141,9 @@
                         "id": "result",
                         "css": "col-md-6",
                         "help": {
-                            "es": "Nombre de variable sin llaves {}.",
-                            "en": "Variable name without braces {}.",
-                            "pr": "Nome da variável sem chaves {}."
+                            "es": "Opcional. Nombre de variable sin llaves {} para guardar True o False.",
+                            "en": "Optional. Variable name without braces {} to store True or False.",
+                            "pr": "Opcional. Nome da variável sem chaves {} para salvar True ou False."
                         }
                     }
                 ]

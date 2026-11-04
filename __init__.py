@@ -2,7 +2,6 @@ import pandas as pd
 import json
 import sys
 import os
-import configparser
 import ast
 import re
 
@@ -180,24 +179,30 @@ if module in ('Login', 'loginNOC'):
     if isinstance(ignore_ssl, str):
         ignore_ssl = ignore_ssl.lower() == "true"
     verify_ssl = not ignore_ssl
+    proxy_params = {
+        "proxy_url": GetParams("proxy_url"),
+        "http_proxy": GetParams("http_proxy"),
+        "https_proxy": GetParams("https_proxy")
+    }
+    proxies = OrchestatorCommon.get_login_proxies(proxy_params, iframe)
     instance_key_ini = None
     try:
-        if path:
-            ini_config = configparser.ConfigParser()
-            if not ini_config.read(path):
-                raise Exception("Could not read the noc.ini file: " + path)
-            instance_key_ini = ini_config.get('USER', 'key', fallback=None)
         if not ((username and password) or api_key or path):
             raise Exception("Please provide an API Key, credentials, or a noc.ini file")
         orchestrator_service = OrchestatorCommon(
             server=server_, user=username, password=password,
             ini_path=path, apikey=api_key
         )
-        token = orchestrator_service.get_authorization_token(verify=verify_ssl)
+        if path:
+            instance_key_ini = orchestrator_service.instance
+            proxies = OrchestatorCommon.merge_proxies(orchestrator_service.proxies, proxies)
+        token = orchestrator_service.get_authorization_token(
+            proxies=proxies, verify=verify_ssl
+        )
         server_ = orchestrator_service.server
         configFormObject = ConfigObject(
             token, server_, orchestrator_service.user,
-            orchestrator_service.password, api_key, None, verify_ssl
+            orchestrator_service.password, api_key, proxies, verify_ssl
         )
         res = configFormObject.post('/api/formData/all')
         if res.status_code != 200:

@@ -25,6 +25,7 @@ Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenci
 | --- | --- | --- |
 |URL Servidor|URL do servidor para se conectar|https://roc.myrb.io/|
 ||||
+|Proxy|URL opcional do proxy com protocolo http// ou https//.|http://proxy.company.com:8080|
 |Ignorar SSL|Desativa a validação do certificado SSL durante a autenticação e as solicitações de Assets.||
 |Atribuir resultado a variável|Variável que recebe True quando a conexão é estabelecida e False quando falha.|var|
 
