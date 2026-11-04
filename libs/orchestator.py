@@ -150,7 +150,7 @@ class OrchestatorCommon:
         return self.apikey
 
     def read_ini(self, ini_path):
-        config = configparser.ConfigParser()
+        config = configparser.ConfigParser(interpolation=None)
         config.read(ini_path)
         self.user = config.get('USER', 'user')
         self.password = config.get('USER', 'password')
