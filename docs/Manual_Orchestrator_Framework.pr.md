@@ -27,14 +27,14 @@ Faça login no NOC usando uma das opções, arquivo noc.ini, API Key ou credenci
 |API KEY|User APIKey|eyJ0eXAiOiJKV2QiLCJhbGciOiJIUzI1MiJ9.eyJpc3MiOiJudHRwczpcL1wvZGV2My5teXJiLmlwXC9hcGlcL3VzZXJzXC9hcGlrZXlcL2dlbmVyYXRlIiwiaWF0IjoxNjg5MDI0NDI2LCJleHAiOjE3NTIwOTY0MjYsIm5iZiI6MTY4OTAyNDQyNiwianRpIjoiSUxQQWRoY3F3NkM1RmllUCIsInN1YiI6MzIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJub2MiOm51bGx9.HZ4oFuOXL_VBlqAHyWkgJQr29bbBLSBnmcx6ij27zaI|
 |Definir como variável|Variável para guardar resultado sem {}|var|
 
-### Obter Tarefas
+### Tarefas - Obter Tarefas
   
 Obter tarefas
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
-### Criar Tarefa
+### Tarefas - Criar Tarefa
   
 Adiciona uma nova tarefa
 |Parâmetros|Descrição|exemplo|
@@ -43,7 +43,7 @@ Adiciona uma nova tarefa
 |Task Key|Variável para guardar a key da nova tarefa, sem {}|key|
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
-### Estabelecer Prioridade
+### Tarefas - Estabelecer Prioridade
   
 Estabelecer a prioridade de uma tarefa
 |Parâmetros|Descrição|exemplo|
@@ -52,7 +52,7 @@ Estabelecer a prioridade de uma tarefa
 |Prioridade|Prioridade da tarefa||
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
-### Adicionar Transação
+### Tarefas - Adicionar Transação
   
 Adicionar uma nova transação
 |Parâmetros|Descrição|exemplo|
@@ -62,7 +62,7 @@ Adicionar uma nova transação
 |Tem Cabeçalhos|Se marcada, levará a primeira lista como o título da transação..|True|
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
-### Adicionar várias Transações
+### Tarefas - Adicionar várias Transações
   
 Adicionar novas transações
 |Parâmetros|Descrição|exemplo|
@@ -72,7 +72,7 @@ Adicionar novas transações
 |Tem Cabeçalhos|Se marcada, levará a primeira lista como os títulos das transações.|True|
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
-### Obter transações não processadas
+### Tarefas - Obter transações não processadas
   
 Obter todas as transações não processadas de uma tarefa
 |Parâmetros|Descrição|exemplo|
@@ -80,12 +80,12 @@ Obter todas as transações não processadas de uma tarefa
 |Task Key|Task Key||
 |Atribuir resultado à variável|Variável para guardar|Variable|
 
-### Definir estado
+### Tarefas - Definir estado
   
 Alterar o estado de uma transação
 |Parâmetros|Descrição|exemplo|
 | --- | --- | --- |
-|Definir estado||-|
+|Bloquear transação||-|
 |Task Key|Task Key||
 |Transaction ID|Transaction ID||
 |Estado|Selecione o estado da transação||
@@ -110,7 +110,7 @@ Enviar log personalizado
 |Mensagem|Mensagem a enviar para o email definido no alerta do processo||
 |Tipo|Selecione o tipo de log a enviar.|info|
 
-### Parar Framework?
+### Parar Framework
   
 Enviar ordem para parar o framework
 |Parâmetros|Descrição|exemplo|
@@ -127,3 +127,57 @@ Verifique se o framework deve parar
 |Instância do processo|Variável onde a instância do processo deve ser inserida|a2f64d5d9988c|
 |Process Token|Variável onde o token do processo a ser verificado se deve parar ou não deve ser inserido|LGPS8DYPJCAVECEF|
 |Atribuir resultado à variável|Variável para guardar|Variable|
+
+### Obter Asset específico
+  
+Obtém o ativo específico indicado
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Nome do Asset|Nome do asset a ser obtido|Teste|
+|Token do processo|Token do processo. Se especificado, você também precisa especificar a chave da instância.|27FEXKIXFRFDUNVD|
+|Key de Instância|Key de instância do processo|6241c3a1dd96f8f92f|
+|Obter dados extras|Marque para obter dados extras dos Assets|True|
+|Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
+
+### Obter todos os Assets
+  
+Obtém todos os Assets e os atribui a variável correspondente
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Obter dados extras|Marque para obter dados extras dos Assets|True|
+|Atribua resultado à Variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
+
+### Adicionar Asset
+  
+Adiciona um Asset ao seu Orquestrador
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Nome do Asset|Nome do Asset a ser adicionado|NovoAsset|
+|Token do processo|Token do processo ao qual o Asset será adicionado|27FEXKIXFRFDUNVD|
+|Key de Instância|Key da instância ao qual o Asset será adicionado|6241c3a1dd96f8f92f|
+|Mails dos usuários|Lista de e-mails de usuários aos quais o Asset será adicionado. Deixar vazio se o Asset não tiver usuários vinculados.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Tipo do Asset|Tipo do Asset a ser adicionado|Geral|
+|Valor do Asset|Valor do Asset a ser adicionado|Um valor|
+|Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
+
+### Modifica o ativo específico
+  
+Modifica o ativo específico indicado
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Id do Asset|Id do Asset a ser modificado|Id_Asset|
+|Novo nome do Asset|Novo nome do Asset. Deixe vazio para manter o nome atual. Se existir outro Asset com o mesmo nome, o asset não poderá ser modificado.|NovoAsset|
+|Novo token do processo|Token do processo que o Asset terá. Deixar vazio para manter o processo atual. Digite NONE para remover o processo (e a instância). Vazio para um Asset global ao criar.|27FEXKIXFRFDUNVD|
+|Nova key da instância|Key da instância que o Asset terá. Deixar vazio para manter a instância atual. Digite NONE para remover a instância (o processo é mantido).|6241c3a1dd96f8f92f|
+|Novos mails dos usuários|Lista de Mails dos usuários que terão o Asset. Digite NONE para remover todos os usuários.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Novo tipo do Asset|Novo tipo do Asset a ser modificado|Geral|
+|Novo valor do Asset|Novo valor do Asset a ser modificado|Um valor|
+|Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|
+
+### Excluir Asset
+  
+Exclui um Asset existente pelo ID.
+|Parâmetros|Descrição|exemplo|
+| --- | --- | --- |
+|Id do Asset|ID do Asset que será excluído.|Id_Asset|
+|Atribuir resultado a variável|Variável onde o resultado será salvo. Nome da variável sem chaves {}|Variável|

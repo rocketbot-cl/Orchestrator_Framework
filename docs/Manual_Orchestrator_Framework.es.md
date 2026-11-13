@@ -27,14 +27,14 @@ Inicie sesión en NOC utilizando unda de las opciones, API Key, archivo noc.ini 
 |API KEY|User APIKey|eyJ0eXAiOiJKV2QiLCJhbGciOiJIUzI1MiJ9.eyJpc3MiOiJudHRwczpcL1wvZGV2My5teXJiLmlwXC9hcGlcL3VzZXJzXC9hcGlrZXlcL2dlbmVyYXRlIiwiaWF0IjoxNjg5MDI0NDI2LCJleHAiOjE3NTIwOTY0MjYsIm5iZiI6MTY4OTAyNDQyNiwianRpIjoiSUxQQWRoY3F3NkM1RmllUCIsInN1YiI6MzIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJub2MiOm51bGx9.HZ4oFuOXL_VBlqAHyWkgJQr29bbBLSBnmcx6ij27zaI|
 |Asignar a variable|Variable donde guardar resultado sin {}|var|
 
-### Obtener Tareas
+### Tareas - Obtener Tareas
   
 Obtener tareas
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
-### Crear Tarea
+### Tareas - Crear Tarea
   
 Agrega una nueva tarea
 |Parámetros|Descripción|ejemplo|
@@ -43,7 +43,7 @@ Agrega una nueva tarea
 |Task Key|Variable donde guardar la key de la nueva tarea, sin {}|key|
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
-### Establecer Prioridad
+### Tareas - Establecer Prioridad
   
 Establecer la prioridad de una tarea
 |Parámetros|Descripción|ejemplo|
@@ -52,7 +52,7 @@ Establecer la prioridad de una tarea
 |Prioridad|Prioridad de la tarea||
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
-### Agregar Transacción
+### Tareas - Agregar Transacción
   
 Agrega una nueva transacción
 |Parámetros|Descripción|ejemplo|
@@ -62,7 +62,7 @@ Agrega una nueva transacción
 |Tiene Encabezados|If checked, it will take the first list as the transaction title.|True|
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
-### Agregar multiples Transacciones
+### Tareas - Agregar multiples Transacciones
   
 Agrega nuevas transacción
 |Parámetros|Descripción|ejemplo|
@@ -72,7 +72,7 @@ Agrega nuevas transacción
 |Tiene Encabezados|If checked, it will take the first list as the transactions titles.|True|
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
-### Obtener transacciones sin procesar
+### Tareas - Obtener transacciones sin procesar
   
 Obtenga todas las transacciones no procesadas de una tarea
 |Parámetros|Descripción|ejemplo|
@@ -80,12 +80,12 @@ Obtenga todas las transacciones no procesadas de una tarea
 |Task Key|Task Key||
 |Asignar resultado a Variable|Variable donde guardar|Variable|
 
-### Establecer estado
+### Tarea - Establecer estado
   
 Cambiar el estado de una transacción
 |Parámetros|Descripción|ejemplo|
 | --- | --- | --- |
-|Establecer estado||-|
+|Bloquear transacción||-|
 |Task Key|Task Key||
 |Transaction ID|Transaction ID||
 |Estado|Seleccione el estado de la transaccion||
@@ -127,3 +127,57 @@ Verifica si el framework debe detenerse
 |Instancia del proceso|Variable donde debe ingresarse la instancia del proceso|a2f64d5d9988c|
 |Process Token|Variable donde debe ingresarse el token del proceso a revisar si debe detenerse o no|LGPS8DYPJCAVECEF|
 |Asignar resultado a Variable|Variable donde guardar|Variable|
+
+### Obtener Asset Específico
+  
+Obtiene el asset especifico que se le indique
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Nombre de Asset|Nombre del asset a obtener|Test|
+|Token del proceso|Token del proceso. Si se especifica, hay que tambien especificar la key de instancia.|27FEXKIXFRFDUNVD|
+|Key de Instancia|Key de instancia del proceso|6241c3a1dd96f8f92f|
+|Obtener datos adicionales|Marca para obtener datos extra de los Assets|True|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
+
+### Obtener Todos los Assets
+  
+Obtiene todos los Assets y los asigna a la variable correspondiente
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Obtener datos adicionales|Marca para obtener datos extra de los Assets|True|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
+
+### Agregar Asset
+  
+Agrega un Asset a tu Orquestador
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Nombre de Asset|Nombre del Asset a agregar|NuevoAsset|
+|Token del proceso|Token del proceso al que se le agregara el Asset|27FEXKIXFRFDUNVD|
+|Key de Instancia|Key de la instancia al que se le agregara el Asset|6241c3a1dd96f8f92f|
+|Mail de usuarios|Lista de mails de usuarios a los que se agregará el Asset. Dejar vacío si el Asset no tiene usuarios vinculados|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Tipo del Asset|Tipo del Asset a agregar|General|
+|Valor del Asset|Valor del Asset a agregar|Un valor|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
+
+### Modificar Asset
+  
+Modifica el asset especifico que se le indique
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Id del Asset|Id del Asset a modificar|Id_Asset|
+|Nuevo nombre de Asset|Nuevo nombre del Asset. Déjelo vacío para conservar el nombre actual. Si existe otro Asset con el mismo nombre, no se podrá modificar el asset|NuevoAsset|
+|Nuevo token del proceso|Token del proceso que tendrá el Asset. Dejar vacío para mantener el proceso actual. Escriba NONE para quitar el proceso (y la instancia). Vacío en un Asset global al crear.|27FEXKIXFRFDUNVD|
+|Nueva key de la instancia|Key de la instancia que tendrá el Asset. Dejar vacío para mantener la instancia actual. Escriba NONE para quitar la instancia (el proceso se mantiene).|6241c3a1dd96f8f92f|
+|Nuevos mails de usuarios|Lista de Mails de usuarios que tendrán el Asset. Escriba NONE para quitar todos los usuarios.|[usuario1@mail.com, usuario2@mail.com, ...]|
+|Nuevo tipo del Asset|Nuevo tipo del Asset a modificar|General|
+|Nuevo valor del Asset|Nuevo valor del Asset a modificar|Un valor|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|
+
+### Eliminar Asset
+  
+Elimina un Asset existente mediante su ID.
+|Parámetros|Descripción|ejemplo|
+| --- | --- | --- |
+|Id del Asset|ID del Asset que se desea eliminar.|Id_Asset|
+|Asignar resultado a Variable|Variable donde se guardara el resultado. Nombre de variable sin llaves {}|Variable|

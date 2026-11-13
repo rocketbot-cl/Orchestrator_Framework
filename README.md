@@ -21,25 +21,25 @@ To install the module in Rocketbot Studio, it can be done in two ways:
 1. Login NOC  
 Login to NOC using one of the options, API Key, noc.ini file, or credentials.
 
-2. Get Tasks  
+2. Tasks - Get Tasks  
 Get task
 
-3. Create Task  
+3. Tasks - Create Task  
 Adds a new task
 
-4. Set Priority  
+4. Tasks - Set Priority  
 Set the priority of a task
 
-5. Add Transaction  
+5. Tasks - Add Transaction  
 Add one new transaction
 
-6. Add multiple Transactions  
+6. Tasks - Add multiple Transactions  
 Add new transactions
 
-7. Get unprocessed transactions  
+7. Tasks - Get unprocessed transactions  
 Get every unprocessed transactions from a task
 
-8. Set status  
+8. Tasks - Set status  
 Change the status of a transaction
 
 9. Send alert  
@@ -52,7 +52,22 @@ Send custom log
 Send order to stop the framework
 
 12. Should Stop Framework?  
-Check if the framework should stop  
+Check if the framework should stop
+
+13. Get a Specific Asset  
+Obtains the specific asset that is indicated
+
+14. Get All Assets  
+Get all the Assets and assign them to the corresponding variable
+
+15. Add Asset  
+Add an Asset to your Orchestrator
+
+16. Modify Asset  
+Modifies the specific asset that is indicated
+
+17. Delete Asset  
+Deletes an existing Asset by ID.  
 
 
 

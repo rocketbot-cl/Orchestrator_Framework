@@ -21,25 +21,25 @@ Para instalar el módulo en Rocketbot Studio, se puede hacer de dos formas:
 1. Login NOC  
 Inicie sesión en NOC utilizando unda de las opciones, API Key, archivo noc.ini o credenciales.
 
-2. Obtener Tareas  
+2. Tareas - Obtener Tareas  
 Obtener tareas
 
-3. Crear Tarea  
+3. Tareas - Crear Tarea  
 Agrega una nueva tarea
 
-4. Establecer Prioridad  
+4. Tareas - Establecer Prioridad  
 Establecer la prioridad de una tarea
 
-5. Agregar Transacción  
+5. Tareas - Agregar Transacción  
 Agrega una nueva transacción
 
-6. Agregar multiples Transacciones  
+6. Tareas - Agregar multiples Transacciones  
 Agrega nuevas transacción
 
-7. Obtener transacciones sin procesar  
+7. Tareas - Obtener transacciones sin procesar  
 Obtenga todas las transacciones no procesadas de una tarea
 
-8. Establecer estado  
+8. Tarea - Establecer estado  
 Cambiar el estado de una transacción
 
 9. Enviar alerta  
@@ -52,7 +52,22 @@ Enviar log personalizado
 Enviar orden para detener el framework
 
 12. ¿Debe detenerse el Framework?  
-Verifica si el framework debe detenerse  
+Verifica si el framework debe detenerse
+
+13. Obtener Asset Específico  
+Obtiene el asset especifico que se le indique
+
+14. Obtener Todos los Assets  
+Obtiene todos los Assets y los asigna a la variable correspondiente
+
+15. Agregar Asset  
+Agrega un Asset a tu Orquestador
+
+16. Modificar Asset  
+Modifica el asset especifico que se le indique
+
+17. Eliminar Asset  
+Elimina un Asset existente mediante su ID.  
 
 
 
