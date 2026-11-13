@@ -217,33 +217,15 @@ if module not in ('Login', 'loginNOC', 'REFramework'):
     except NameError:
         raise Exception("Not logged in to Orchestrator")
 
-if module == 'GetProcesses':
-    token_ = GetParams('process_token')
-    var_ = GetParams('result')
-
-    try:
-        res = configFormObject.post('/api/process/list')
-        res_ = res.json()
-        if res.status_code == 200:
-            array = []
-            if 'data' in res_:
-                for data in res_['data']:
-                    array.append({'token': data['token'], 'name': data['name']})
-                SetVar(var_, array)
-        else:
-            raise Exception(res_['message'])
-    except Exception as e:
-        PrintException()
-        raise e
-
-
 if module == 'GetTasks':
-    token_ = GetParams('process_token')
     var_ = GetParams('result')
 
     try:
-        res = configFormObject.post(f'/api/process/{token_}/tasks')
+        res = requests.post(configFormObject.server_ + f'/api/tasks/list',
+                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        
         res_ = res.json()
+       
         if res.status_code == 200:
             array = []
             if 'data' in res_:
@@ -257,12 +239,21 @@ if module == 'GetTasks':
         raise e
 
 if module == 'AddTask':
-    token_ = GetParams('process_token')
+    name_ = GetParams('name') #OPCIONAL
     var_ = GetParams('result')
     key_ = GetParams('key')
+    
+    payload = {}
+    
+    if name_:
+        payload['name'] = name_
 
     try:
-        res = configFormObject.post(f'/api/process/{token_}/addTask')
+        res = requests.post(configFormObject.server_ + f'/api/tasks/add',
+                            json=payload,
+                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
+        
+    
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -276,17 +267,29 @@ if module == 'AddTask':
         PrintException()
         raise e
 
-if module == 'PriorityTask':
-    token_ = GetParams('process_token')
+if module == 'PriorityTask': #Listo
     priority_ = GetParams('priority')
     key_ = GetParams('task_key')
     var_ = GetParams('result')
+    
+    print(f"DEBUG - Recibido -> priority: {priority_} (tipo: {type(priority_)})")
+    print(f"DEBUG - Recibido -> task_key: {key_}")
+    print(f"DEBUG - Recibido -> result: {var_}")
 
     try:
-        res = configFormObject.post(
-            f'/api/process/{token_}/tasks/{key_}/setTaskPriority',
-            json_data={'priority': priority_}
-        )
+        
+        if priority_ is None or str(priority_).strip() == "":
+            raise Exception("Priority is required")
+        
+        if str(priority_) == 'very_low':
+            priority_value = 0
+        else:
+            priority_value = int(priority_)
+        
+        data = {'priority': priority_value}
+        print("PAYLOAD ENVIADO:", data)
+        res = requests.post(configFormObject.server_ + f'/api/tasks/{key_}/setPriority', json=data,
+                            headers={'Authorization': "Bearer " + configFormObject.token}, proxies=None)
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -300,26 +303,25 @@ if module == 'PriorityTask':
         PrintException()
         raise e
 
-if module == 'AddTransaction':
-    token_ = GetParams('process_token')
+if module == 'AddTransaction': 
     task_key = GetParams('task_key')
     transaction = GetParams('transaction')
     headers = GetParams('headers')
     var_ = GetParams('result')
-
-    transaction = json.loads(transaction) if isinstance(transaction, str) else transaction
-
+    
+    transaction = eval(transaction)
+    
     try:
-        headers_value = json.loads(headers) if isinstance(headers, str) else headers
-        if headers_value:
+        if headers and eval(headers):
             df = pd.DataFrame(transaction[1:], columns=transaction[0])
         else:
             df = pd.DataFrame(transaction)
-
-        res = configFormObject.post(
-            f'/api/process/{token_}/tasks/{task_key}/addTransaction',
-            json_data={'transaction': json.dumps(df.to_dict('records')[0])}
-        )
+        
+        data = {}
+        data['transaction'] = json.dumps(df.to_dict('records')[0])
+        res = requests.post(configFormObject.server_ + f'/api/tasks/{task_key}/addTransaction', json=data,
+                            headers={'Authorization': 'Bearer ' + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+        
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -330,27 +332,28 @@ if module == 'AddTransaction':
     except Exception as e:
         PrintException()
         raise e
+        raise e
 
-if module == 'AddTransactions':
-    token_ = GetParams('process_token')
+if module == 'AddTransactions': 
     task_key = GetParams('task_key')
     transactions = GetParams('transactions')
     headers = GetParams('headers')
     var_ = GetParams('result')
 
-    transactions = json.loads(transactions) if isinstance(transactions, str) else transactions
-
+    transactions = eval(transactions)
+    
     try:
-        headers_value = json.loads(headers) if isinstance(headers, str) else headers
-        if headers_value:
+        if headers and eval(headers):
             df = pd.DataFrame(transactions[1:], columns=transactions[0])
         else:
             df = pd.DataFrame(transactions)
-
-        res = configFormObject.post(
-            f'/api/process/{token_}/tasks/{task_key}/addTransactions',
-            json_data={'transactions': json.dumps(df.to_dict('records'))}
-        )
+        
+        data = {}
+        data['transactions'] = json.dumps(df.to_dict('records'))
+        
+        res = requests.post(configFormObject.server_ + f'/api/tasks/{task_key}/addTransactions', json=data,
+                            headers={'Authorization': 'Bearer ' + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+        
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -360,16 +363,15 @@ if module == 'AddTransactions':
     except Exception as e:
         PrintException()
         raise e
-
-if module == 'GetUnprocessedTransactions':
+    
+if module == 'GetUnprocessedTransactions': #Listo
     task_key = GetParams('task_key')
-    token_ = GetParams('process_token')
     var_ = GetParams('result')
 
     try:
-        res = configFormObject.post(
-            f'/api/process/{token_}/tasks/{task_key}/getUnprocessedTransactions'
-        )
+        res = requests.post(configFormObject.server_ + f'/api/tasks/{task_key}/getUnprocessedTransactions',
+                            headers={'Authorization': "Bearer " + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+        
         res_ = res.json()
         if res.status_code == 200:
             array = []
@@ -384,30 +386,43 @@ if module == 'GetUnprocessedTransactions':
         PrintException()
         raise e
 
-if module == 'SetStatus':
-    token_ = GetParams('process_token')
+if module == 'SetStatus': #Revisar con Cori
+    locked = GetParams('locked') #Checkbox (True/False)
     task_key = GetParams('task_key')
     transaction_id = GetParams('transaction_id')
     status_ = GetParams('status_')
     var_ = GetParams('result')
 
+    # Normaliza a 0 / 1
+    if isinstance(locked, str):
+        locked = locked.strip().lower()
+        locked_value = 1 if locked in ('true', '1', 'yes', 'y') else 0
+    else:
+        locked_value = 1 if locked else 0
+
     if not transaction_id:
         raise Exception("Transaction ID is needed.")
     try:
-        res = configFormObject.post(
-            f'/api/process/{token_}/tasks/{task_key}/setTransactionStatus',
-            json_data={'transaction': transaction_id, 'status': status_}
-        )
+        data = {'transaction': transaction_id, 'status': status_, 'locked': locked_value}
+        res = requests.post(configFormObject.server_ + f'/api/tasks/{task_key}/setTransactionStatus', json=data,
+                            headers={'Authorization': "Bearer " + configFormObject.token, 'Content-Type': 'application/json'}, proxies=configFormObject.proxies)
+        print("STATUS CODE:", res.status_code)
         res_ = res.json()
         if res.status_code == 200:
             if var_:
-                SetVar(var_, res_['success'])
+                SetVar(var_, res_.get('success', True))
         else:
-            raise Exception(res_['message'])
+            error_msg = res_.get('message', '')
+            if "Transaction already locked" in error_msg:
+                print("Proceed with the next transaction.")
+                if var_:
+                    SetVar(var_, False)
+            else:
+                raise Exception(error_msg)
     except Exception as e:
         PrintException()
         raise e
-
+    
 if module == 'SendAlert':
     token_ = GetParams('process_token')
     log_ = GetParams('message')
@@ -417,10 +432,9 @@ if module == 'SendAlert':
         raise Exception('Missing Data')
 
     try:
-        res = configFormObject.post(
-            '/api/rocketbot/alert',
-            json_data={'processToken': token_, 'message': log_}
-        )
+        data = {'processToken': token_, 'message': log_}
+        res = requests.post(configFormObject.server_ + '/api/rocketbot/alert', json=data,
+                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
         res_ = res.json()
         if res.status_code == 200:
             if var_:
@@ -443,14 +457,13 @@ if module == 'SendLog':
         raise Exception('Missing Data')
 
     try:
-        res = configFormObject.post(
-            '/api/rocketbot/log',
-            json_data={'processToken': token_, 'key': instance_, 'log': log_, 'type': type_}
-        )
+        data = {'processToken': token_, 'key': instance_, 'log': log_, 'type': type_}
+        res = requests.post(configFormObject.server_ + '/api/rocketbot/log', json=data,
+                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
         res_ = res.json()
         if res.status_code != 200:
             raise Exception(res_['message'])
-
+    
     except Exception as e:
         PrintException()
         raise e
@@ -461,10 +474,10 @@ if module == "StopFramework":
     var_ = GetParams('result')
 
     try:
-        res = configFormObject.post(
-            '/api/robots/setFrameworkStatus',
-            json_data={"instance": instance_, "process": token_, "stop_framework": 1}
-        )
+        data = {"instance": instance_, "process": token_, "stop_framework": 1}
+        res = requests.post(configFormObject.server_ + '/api/robots/setFrameworkStatus', json=data,
+                            headers={'Authorization': "Bearer " + configFormObject.token, 'content-type': 'application/json'}, proxies=configFormObject.proxies)
+        
         res_ = res.json()
         if res.status_code == 200:
             if var_:
